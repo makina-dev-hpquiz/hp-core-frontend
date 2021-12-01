@@ -1,0 +1,19 @@
+#question-type-select {
+    width: 50%;
+    float: left;
+    text-align: start;
+}
+#difficulty-select {
+    width: 50%;
+    float: right;
+    text-align: end;
+}
+
+ion-fab-button > label{
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+ion-button, ion-fab {
+    bottom: 7% !important;
+}
