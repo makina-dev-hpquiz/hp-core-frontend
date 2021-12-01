@@ -1,0 +1,48 @@
+#difficulty-select{
+    width: 30%;
+    right: 0%;
+    text-align: end;
+    float: right;
+}
+#book-select{
+    width: 30%;
+    float: left;
+}
+
+#lecture-button{
+    width: 99%;
+    padding: 1%;
+    bottom: 0%;
+    position: absolute;
+    left: 0%;
+}
+
+.red{
+    background-color:tomato;
+    // color: white;
+}
+.green{
+    background-color:greenyellow;
+}
+.orange{
+    background-color: orange;
+}
+
+
+.main-case {
+    font-size: xxx-large;
+    width: 98%;
+    margin: 1%;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.case{
+    float: left;
+    width: 31%;
+    margin: 1%;
+    border-radius: 5px;
+    text-align: center;
+    padding: 5px 0 5px 0;
+    font-size: larger;
+}

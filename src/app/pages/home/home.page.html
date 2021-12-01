@@ -1,9 +1,34 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>home</ion-title>
+
+    <div>
+      <span id="book-select">LIVRE 1</span>
+      <span id="difficulty-select">
+        <ion-select [value]=selectedDifficulty (ionChange)="difficultyChange($event)">
+          <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}
+          </ion-select-option>
+        </ion-select>
+      </span>
+     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+
+  <div>
+    <div class="{{difficultyColor}} main-case">
+     {{countNbOfAnswersForSelectedDifficulty()}}
+    </div>
+
+    <div>
+      <div class="{{difficultyColor}} case" *ngFor="let question of questions">
+        <label>{{question.nb}}</label><br>
+        <label>{{question.type}}</label>
+      </div>
+    </div>
+
+  </div>
+  <ion-button id="lecture-button">Commencer une lecture</ion-button>
 </ion-content>
