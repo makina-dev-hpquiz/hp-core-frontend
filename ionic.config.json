@@ -1,5 +1,7 @@
 {
   "name": "hp-core-frontend",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
