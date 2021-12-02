@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: 'new',
         loadChildren: () => import('../newAnswer/newAnswer.module').then(m => m.NewAnswerPageModule)
+      }, 
+      {
+        path: 'detail',
+        loadChildren: () => import('../newAnswer/newAnswer.module').then(m => m.NewAnswerPageModule)
       },
       {
         path: 'groups',
