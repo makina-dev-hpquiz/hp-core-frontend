@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GroupsPage } from './groups.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { GroupsPageRoutingModule } from './groups-routing.module';
 
@@ -13,7 +12,6 @@ import { GroupsPageRoutingModule } from './groups-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: GroupsPage }]),
     GroupsPageRoutingModule,
   ],
