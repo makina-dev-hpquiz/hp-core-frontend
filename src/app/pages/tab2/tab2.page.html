@@ -12,13 +12,13 @@
     </ion-toolbar>
   </ion-header>
   <span id="question-type-select">
-    <ion-select [value]=selectedQuestionType (ionChange)="questionTypeChange($event)">
+    <ion-select (ionChange)="questionTypeChange($event)">
       <ion-select-option *ngFor="let questionType of questionsType" value="{{questionType}}">{{questionType}}
       </ion-select-option>
     </ion-select>
   </span>
   <span id="difficulty-select">
-    <ion-select [value]=selectedDifficulty (ionChange)="difficultyChange($event)">
+    <ion-select (ionChange)="difficultyChange($event)">
       <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}
       </ion-select-option>
     </ion-select>
