@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { ListAnswersPage } from './listAnswers.page';
 
 import { ListAnswersPageRoutingModule } from './listAnswers-routing.module';
+import { ComponentsModule } from 'src/app/components/ComponentsModule';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ListAnswersPageRoutingModule
+    ListAnswersPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [ListAnswersPage]
 })

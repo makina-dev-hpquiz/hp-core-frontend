@@ -1,17 +1,17 @@
-.type-question-label{
+.type-question-label{ // TODO doublon avec listAnswer
     font-size: large;
     font-weight: bold;
     display: contents;
 }
 
-.question-label{
+.question-label{ // TODO doublon avec listAnswer
     width: 85%;
     padding-left: 6%;
     white-space: break-spaces;
     text-align: justify;
 }
 
-.vertical-barre{
+.vertical-barre{ // TODO doublon avec listAnswer
     left:6%;
     position: absolute;
     border-right: 1px solid lightgray;

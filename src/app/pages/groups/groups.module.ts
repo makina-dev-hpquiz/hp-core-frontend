@@ -6,15 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { GroupsPage } from './groups.page';
 
 import { GroupsPageRoutingModule } from './groups-routing.module';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: GroupsPage }]),
-    GroupsPageRoutingModule,
+    // RouterModule.forChild([{ path: '', component: GroupsPage }]),
+    GroupsPageRoutingModule
   ],
-  declarations: [GroupsPage]
+  declarations: [GroupsPage, HeaderComponent],
 })
 export class GroupsPageModule {}

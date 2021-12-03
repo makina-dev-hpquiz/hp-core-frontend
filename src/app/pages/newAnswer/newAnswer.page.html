@@ -1,16 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>New Question
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<header-lecture></header-lecture>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">New Question</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
   <span id="question-type-select">
     <ion-select (ionChange)="questionTypeChange($event)">
       <ion-select-option *ngFor="let questionType of questionsType" value="{{questionType}}">{{questionType}}
