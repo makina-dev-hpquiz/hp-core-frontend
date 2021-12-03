@@ -7,7 +7,8 @@ export class QuestionModel {
         public nbPlayer: number,
         public particularity: string,
         public question: string,
-        public answer: string
+        public answer: string,
+        public dateOfCreation:string
 
     ) {}
 
