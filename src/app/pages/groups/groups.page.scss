@@ -1,0 +1,54 @@
+.type-question-label{
+    font-size: large;
+    font-weight: bold;
+    display: contents;
+}
+
+.question-label{
+    width: 85%;
+    padding-left: 6%;
+    white-space: break-spaces;
+    text-align: justify;
+}
+
+.vertical-barre{
+    left:6%;
+    position: absolute;
+    border-right: 1px solid lightgray;
+    height: 100%;
+    display: inline-block;
+}
+
+
+ion-list > div {
+    border: 1px solid lightgray;
+    border-radius: 1%;
+    position: relative;
+    margin-right: 1%;
+    margin-left: 1%;
+    .box {
+        width: 90%;
+    }
+}
+
+
+
+.div-icone{
+    z-index: 1;
+    width: 10%;
+    position: absolute;
+    right: 0%;
+    height: 100%;
+    top: 0%;
+    // border: 1px solid lightgray;
+    // border-radius: 1%;
+    border-left:1px solid lightgray;
+    ion-icon{
+        display: contents;
+    }
+}
+
+.large-button{
+    width: 99%;
+    padding: 1%;
+}

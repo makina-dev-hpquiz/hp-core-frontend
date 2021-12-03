@@ -7,6 +7,19 @@ import { Component } from '@angular/core';
 })
 export class GroupsPage {
 
+  
+  public question;
+
   constructor() {}
+
+ ngOnInit(){
+    this.question = {"question": "Quel est le numéro du coffre où Hagrid récupère un mystérieux paquet?", "type":"question"};
+  }
+
+
+
+  public getMiniNameType(typeName: String) {
+    return typeName.substring(0, 1).toUpperCase();
+  }
 
 }

@@ -12,4 +12,42 @@
       <ion-title size="large">Tab 3</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div style="margin:2%">
+    <h4>Question selectionnée</h4>
+    <ion-item color="primary">
+      <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
+      <span class="vertical-barre"></span>
+      <ion-label class="question-label">{{question.question}}</ion-label>
+      <ion-icon slot="end" size="large" name="remove-outline"></ion-icon>
+    </ion-item>
+  </div>
+  <ion-searchbar animated></ion-searchbar>
+  <ion-button class="large-button">Ajouter groupe</ion-button>
+
+  <ion-list>
+
+    <div>
+      <div class="box">
+        <ion-item>
+          <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
+          <span class="vertical-barre"></span>
+          <ion-label class="question-label">{{question.question}}</ion-label>
+          <ion-icon slot="end" size="large" name="remove-outline"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
+          <span class="vertical-barre"></span>
+          <ion-label class="question-label">{{question.question}}</ion-label>
+          <ion-icon slot="end" size="large" name="remove-outline"></ion-icon>
+        </ion-item>
+      </div>
+      <div class="div-icone">
+        <ion-icon size="large" name="add-outline"></ion-icon>
+      </div>
+    </div>
+
+
+
+  </ion-list>
 </ion-content>
