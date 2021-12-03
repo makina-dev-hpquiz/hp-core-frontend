@@ -59,9 +59,11 @@
       </div>
 
       <div *ngIf="selectedQuestion === CHAUDRON">
-        <ion-item></ion-item>
-
+        <ion-item>
+          <ion-textarea rows="6" placeholder="Chaudron"></ion-textarea>
+        </ion-item>
       </div>
+
       <div *ngIf="selectedQuestion === DEBAT">
         <ion-item>
           <ion-textarea rows="6" placeholder="Prêt, feu, débattage! "></ion-textarea>
@@ -84,16 +86,18 @@
         <ion-item>
           <ion-textarea rows="2" placeholder="Vrai ou faux? !"></ion-textarea>
         </ion-item>
+        <ion-radio-group name="VF" value="Vrai">
         <ion-item>
           <ion-item>
             <ion-label>Vrai</ion-label>
-            <ion-checkbox checked="true"></ion-checkbox> <!-- [(ngModel)]="pepperoni" -->
+            <ion-radio  name="VF" checked="true" value="Vrai"></ion-radio> <!-- [(ngModel)]="pepperoni" -->
           </ion-item>
           <ion-item>
             <ion-label>Faux</ion-label>
-            <ion-checkbox></ion-checkbox>
+            <ion-radio  name="VF" value="Faux"></ion-radio>
           </ion-item>
         </ion-item>
+      </ion-radio-group>
       </div>
 
       <div *ngIf="selectedQuestion === AFFIRMATION">
@@ -101,10 +105,7 @@
           <ion-textarea rows="4" placeholder="Laquel est vrai?!"></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-input rows="2" placeholder="Bonne réponse : Affirmation 1"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input rows="2" placeholder="Affirmation 2"></ion-input>
+          <ion-input rows="2" placeholder="Réponse"></ion-input>
         </ion-item>
       </div>
 
