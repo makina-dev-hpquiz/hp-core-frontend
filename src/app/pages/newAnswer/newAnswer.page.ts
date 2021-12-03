@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
+import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
+
 
 @Component({
   selector: 'app-new-answer',
@@ -7,6 +10,7 @@ import { Component } from '@angular/core';
 })
 export class NewAnswerPage {
 
+  public TYPE_QUESTION;
   public QUESTION = "Question";
   public QCM = "QCM";
   public LEXICAL = "Lexical";
@@ -17,9 +21,9 @@ export class NewAnswerPage {
   public VRAI_OU_FAUX = "Vrai ou faux";
   public AFFIRMATION = "Affirmation";
 
-  public FACILE = "FACILE";
-  public MOYEN = "MOYEN";
-  public DIFFICILE = "DIFFICILE";
+  // public FACILE = "FACILE";
+  // public MOYEN = "MOYEN";
+  // public DIFFICILE = "DIFFICILE";
   
   public questionsType;
   public selectedQuestion : String;
@@ -31,20 +35,17 @@ export class NewAnswerPage {
   constructor() { }
 
   ngOnInit() {
-    this.questionsType = this.getQuestionType();
-    this.difficulties = this.getDifficulties();
-
-    this.selectedQuestion = this.questionsType[0];
-    this.selectedDifficulty = this.MOYEN;
+    this.questionsType = TypeQuestionList;
+    this.difficulties = DifficultyList;
+    
+    this.TYPE_QUESTION = TypeQuestion;
+    this.selectedQuestion = TypeQuestion.QUESTION;
+    this.selectedDifficulty = Difficulty.MOYEN;
   }
 
-  public getQuestionType() {
-    return [this.QUESTION, this.QCM, this.LEXICAL, this.CHAUDRON, this.DEBAT, this.SPEECH, this.GAGE, this.VRAI_OU_FAUX, this.AFFIRMATION];
-  }
-
-  public getDifficulties(){
-    return  [this.FACILE, this.MOYEN, this.DIFFICILE];
-  }
+  // public getQuestionType() {
+  //   return [this.QUESTION, this.QCM, this.LEXICAL, this.CHAUDRON, this.DEBAT, this.SPEECH, this.GAGE, this.VRAI_OU_FAUX, this.AFFIRMATION];
+  // }
 
   public questionTypeChange(event){
     this.selectedQuestion = event.detail.value;

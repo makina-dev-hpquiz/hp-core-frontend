@@ -2,7 +2,7 @@
 
 <ion-content>
   <span id="question-type-select">
-    <ion-select [value]=QUESTION (ionChange)="questionTypeChange($event)">
+    <ion-select [value]=selectedQuestion (ionChange)="questionTypeChange($event)">
       <ion-select-option *ngFor="let questionType of questionsType" value="{{questionType}}">{{questionType}}
       </ion-select-option>
     </ion-select>
@@ -19,7 +19,7 @@
 
 
     <ion-list>
-      <div *ngIf="selectedQuestion === QUESTION">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.QUESTION">
         <ion-item>
           <ion-textarea placeholder="Balance ta question ! "></ion-textarea>
         </ion-item>
@@ -31,7 +31,7 @@
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === QCM">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.QCM">
         <ion-item>
           <ion-textarea placeholder="Balance ton QCM ! "></ion-textarea>
         </ion-item>
@@ -49,7 +49,7 @@
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === LEXICAL">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.LEXICAL">
         <ion-item>
           <ion-textarea placeholder="Citer tour à tour le matériel scolaire ... "></ion-textarea>
         </ion-item>
@@ -58,31 +58,31 @@
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === CHAUDRON">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.CHAUDRON">
         <ion-item>
           <ion-textarea rows="6" placeholder="Chaudron"></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === DEBAT">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.DEBAT">
         <ion-item>
           <ion-textarea rows="6" placeholder="Prêt, feu, débattage! "></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === SPEECH">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.SPEECH">
          <ion-item>
           <ion-textarea rows="2" placeholder="Speech"></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === GAGE">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.GAGE">
         <ion-item> 
           <ion-textarea rows="4" placeholder="Gage!"></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="selectedQuestion === VRAI_OU_FAUX">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.VRAI_OU_FAUX">
         <ion-item>
           <ion-textarea rows="2" placeholder="Vrai ou faux? !"></ion-textarea>
         </ion-item>
@@ -100,7 +100,7 @@
       </ion-radio-group>
       </div>
 
-      <div *ngIf="selectedQuestion === AFFIRMATION">
+      <div *ngIf="selectedQuestion === TYPE_QUESTION.AFFIRMATION">
         <ion-item>
           <ion-textarea rows="4" placeholder="Laquel est vrai?!"></ion-textarea>
         </ion-item>

@@ -1,13 +1,13 @@
 export enum TypeQuestion {
-    QUESTION,
-    QCM,
-    LEXICAL,
-    CHAUDRON,
-    DEBAT,
-    SPEECH,
-    GAGE,
+    QUESTION = "QUESTION",
+    QCM = "QCM",
+    LEXICAL = "LEXICAL",
+    CHAUDRON = "CHAUDRON",
+    DEBAT = "DEBAT",
+    SPEECH = "SPEECH",
+    GAGE = "GAGE",
     VRAI_OU_FAUX = 'VRAI OU FAUX',
     AFFIRMATION = 'AFFIRMATION'
   }
   
-  export const TypeQuestionList: string[] = Object.keys(TypeQuestion);
+  export const TypeQuestionList: string[] = Object.values(TypeQuestion);

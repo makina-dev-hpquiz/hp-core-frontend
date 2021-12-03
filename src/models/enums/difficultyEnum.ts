@@ -1,7 +1,7 @@
 export enum Difficulty {
-    FACILE,
-    MOYEN,
-    DIFFICILE
+    FACILE = "FACILE",
+    MOYEN = "MOYEN",
+    DIFFICILE = "DIFFICILE"
   }
   
   export const DifficultyList: string[] = Object.keys(Difficulty);
