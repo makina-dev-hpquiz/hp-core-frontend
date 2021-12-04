@@ -41,8 +41,6 @@ export class ListAnswersPage {
    * Filtre la liste de questions en fonction de la phrase écrite dans le searchInput
    */
   public filter(){
-    if(this.keyword !== "") {
     this.questions = this.lectureService.questions.filter( q => q.question.toLowerCase().includes(this.keyword.toLowerCase()));
-    }
   }
 }
