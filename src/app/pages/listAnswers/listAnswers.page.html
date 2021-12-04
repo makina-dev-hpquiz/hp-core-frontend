@@ -2,14 +2,18 @@
 
 <ion-content>
 
-  <ion-searchbar animated></ion-searchbar>
+  <ion-searchbar (ionChange)="filter()" [(ngModel)]="keyword" animated></ion-searchbar>
   <ion-list>
-  
+
     <ion-item *ngFor="let question of questions" color="{{question.difficulty.toLowerCase()}}">
       <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
       <span class="vertical-barre"></span>
       <ion-label class="question-label">{{question.question}}</ion-label>
       <ion-icon slot="end" name="chevron-forward-outline" (click)="goToDetail(question)"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="questions.length == 0">
+     <ion-label id="no-question">Aucune question</ion-label> 
     </ion-item>
   </ion-list>
 
