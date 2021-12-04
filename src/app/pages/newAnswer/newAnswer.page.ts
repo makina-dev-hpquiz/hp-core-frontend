@@ -1,6 +1,9 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
 import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
+import { QuestionModel } from 'src/models/question.model';
+import { LectureService } from 'src/providers/lecture.service';
 
 
 @Component({
@@ -11,48 +14,46 @@ import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnu
 export class NewAnswerPage {
 
   public TYPE_QUESTION;
-  public QUESTION = "Question";
-  public QCM = "QCM";
-  public LEXICAL = "Lexical";
-  public CHAUDRON = "Chaudron";
-  public DEBAT = "Débat";
-  public SPEECH = "Speech";
-  public GAGE = "Gage";
-  public VRAI_OU_FAUX = "Vrai ou faux";
-  public AFFIRMATION = "Affirmation";
-
-  // public FACILE = "FACILE";
-  // public MOYEN = "MOYEN";
-  // public DIFFICILE = "DIFFICILE";
-  
   public questionsType;
-  public selectedQuestion : String;
-  public selectedDifficulty : String;
   public difficulties;
+  public qcmRep: string[];
 
+  public question: QuestionModel;
 
-
-  constructor() { }
+  constructor(private lectureService: LectureService) { }
 
   ngOnInit() {
     this.questionsType = TypeQuestionList;
     this.difficulties = DifficultyList;
     
     this.TYPE_QUESTION = TypeQuestion;
-    this.selectedQuestion = TypeQuestion.QUESTION;
-    this.selectedDifficulty = Difficulty.MOYEN;
+
+    this.createNewQuestion();
   }
 
-  // public getQuestionType() {
-  //   return [this.QUESTION, this.QCM, this.LEXICAL, this.CHAUDRON, this.DEBAT, this.SPEECH, this.GAGE, this.VRAI_OU_FAUX, this.AFFIRMATION];
-  // }
+  /**
+   * Créer une nouvelle question 
+   */
+  createNewQuestion(){
+    this.question = new QuestionModel();
+    this.question.type = TypeQuestion.QUESTION;
+    this.question.difficulty = Difficulty.MOYEN;
 
-  public questionTypeChange(event){
-    this.selectedQuestion = event.detail.value;
+    this.qcmRep = ["", "", "", ""];
   }
 
-  public difficultyChange(event){
-    console.log(event)
+  /**
+   * Ajoute une question au lectureService, créer une nouvelle question.
+   * RG Pour QCM, concat des différents champs avec un séparateur / La première réponse est la bonne.
+   */
+  addQuestion(){
+    if(this.question.type === TypeQuestion.QCM) {
+      this.question.answer = this.qcmRep[0]+"/"+this.qcmRep[1]+"/"+this.qcmRep[2]+"/"+this.qcmRep[3];
+    }
+
+    this.lectureService.addQuestion(this.question);
+    this.createNewQuestion();
+
   }
 
 }
