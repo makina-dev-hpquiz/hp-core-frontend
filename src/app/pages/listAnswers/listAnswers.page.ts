@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LectureService } from 'src/providers/lecture.service';
 
 @Component({
   selector: 'app-list-Answers',
@@ -8,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class ListAnswersPage {
 
-  public question;
+  public questions;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private lectureService : LectureService) {}
 
   ngOnInit(){
-    this.question = {"question": "Quel est le numéro du coffre où Hagrid récupère un mystérieux paquet?", "type":"question"};
+    this.questions = this.lectureService.questions;
   }
 
   public goToDetail(){
@@ -22,6 +23,12 @@ export class ListAnswersPage {
   }
 
 
+  /**
+   * Retourne le premier caractère de la chaîne fourni en paramètre.
+   * TODO Attention pas de distinction entre Question : Q et QCM : Q
+   * @param typeName string
+   * @returns string
+   */
   public getMiniNameType(typeName: String) {
     return typeName.substring(0, 1).toUpperCase();
   }
