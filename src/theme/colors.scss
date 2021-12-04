@@ -1,0 +1,15 @@
+:root {
+    --ion-color-easy:#adff2f;
+    --ion-color-medium:#ffa500;
+    --ion-color-hard:#ff6347;
+
+    .ion-color-facile {
+        --ion-color-base: var(--ion-color-easy);
+    }
+    .ion-color-moyen {
+        --ion-color-base: var(--ion-color-medium);
+    }
+    .ion-color-difficile {
+        --ion-color-base: var(--ion-color-hard);
+    }
+}
