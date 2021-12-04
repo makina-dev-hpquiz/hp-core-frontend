@@ -1,5 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { QuestionModel } from 'src/models/question.model';
@@ -13,6 +14,8 @@ import { LectureService } from 'src/providers/lecture.service';
 })
 export class NewAnswerPage {
 
+  public updateState: Boolean;
+
   public TYPE_QUESTION;
   public questionsType;
   public difficulties;
@@ -20,15 +23,34 @@ export class NewAnswerPage {
 
   public question: QuestionModel;
 
-  constructor(private lectureService: LectureService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService) {
+    this.updateState = false;
+    
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.updateState = this.router.getCurrentNavigation().extras.state.update;
+        this.question = this.router.getCurrentNavigation().extras.state.question;
+        if(this.question.type === TypeQuestion.QCM) {
+          this.qcmRep = this.question.answer.split("/");
+        }
+
+      }
+    });
+   }
+
+  // updateMode(){
+
+  // }
 
   ngOnInit() {
+    if(!this.updateState){
     this.questionsType = TypeQuestionList;
     this.difficulties = DifficultyList;
     
     this.TYPE_QUESTION = TypeQuestion;
 
     this.createNewQuestion();
+    }
   }
 
   /**
@@ -51,7 +73,9 @@ export class NewAnswerPage {
       this.question.answer = this.qcmRep[0]+"/"+this.qcmRep[1]+"/"+this.qcmRep[2]+"/"+this.qcmRep[3];
     }
 
-    this.lectureService.addQuestion(this.question);
+    if(!this.updateState) {
+      this.lectureService.addQuestion(this.question);
+    }
     this.createNewQuestion();
 
   }

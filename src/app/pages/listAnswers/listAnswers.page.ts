@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
 
@@ -21,9 +21,18 @@ export class ListAnswersPage {
     this.keyword = "";
   }
 
-  public goToDetail(){
-    this.router.navigate(['/tabs/detail']);
-    //Service stockage data avec transition de page
+  /**
+   * Ouvre le détail de la question cliqué
+   * @param question 
+   */
+  public goToDetail(question: QuestionModel){
+    let navigationExtras: NavigationExtras = {
+      state: {
+        update: true,
+        question: question
+      }
+    };
+    this.router.navigate(['/tabs/detail'], navigationExtras);
   }
 
 
