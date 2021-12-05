@@ -43,13 +43,13 @@ export class NewAnswerPage {
   // }
 
   ngOnInit() {
-    if(!this.updateState){
-    this.questionsType = TypeQuestionList;
-    this.difficulties = DifficultyList;
-    
     this.TYPE_QUESTION = TypeQuestion;
 
-    this.createNewQuestion();
+    this.questionsType = TypeQuestionList;
+    this.difficulties = DifficultyList;
+
+    if(!this.updateState){
+      this.createNewQuestion();
     }
   }
 
