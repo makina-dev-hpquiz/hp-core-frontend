@@ -4,35 +4,40 @@
 
   <div style="margin:2%">
     <h4>Question selectionnée</h4>
-    <ion-item color="primary">
-      <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
+    <ion-item *ngIf="selectedQuestion" color="primary">
+      <ion-label class="type-question-label">{{getMiniNameType(selectedQuestion.type)}}</ion-label>
       <span class="vertical-barre"></span>
-      <ion-label class="question-label">{{question.question}}</ion-label>
-      <ion-icon slot="end" size="large" name="remove-outline"></ion-icon>
+      <ion-label class="question-label">{{selectedQuestion.question}}</ion-label>
+      <ion-icon slot="end" size="large" (click)="resetSelectedQuestion()" name="remove-outline"></ion-icon>
     </ion-item>
   </div>
-  <ion-searchbar animated></ion-searchbar>
-  <ion-button class="large-button">Ajouter groupe</ion-button>
+  
+  <!-- SEARCH BAR -->
+  <ion-searchbar (ionChange)="filter()" (ionClear)="filter()" [(ngModel)]="keyword" animated></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let result of results">
+      <ion-label class="type-question-label">{{getMiniNameType(result.type)}}</ion-label>
+      <span class="vertical-barre"></span>
+      <ion-label class="question-label">{{result.question}}</ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline" (click)="selectQuestion(result)"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="createGroupe()" class="large-button">Ajouter groupe</ion-button>
 
   <ion-list>
 
-    <div>
+    <div *ngFor="let group of groups">
       <div class="box">
-        <ion-item>
+        <ion-item *ngFor="let question of group.questions">
           <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
           <span class="vertical-barre"></span>
           <ion-label class="question-label">{{question.question}}</ion-label>
-          <ion-icon slot="end" size="large" name="remove-outline"></ion-icon>
+          <ion-icon slot="end" size="large" name="remove-outline" (click)="removeQuestion(group, question)"></ion-icon>
         </ion-item>
-        <ion-item>
-          <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
-          <span class="vertical-barre"></span>
-          <ion-label class="question-label">{{question.question}}</ion-label>
-          <ion-icon slot="end" size="large" name="remove-outline"></ion-icon>
-        </ion-item>
+       
       </div>
       <div class="div-icone">
-        <ion-icon size="large" name="add-outline"></ion-icon>
+        <ion-icon size="large" (click)="addInGroupe(group)" name="add-outline"></ion-icon>
       </div>
     </div>
 

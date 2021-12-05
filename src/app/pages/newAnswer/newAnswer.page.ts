@@ -1,6 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { QuestionModel } from 'src/models/question.model';
@@ -78,6 +78,15 @@ export class NewAnswerPage {
     }
     this.createNewQuestion();
 
+  }
+
+  addInGroup() {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        question: this.question
+      }
+    };
+    this.router.navigate(['/tabs/groups'], navigationExtras);
   }
 
 }
