@@ -3,6 +3,8 @@ import { NavigationExtras, Router } from '@angular/router';
 import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
 
+import {TypeQuestion } from 'src/models/enums/typeQuestionEnum';
+
 @Component({
   selector: 'app-list-Answers',
   templateUrl: 'listAnswers.page.html',
@@ -43,7 +45,12 @@ export class ListAnswersPage {
    * @returns string
    */
   public getMiniNameType(typeName: String) {
+
+    if(typeName === TypeQuestion.QCM) {
+      return "Qc";
+    } else {
     return typeName.substring(0, 1).toUpperCase();
+    }
   }
 
   /**

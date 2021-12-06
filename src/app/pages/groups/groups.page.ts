@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { GroupModel } from 'src/models/group.model';
 import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
@@ -32,9 +33,17 @@ export class GroupsPage {
     this.keyword = "";
   }
 
+  /**
+   * TODO Code en doublon, à transformer en component
+   * @param typeName 
+   * @returns 
+   */
   public getMiniNameType(typeName: String) {
+    if(typeName === TypeQuestion.QCM) {
+      return "Qc";
+    } else {
     return typeName.substring(0, 1).toUpperCase();
-  }
+    }  }
 
   /**
    * Créer un nouveau groupe avec la question sélectionné
