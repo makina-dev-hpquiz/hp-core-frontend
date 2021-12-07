@@ -50,7 +50,7 @@ export class GroupsPage {
    */
   public createGroupe() {
     if (this.selectedQuestion) {
-      this.lectureService.createGroupe(Object.assign({}, this.selectedQuestion));
+      this.lectureService.createGroupe(this.selectedQuestion);
       this.resetSelectedQuestion();
     } else {
       console.log("Pas de question selectionnée")
