@@ -14,7 +14,7 @@ import { LectureService } from 'src/providers/lecture.service';
 })
 export class NewAnswerPage {
 
-  @ViewChild('questionInput', {read: IonTextarea}) ionTextarea: IonTextarea;
+  @ViewChild('questionInput', { read: IonTextarea }) ionTextarea: IonTextarea;
 
   public updateState: Boolean;
   public duplicatedTitle: string;
@@ -28,12 +28,12 @@ export class NewAnswerPage {
 
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService) {
     this.updateState = false;
-    
+
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.updateState = this.router.getCurrentNavigation().extras.state.update;
         this.question = this.router.getCurrentNavigation().extras.state.question;
-        if(this.question.type === TypeQuestion.QCM) {
+        if (this.question.type === TypeQuestion.QCM) {
           this.qcmRep = this.question.answer.split("/");
         } else {
           this.qcmRep = ["", "", "", ""];
@@ -41,7 +41,7 @@ export class NewAnswerPage {
 
       }
     });
-   }
+  }
 
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class NewAnswerPage {
     this.difficulties = DifficultyList;
     this.duplicatedTitle = "";
 
-    if(!this.updateState){
+    if (!this.updateState) {
       this.createNewQuestion();
     }
   }
@@ -59,7 +59,7 @@ export class NewAnswerPage {
   /**
    * Créer une nouvelle question 
    */
-  createNewQuestion(){
+  createNewQuestion() {
     this.updateState = false;
     this.question = new QuestionModel();
     this.question.type = TypeQuestion.QUESTION;
@@ -69,12 +69,12 @@ export class NewAnswerPage {
     this.duplicatedTitle = "";
 
     this.qcmRep = ["", "", "", ""];
-    if(this.ionTextarea) {
+    if (this.ionTextarea) {
       this.ionTextarea.setFocus();
     }
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.ionTextarea.setFocus();
   }
 
@@ -82,32 +82,51 @@ export class NewAnswerPage {
    * Ajoute une question au lectureService, créer une nouvelle question.
    * RG Pour QCM, concat des différents champs avec un séparateur / La première réponse est la bonne.
    */
-  addQuestion(){
-    if(this.question.type === TypeQuestion.QCM) {
-      this.question.answer = this.qcmRep[0]+"/"+this.qcmRep[1]+"/"+this.qcmRep[2]+"/"+this.qcmRep[3];
+  addQuestion() {
+    if (this.question.type === TypeQuestion.QCM) {
+      this.question.answer = this.qcmRep[0] + "/" + this.qcmRep[1] + "/" + this.qcmRep[2] + "/" + this.qcmRep[3];
     }
 
-    if(!this.updateState) {
-      this.lectureService.addQuestion(this.question);
+    if (this.questionIsValid()) {
+      if (!this.updateState) {
+        this.lectureService.addQuestion(this.question);
+      }
+      this.createNewQuestion();
     }
-    this.createNewQuestion();
 
   }
 
+  /**
+   * L'application navigue vers l'écran Groups en sélectionnant la question actuelle
+   */
   addInGroup() {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        question: this.question
-      }
-    };
-    this.router.navigate(['/tabs/groups'], navigationExtras);
+    if (this.questionIsValid) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          question: this.question
+        }
+      };
+      this.router.navigate(['/tabs/groups'], navigationExtras);
+    }
   }
 
   /**
    * Duplique le titre de la question pour une utilisation ultérieur
    */
-  duplicateTitle(){
+  duplicateTitle() {
     this.duplicatedTitle = this.question.question;
+  }
+
+  /**
+   * Indique si une question possède à un minimat un titre
+   * @returns Boolean
+   */
+  private questionIsValid() {
+    if (this.question.question !== "") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
