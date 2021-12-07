@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'stop-lecture',
+    loadChildren: () => import('./pages/stop-lecture/stop-lecture.module').then( m => m.StopLecturePageModule)
   }
  
 ];

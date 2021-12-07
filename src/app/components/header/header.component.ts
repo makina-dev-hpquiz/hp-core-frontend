@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'header-lecture',
@@ -9,11 +8,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   public title= "Mode lecture"
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {}
-  stopLecture() {
-    this.router.navigate(['/']);
-    
-  }
 }

@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('../groups/groups.module').then(m => m.GroupsPageModule)
       },
       {
+        path: 'stop-lecture',
+        loadChildren: () => import('../stop-lecture/stop-lecture.module').then(m => m.StopLecturePageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/new',
         pathMatch: 'full'
