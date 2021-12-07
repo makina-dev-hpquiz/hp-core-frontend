@@ -21,7 +21,9 @@
     <ion-list>
       <div *ngIf="question.type === TYPE_QUESTION.QUESTION">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" placeholder="Balance ta question ! "></ion-textarea>
+          <!-- input type="text" -->
+          <!-- ion-textarea -->
+          <ion-textarea #questionInput [(ngModel)]="question.question" placeholder="Balance ta question ! "></ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label>Réponse : </ion-label>
@@ -154,7 +156,8 @@
     <ion-label *ngIf="!updateState">Ajouter</ion-label>
     <ion-label *ngIf="updateState">Mettre à jour</ion-label>
   </ion-button>
-  <ion-button  (click)="addInGroup()">
+  <!-- addInGroup -->
+  <ion-button  (click)="focus()">
     G+
   </ion-button>
 </div>

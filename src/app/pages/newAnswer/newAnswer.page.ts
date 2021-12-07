@@ -1,6 +1,6 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { IonTextarea } from '@ionic/angular';
 import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { QuestionModel } from 'src/models/question.model';
@@ -13,6 +13,8 @@ import { LectureService } from 'src/providers/lecture.service';
   styleUrls: ['newAnswer.page.scss']
 })
 export class NewAnswerPage {
+
+  @ViewChild('questionInput', {read: IonTextarea}) ionTextarea: IonTextarea;
 
   public updateState: Boolean;
 
@@ -65,6 +67,13 @@ export class NewAnswerPage {
     this.question.difficulty = Difficulty.MOYEN;
 
     this.qcmRep = ["", "", "", ""];
+    if(this.ionTextarea) {
+      this.ionTextarea.setFocus();
+    }
+  }
+
+  ionViewDidEnter(){
+    this.ionTextarea.setFocus();
   }
 
   /**
