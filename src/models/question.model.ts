@@ -14,7 +14,7 @@ export class QuestionModel {
 
     constructor() {
         this.id = uuidv4();
-        this.dateOfCreation = new Date().toDateString();
+        this.dateOfCreation = new Date().toISOString();
      }
 
 }

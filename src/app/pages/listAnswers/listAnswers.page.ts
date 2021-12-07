@@ -1,33 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
 
-import {TypeQuestion } from 'src/models/enums/typeQuestionEnum';
+import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 
 @Component({
   selector: 'app-list-Answers',
   templateUrl: 'listAnswers.page.html',
   styleUrls: ['listAnswers.page.scss']
 })
-export class ListAnswersPage {
+export class ListAnswersPage{
 
   public questions: QuestionModel[];
   public keyword: string;
 
-  constructor(private router: Router, private lectureService : LectureService) {}
+  constructor(private router: Router, private lectureService: LectureService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.questions = this.lectureService.questions;
-    // this.questions.length
     this.keyword = "";
   }
 
+  ionViewWillEnter(){
+    if(this.keyword === "") {
+      this.questions = this.lectureService.questions;
+    }
+    this.sortQuestions();
+    
+  }
   /**
    * Ouvre le détail de la question cliqué
    * @param question 
    */
-  public goToDetail(question: QuestionModel){
+  public goToDetail(question: QuestionModel) {
     let navigationExtras: NavigationExtras = {
       state: {
         update: true,
@@ -46,17 +52,27 @@ export class ListAnswersPage {
    */
   public getMiniNameType(typeName: String) {
 
-    if(typeName === TypeQuestion.QCM) {
+    if (typeName === TypeQuestion.QCM) {
       return "Qc";
     } else {
-    return typeName.substring(0, 1).toUpperCase();
+      return typeName.substring(0, 1).toUpperCase();
     }
   }
 
   /**
    * Filtre la liste de questions en fonction de la phrase écrite dans le searchInput
    */
-  public filter(){
-    this.questions = this.lectureService.questions.filter( q => q.question.toLowerCase().includes(this.keyword.toLowerCase()));
+  public filter() {
+    this.questions = this.lectureService.questions.filter(q => q.question.toLowerCase().includes(this.keyword.toLowerCase()));
+    this.sortQuestions();
+  }
+
+  /**
+   * trie les questions par date de plus récentes à plus anciennes.
+   */
+  private sortQuestions(){
+    this.questions.sort((q1, q2) =>
+    (new Date(q1.dateOfCreation) > new Date(q2.dateOfCreation)) ? -1 : (new Date(q1.dateOfCreation) < new Date(q2.dateOfCreation)) ? 1 : 0
+    );
   }
 }
