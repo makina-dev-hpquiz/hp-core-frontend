@@ -103,6 +103,9 @@ export class NewAnswerPage {
     this.router.navigate(['/tabs/groups'], navigationExtras);
   }
 
+  /**
+   * Duplique le titre de la question pour une utilisation ultérieur
+   */
   duplicateTitle(){
     this.duplicatedTitle = this.question.question;
   }
