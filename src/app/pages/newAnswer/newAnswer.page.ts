@@ -17,6 +17,7 @@ export class NewAnswerPage {
   @ViewChild('questionInput', {read: IonTextarea}) ionTextarea: IonTextarea;
 
   public updateState: Boolean;
+  public duplicatedTitle: string;
 
   public TYPE_QUESTION;
   public questionsType;
@@ -42,15 +43,13 @@ export class NewAnswerPage {
     });
    }
 
-  // updateMode(){
-
-  // }
 
   ngOnInit() {
     this.TYPE_QUESTION = TypeQuestion;
 
     this.questionsType = TypeQuestionList;
     this.difficulties = DifficultyList;
+    this.duplicatedTitle = "";
 
     if(!this.updateState){
       this.createNewQuestion();
@@ -65,6 +64,9 @@ export class NewAnswerPage {
     this.question = new QuestionModel();
     this.question.type = TypeQuestion.QUESTION;
     this.question.difficulty = Difficulty.MOYEN;
+
+    this.question.question = this.duplicatedTitle;
+    this.duplicatedTitle = "";
 
     this.qcmRep = ["", "", "", ""];
     if(this.ionTextarea) {
@@ -99,6 +101,10 @@ export class NewAnswerPage {
       }
     };
     this.router.navigate(['/tabs/groups'], navigationExtras);
+  }
+
+  duplicateTitle(){
+    this.duplicatedTitle = this.question.question;
   }
 
 }
