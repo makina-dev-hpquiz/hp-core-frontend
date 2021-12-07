@@ -143,12 +143,20 @@
       </ion-list>
     </div>
   </div>
-
-  <ion-fab (click)="addInGroup()" vertical="bottom" horizontal="end" slot="fixed">
+<!-- 
+  <ion-fab (click)="addInGroup()" vertical="bottom" horizontal="end">
     <ion-fab-button>
       <label>G+</label>
     </ion-fab-button>
-  </ion-fab>
-  <ion-button (click)="addQuestion()" class="bottom-button">Ajouter</ion-button>
+  </ion-fab> -->
+  <div>
+  <ion-button (click)="addQuestion()" class="bottom-button">
+    <ion-label *ngIf="!updateState">Ajouter</ion-label>
+    <ion-label *ngIf="updateState">Mettre à jour</ion-label>
+  </ion-button>
+  <ion-button  (click)="addInGroup()">
+    G+
+  </ion-button>
+</div>
 
 </ion-content>

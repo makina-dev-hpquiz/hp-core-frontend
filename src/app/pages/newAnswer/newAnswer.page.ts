@@ -57,6 +57,7 @@ export class NewAnswerPage {
    * Créer une nouvelle question 
    */
   createNewQuestion(){
+    this.updateState = false;
     this.question = new QuestionModel();
     this.question.type = TypeQuestion.QUESTION;
     this.question.difficulty = Difficulty.MOYEN;
