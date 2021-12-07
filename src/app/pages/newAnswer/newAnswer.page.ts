@@ -32,6 +32,8 @@ export class NewAnswerPage {
         this.question = this.router.getCurrentNavigation().extras.state.question;
         if(this.question.type === TypeQuestion.QCM) {
           this.qcmRep = this.question.answer.split("/");
+        } else {
+          this.qcmRep = ["", "", "", ""];
         }
 
       }
