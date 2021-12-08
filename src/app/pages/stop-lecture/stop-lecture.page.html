@@ -1,7 +1,29 @@
 <header-lecture></header-lecture>
 
 <ion-content>
+  <ion-list>
+    <ion-item>{{nbQuestions}}</ion-item>
+    <ion-item slot="centre">
+      <ion-label color="facile">{{nbQuestionPerDifficulty[0]}}</ion-label>
+      <ion-label color="moyen">{{nbQuestionPerDifficulty[1]}}</ion-label>
+      <ion-label color="difficile">{{nbQuestionPerDifficulty[2]}}</ion-label>
+    </ion-item>
+  </ion-list>
 
-
+  <ion-list>
+    <ion-item>
+      <ion-label>Connexion avec le serveur</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>OK</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Page de fin de lecture</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="193" >
+      </ion-input>
+    </ion-item>
+  </ion-list>
   <ion-button (click)="stopLecture()" class="bottom-button">Terminer la lecture</ion-button>
 </ion-content>
