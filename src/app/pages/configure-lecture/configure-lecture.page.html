@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nouvelle lecture !</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- ### CHOIX TYPE D'OEUVRE-->
+  <div class="div-type-oeuvre">
+    <ion-label class="placeholder-style">
+      {{currentDate}}
+    </ion-label>
+
+    <div>
+      <ion-label>
+        Type d'oeuvre
+      </ion-label>
+    </div>
+    <ion-radio-group [(ngModel)]="selectedArtworkType" (ionChange)="selectedTypeChange()">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-radio [value]="LIVRE">Livre</ion-radio>
+          <ion-label>Livre</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-radio [value]="FILM"></ion-radio>
+          <ion-label>Film</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-radio [value]="SERIE"></ion-radio>
+          <ion-label>Série</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-radio-group>
+  </div>
+  
+  <ion-item lines="none">
+    <ion-label slot="start">
+      Choisir un {{selectedArtworkType}}
+    </ion-label>
+    <ion-icon (click)="newArtwork()" multiple="false"style="margin-left: -20%;" slot="start" name="add-circle-outline"></ion-icon>
+  </ion-item>
+  <ion-select [(ngModel)]="selectedArtwork" *ngIf="artworksList.length > 0">
+    <ion-select-option *ngFor="let artwork of artworksList" value="artwork">{{artwork}}</ion-select-option>
+  </ion-select>
+  <div *ngIf="selectedArtworkType != FILM">
+    <ion-label class="start-page-label" slot="start">
+      {{displayTextStartLecture()}}
+    </ion-label>
+    <ion-input placeholder="Page de début de lecture"></ion-input>
+  </div>
+  
+
+
+  <ion-button class="bottom-button" (click)="startLecture()">Commencer la lecture</ion-button>
+</ion-content>

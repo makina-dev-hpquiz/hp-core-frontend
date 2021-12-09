@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'stop-lecture',
     loadChildren: () => import('./pages/stop-lecture/stop-lecture.module').then( m => m.StopLecturePageModule)
+  },
+  {
+    path: 'configure-lecture',
+    loadChildren: () => import('./pages/configure-lecture/configure-lecture.module').then( m => m.ConfigureLecturePageModule)
   }
  
 ];
