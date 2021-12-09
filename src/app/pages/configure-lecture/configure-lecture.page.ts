@@ -28,8 +28,10 @@ export class ConfigureLecturePage implements OnInit {
 
   constructor() { 
     this.currentDate = new Date();
+
     registerLocaleData(localeFr, 'fr');
     this.currentDateToDisplay = formatDate( this.currentDate,'dd/MM/yyyy HH:mm:ss', 'fr');
+
     this.selectedArtworkType = this.LIVRE;
     this.artworksList = new Array();
     this.getArtworkByArtworkType();
@@ -76,9 +78,15 @@ export class ConfigureLecturePage implements OnInit {
     }
   }
 
+  /**
+   * Ouvre une petite fenêtre dans l'objectif de créer une nouvelle oeuvre avec le type sélectionné
+   */
   public newArtwork(){
-    this.selectedArtwork = prompt("Nom du nouvelle artwork de type "+this.selectedArtworkType, "");
-    this.artworksList.push(this.selectedArtwork);
+    let newArtwork = prompt("Nom du nouvelle oeuvre de type "+this.selectedArtworkType, "");
+    if(newArtwork) {
+      this.selectedArtwork = newArtwork;
+      this.artworksList.push(this.selectedArtwork);
+    }
   }
 
 }

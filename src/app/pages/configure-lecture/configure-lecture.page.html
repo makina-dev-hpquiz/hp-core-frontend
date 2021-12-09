@@ -41,8 +41,8 @@
     </ion-label>
     <ion-icon (click)="newArtwork()" multiple="false"style="margin-left: -20%;" slot="start" name="add-circle-outline"></ion-icon>
   </ion-item>
-  <ion-select [(ngModel)]="selectedArtwork" *ngIf="artworksList.length > 0">
-    <ion-select-option *ngFor="let artwork of artworksList" value="artwork">{{artwork}}</ion-select-option>
+  <ion-select [(ngModel)]="selectedArtwork" [value]="selectedArtwork" *ngIf="artworksList.length > 0">
+    <ion-select-option *ngFor="let artwork of artworksList" value="{{artwork}}">{{artwork}}</ion-select-option>
   </ion-select>
   <div *ngIf="selectedArtworkType != FILM">
     <ion-label class="start-page-label" slot="start">
