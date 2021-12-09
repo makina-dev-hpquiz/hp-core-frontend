@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {formatDate} from '@angular/common';
+
+import localeFr from '@angular/common/locales/fr';
+import { registerLocaleData } from '@angular/common'; 
+
+
+
 
 @Component({
   selector: 'app-configure-lecture',
@@ -14,12 +21,15 @@ export class ConfigureLecturePage implements OnInit {
 
   //DATA
   public currentDate;
+  public currentDateToDisplay: String;
   public selectedArtworkType;
   public selectedArtwork;
   public artworksList: Array<String>;
 
   constructor() { 
-    this.currentDate = new Date(); //TODO
+    this.currentDate = new Date();
+    registerLocaleData(localeFr, 'fr');
+    this.currentDateToDisplay = formatDate( this.currentDate,'dd/MM/yyyy HH:mm:ss', 'fr');
     this.selectedArtworkType = this.LIVRE;
     this.artworksList = new Array();
     this.getArtworkByArtworkType();
