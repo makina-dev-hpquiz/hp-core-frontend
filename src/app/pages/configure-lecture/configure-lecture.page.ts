@@ -3,6 +3,7 @@ import {formatDate} from '@angular/common';
 
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common'; 
+import { TypeArtwork } from 'src/models/enums/typeArtworkEnum';
 
 
 
@@ -12,13 +13,10 @@ import { registerLocaleData } from '@angular/common';
   templateUrl: './configure-lecture.page.html',
   styleUrls: ['./configure-lecture.page.scss'],
 })
-export class ConfigureLecturePage implements OnInit {
+export class ConfigureLecturePage {
 
-  //CONST
-  public LIVRE = "Livre";
-  public FILM = "Film";
-  public SERIE = "Série";
-
+  //CONST 
+  public typeArtwork;
   //DATA
   public currentDate;
   public currentDateToDisplay: String;
@@ -31,18 +29,18 @@ export class ConfigureLecturePage implements OnInit {
 
     registerLocaleData(localeFr, 'fr');
     this.currentDateToDisplay = formatDate( this.currentDate,'dd/MM/yyyy HH:mm:ss', 'fr');
-
-    this.selectedArtworkType = this.LIVRE;
+    this.typeArtwork = TypeArtwork;
+    this.selectedArtworkType = this.typeArtwork.LIVRE;
     this.artworksList = new Array();
     this.getArtworkByArtworkType();
     this.selectedArtwork ="";
   }
 
-  ngOnInit() {
-  }
-
+  /**
+   * Lorsque le type sélectionné dans la liste déroulante Type d'oeuvre change,
+   * On met à jour la liste des oeuvres associées au type
+   */
   public selectedTypeChange(){
-    console.log("Change");
     this.selectedArtwork ="";
     this.getArtworkByArtworkType();
   }
@@ -55,11 +53,11 @@ export class ConfigureLecturePage implements OnInit {
     // TODO Service gestion des oeuvres
     this.artworksList = new Array();
     switch(this.selectedArtworkType){
-      case this.LIVRE :
+      case TypeArtwork.LIVRE :
         this.artworksList.push("HP Livre 1 : Ecole des sorciers");
         this.artworksList.push("HP Livre 2 : Chambre des secrets");
         break;
-      case this.FILM : 
+      case TypeArtwork.FILM : 
         this.artworksList.push("OSS 117");
       break;
     }
@@ -71,9 +69,9 @@ export class ConfigureLecturePage implements OnInit {
    */
   public displayTextStartLecture(){
     switch(this.selectedArtworkType){
-      case this.LIVRE :
+      case TypeArtwork.LIVRE :
         return "Votre lecture du livre "+this.selectedArtwork+" commence à la page combien?";
-      case this.SERIE : 
+      case TypeArtwork.SERIE : 
         return "Votre visionnage de la série "+this.selectedArtwork+"  commence à l'épisode combien?"
     }
   }
