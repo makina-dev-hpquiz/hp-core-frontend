@@ -12,7 +12,7 @@ export class LectureService {
   public groups: Array<GroupModel>;
 
    constructor() {
-       this.lecture = new LectureModel(new Date().toDateString(), "Livre 1", this.questions);
+      //  this.lecture = new LectureModel(new Date().toDateString(), "Livre 1", this.questions);
        this.questions= new Array<QuestionModel>();
        this.groups = new Array<GroupModel>();
     }
