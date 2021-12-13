@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-buttons slot="start" (click)="backHome()">
+      <ion-icon size="large"  name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
     <ion-title>Nouvelle lecture !</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -39,10 +42,12 @@
     <ion-label slot="start">
       Choisir un {{selectedArtworkType}}
     </ion-label>
-    <ion-icon (click)="newArtwork()" multiple="false"style="margin-left: -20%;" slot="start" name="add-circle-outline"></ion-icon>
+    <ion-icon (click)="newArtwork()" multiple="false" style="margin-left: -20%;" slot="start" name="add-circle-outline">
+    </ion-icon>
   </ion-item>
   <ion-select [(ngModel)]="selectedArtwork.title" [value]="selectedArtwork.title" *ngIf="artworksList.length > 0">
-    <ion-select-option *ngFor="let artwork of artworksList" value="{{artwork.title}}">{{artwork.title}}</ion-select-option>
+    <ion-select-option *ngFor="let artwork of artworksList" value="{{artwork.title}}">{{artwork.title}}
+    </ion-select-option>
   </ion-select>
 
   <!-- ### Page de début de lecture ### -->
@@ -52,7 +57,7 @@
     </ion-label>
     <ion-input placeholder="Exemple : 154"></ion-input>
   </div>
-  
+
 
 
   <ion-button class="bottom-button" (click)="startLecture()">Commencer la lecture</ion-button>

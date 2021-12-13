@@ -105,5 +105,11 @@ export class ConfigureLecturePage {
     this.artworksList = await this.configureLecture.findArtworkByType(this.selectedArtworkType);
   }
 
+  /**
+   * Renvoi à l'écran d'accueil
+   */
+  public backHome(){
+    this.router.navigate(["/"]);
+  }
 
 }
