@@ -4,9 +4,8 @@
 
     <div>
       <span id="book-select">LIVRE 1</span>
-      {{test}}
       <span id="difficulty-select">
-        <ion-select [value]=selectedDifficulty (ionChange)="difficultyChange($event)">
+        <ion-select [(ngModel)]=selectedDifficulty >
           <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}
           </ion-select-option>
         </ion-select>
@@ -18,12 +17,12 @@
 
 
   <div>
-    <div class="{{difficultyColor}} main-case">
+    <div class="{{selectedDifficulty.toLowerCase()}} main-case">
      {{countNbOfAnswersForSelectedDifficulty()}}
     </div>
 
     <div>
-      <div class="{{difficultyColor}} case" *ngFor="let question of questions">
+      <div class="{{selectedDifficulty.toLowerCase()}} case" *ngFor="let question of questions">
         <label>{{question.nb}}</label><br>
         <label>{{question.type}}</label>
       </div>

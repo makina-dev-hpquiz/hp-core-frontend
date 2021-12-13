@@ -3,6 +3,8 @@ import { Lecture } from 'src/entities/lecture';
 import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
 import { OrmService } from 'src/providers/orm.service';
 
+import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -10,21 +12,19 @@ import { OrmService } from 'src/providers/orm.service';
 })
 export class HomePage implements OnInit {
 
-  constructor(private ormService: OrmService, private lectureDao: LectureDaoService) { }
-
   public questions;
 
-  public difficulties;
-  public selectedDifficulty;
-  public difficultyColor = "green";
+  public difficulties : string[];
+  public selectedDifficulty: String;
   public test: Lecture[];
 
+  constructor(private ormService: OrmService, private lectureDao: LectureDaoService) {
+    this.difficulties = DifficultyList;
+    this.selectedDifficulty = Difficulty.FACILE;
+   }
 
   async ngOnInit() {
     await this.ormService.ready();
- 
-
-
 
     this.questions = [{"nb" : 13, "type" : "Question"},
     {"nb" : 3, "type" : "QCM"},
@@ -37,21 +37,12 @@ export class HomePage implements OnInit {
     {"nb" : 3, "type" : "Affirmation"}                    
   ];
 
-
-  this.difficulties = ["FACILE", "MOYEN", "DIFFICILE"];
-  this.selectedDifficulty = this.difficulties[0];
   }
 
-
-  async ionViewWillEnter(){
-    console.log("##############")
-    this.test = await this.lectureDao.findAllLectures();
-    console.log(this.test);
-    console.log("##############")
-    console.log("ionViewWillEnter home")
-  }
-
-
+  /**
+   * Compte le nombre total de questions
+   * @returns number
+   */
   public countNbOfAnswersForSelectedDifficulty(){
     var totalNbOfAnswers = 0;
    if(this.questions != undefined) {
@@ -59,23 +50,7 @@ export class HomePage implements OnInit {
       totalNbOfAnswers += question.nb;
     });
   }
-
     return totalNbOfAnswers;
   }
-
-  public difficultyChange(event){
-    this.selectedDifficulty = event.detail.value;
-    switch(this.selectedDifficulty){
-      case "FACILE" : 
-        this.difficultyColor = "green";
-      break;
-      case "MOYEN" : 
-        this.difficultyColor = "orange";
-      break;
-      case "DIFFICILE" : 
-        this.difficultyColor = "red";
-      break;
-    }
-  }
-
+  
 }
