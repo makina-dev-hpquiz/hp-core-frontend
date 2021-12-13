@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ConfigureLectureService } from 'src/providers/configure-lecture.service';
 import { Lecture } from 'src/entities/lecture';
 import { ArtworkModel } from 'src/models/artwork.model';
+import { Artwork } from 'src/entities/artwork';
 
 
 
@@ -27,21 +28,24 @@ export class ConfigureLecturePage {
 
   public currentDateToDisplay: String;
   public selectedArtworkType: ArtworkType;
-  public selectedArtwork: ArtworkModel;
-  public artworksList: Array<ArtworkModel>;
+  public selectedArtwork: Artwork;
+  public artworksList: Artwork[];
 
+  
   constructor(private router: Router, private configureLecture: ConfigureLectureService) {
-    console.log("Constructor")
     this.lecture = configureLecture.initializeNewLecture();
 
-    registerLocaleData(localeFr, 'fr');
+    registerLocaleData(localeFr, 'fr'); 
     this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
 
     this.typeArtwork = ArtworkType;
     this.selectedArtworkType = this.typeArtwork.BOOK;
+    this.selectedArtwork = new Artwork();
+
     this.artworksList = new Array();
     this.getArtworkByArtworkType();
-    this.selectedArtwork = new ArtworkModel();
+
+    
   }
 
 
@@ -50,7 +54,7 @@ export class ConfigureLecturePage {
    * On met à jour la liste des oeuvres associées au type
    */
   public selectedTypeChange() {
-    this.selectedArtwork = new ArtworkModel();
+    this.selectedArtwork = new Artwork();
     this.getArtworkByArtworkType();
   }
 
@@ -71,11 +75,12 @@ export class ConfigureLecturePage {
   /**
    * Ouvre une petite fenêtre dans l'objectif de créer une nouvelle oeuvre avec le type sélectionné
    */
-  public newArtwork() {
+  public async newArtwork() {
     let newArtwork = prompt("Nom du nouvelle oeuvre de type " + this.selectedArtworkType, "");
     if (newArtwork) {
 
-      this.selectedArtwork = new ArtworkModel(newArtwork, this.selectedArtworkType);
+      this.selectedArtwork = new Artwork(newArtwork, this.selectedArtworkType);
+      await this.configureLecture.addArtwork( this.selectedArtwork);
       this.artworksList.push(this.selectedArtwork);
     }
   }
@@ -85,31 +90,19 @@ export class ConfigureLecturePage {
    * l'utilisateur est envoyé vers l'écran new question
    */
   public startLecture() {
-    this.lecture.livre = this.selectedArtwork.title;
-    this.configureLecture.saveLecture();
-    this.router.navigate(['/tabs/']);
+    if(this.selectedArtwork.title) {
+      this.lecture.artwork = this.selectedArtwork;
+      this.configureLecture.saveLecture();
+      this.router.navigate(['/tabs/']);
+    }
   }
 
   /**
    * Récupère les oeuvres associées au type selectionné
    * et les placent dans la liste affichée
    */
-  private getArtworkByArtworkType() {
-    // TODO Service gestion des oeuvres
-
-    this.artworksList = this.configureLecture.findArtworkByType(this.selectedArtworkType);
-
-
-
-    // this.artworksList = new Array<ArtworkModel>();
-    // switch(this.selectedArtworkType){
-    //   case ArtworkType.LIVRE :
-    //     this.artworksList.push(new ArtworkModel("HP Livre 1 : Ecole des sorciers",  ArtworkType.LIVRE));
-    //     this.artworksList.push(new ArtworkModel("HP Livre 2 : Chambre des secrets", ArtworkType.LIVRE));
-    //     break;
-    //   case ArtworkType.FILM : 
-    //     this.artworksList.push(new ArtworkModel("OSS 117", ArtworkType.FILM));
-    //   break;
+   private async getArtworkByArtworkType() {
+    this.artworksList = await this.configureLecture.findArtworkByType(this.selectedArtworkType);
   }
 
 

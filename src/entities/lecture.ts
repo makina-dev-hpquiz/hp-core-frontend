@@ -1,5 +1,5 @@
-import { QuestionModel } from "../models/question.model";
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, JoinTable } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Artwork } from "./artwork";
 
 @Entity()
 export class Lecture {
@@ -10,8 +10,8 @@ export class Lecture {
     @Column()
     public date: string;
 
-    @Column()
-    public livre: string;
+    @ManyToOne(() => Artwork, artwork => artwork.id) 
+    public artwork: Artwork;
 
     // @OneToMany(type => QuestionModel, question => question.lecture) 
     // public questions: Array<QuestionModel>;

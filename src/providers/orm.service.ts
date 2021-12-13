@@ -48,6 +48,7 @@ export class OrmService {
       }
 
       Object.assign(dbOptions, {
+        name:"default",
         logging: ['error', 'query', 'schema'],
         synchronize: true,
         entities: [Lecture, Artwork]

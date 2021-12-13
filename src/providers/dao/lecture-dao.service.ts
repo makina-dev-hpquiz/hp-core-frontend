@@ -8,19 +8,14 @@ import { Repository } from 'typeorm/repository/Repository';
 })
 export class LectureDaoService {
 
-  private lectureRepository : Repository<Lecture>;
-
-  constructor() {
-    this.lectureRepository = getRepository(Lecture);
-
-   }
+  constructor() {   }
 
   /**
      * Supprime l'entité lecture fourni en paramètre de la base de données
      */
   public async removeLecture(lecture: Lecture) {
     if (lecture) {
-      await this.lectureRepository.remove(lecture);
+      await getRepository(Lecture).remove(lecture);
     }
   }
 
@@ -29,7 +24,7 @@ export class LectureDaoService {
      */
   public async saveLecture(lecture: Lecture) {
     try {
-      return await this.lectureRepository.save(lecture);
+      return await getRepository(Lecture).save(lecture);
     } catch (error) {
       console.log('LectureDaoService - saveLecture : La sauvegarde a echoué' + error);
     }
@@ -40,7 +35,7 @@ export class LectureDaoService {
    * @returns Lecture[]
    */
   public async findAllLectures(): Promise<Lecture[]> {
-    return await this.lectureRepository.find();
+    return await getRepository(Lecture).find({ order: { id: "DESC"} });
   }
 
 }

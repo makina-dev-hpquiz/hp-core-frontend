@@ -3,6 +3,8 @@ import { ArtworkModel } from 'src/models/artwork.model';
 import { ArtworkType } from 'src/models/enums/typeArtworkEnum';
 import { Lecture } from 'src/entities/lecture';
 import { LectureDaoService } from './dao/lecture-dao.service';
+import { ArtworkDaoService } from './dao/artwork-dao.service';
+import { Artwork } from 'src/entities/artwork';
 
 @Injectable({
   providedIn: 'root'
@@ -10,40 +12,41 @@ import { LectureDaoService } from './dao/lecture-dao.service';
 export class ConfigureLectureService {
 
   private lecture: Lecture;
+  private lectures: Lecture[]
 
-  constructor(private lectureDao: LectureDaoService) {
+  constructor(private lectureDao: LectureDaoService, private artworkDao: ArtworkDaoService) {
    }
 
 
+   /**
+    * Initialise un nouvel object lecture
+    * @returns Lecture
+    */
    initializeNewLecture(){
       this.lecture = new Lecture();
       return this.lecture
    }
-
-   /**
-    * Initialise puis renvoi une lecture
-   */
-  getLecture(){
-    if(!this.lecture) {
-      this.initializeNewLecture();
-    }
-
-    return this.lecture;
-  }
   
 
   /**
-   * Récupère en bdd ??? 
+   * Récupère depuis le service Dao la liste des oeuvres liées au type selectionné 
    * @returns List<string>
    */
-  findArtworkByType(artworkType: ArtworkType){
-    return Array<ArtworkModel>();
+  async findArtworkByType(artworkType: ArtworkType) : Promise<Artwork[]>{
+    return await this.artworkDao.findAllArtworksByType(artworkType);
   }
 
-  addArtwork(artwork: ArtworkModel){
-    // Call couche DAO
+  /**
+   * Transfert à la couche ArtworkDao, un objet Artwork à sauvegarder
+   * @param artwork 
+   */
+  addArtwork(artwork: Artwork){
+    this.artworkDao.saveArtwork(artwork);
   }
 
+  /**
+   * Transfert à la couche LectureDao, un objet lecture à sauvegarder
+   */
   saveLecture(){
     this.lectureDao.saveLecture(this.lecture);
   }
