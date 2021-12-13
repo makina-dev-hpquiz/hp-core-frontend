@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { Artwork } from 'src/entities/artwork';
 import { Lecture } from 'src/entities/lecture';
 
 import {
@@ -21,7 +22,6 @@ export class OrmService {
  */
   private async createConnection(): Promise<Connection> {
     let dbOptions: ConnectionOptions;
-    console.log("CREATE CONNECTION")
 
       // dbOptions = {
       //   type: 'sqlite',
@@ -50,10 +50,9 @@ export class OrmService {
       Object.assign(dbOptions, {
         logging: ['error', 'query', 'schema'],
         synchronize: true,
-        entities: [Lecture]
+        entities: [Lecture, Artwork]
         
       });
-      console.log("JUSTE AVANT createConnection()")
       return await createConnection(dbOptions);
     
   }
