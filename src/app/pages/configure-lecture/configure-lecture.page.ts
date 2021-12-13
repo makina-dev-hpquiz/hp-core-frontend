@@ -31,17 +31,19 @@ export class ConfigureLecturePage {
   public artworksList: Array<ArtworkModel>;
 
   constructor(private router: Router, private configureLecture: ConfigureLectureService) {
-    this.lecture = configureLecture.getLecture();
+    console.log("Constructor")
+    this.lecture = configureLecture.initializeNewLecture();
 
     registerLocaleData(localeFr, 'fr');
     this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
 
     this.typeArtwork = ArtworkType;
-    this.selectedArtworkType = this.typeArtwork.LIVRE;
+    this.selectedArtworkType = this.typeArtwork.BOOK;
     this.artworksList = new Array();
     this.getArtworkByArtworkType();
     this.selectedArtwork = new ArtworkModel();
   }
+
 
   /**
    * Lorsque le type sélectionné dans la liste déroulante Type d'oeuvre change,
@@ -59,7 +61,7 @@ export class ConfigureLecturePage {
    */
   public displayTextStartLecture() {
     switch (this.selectedArtworkType) {
-      case ArtworkType.LIVRE:
+      case ArtworkType.BOOK:
         return "Votre lecture du livre " + this.selectedArtwork.title + " commence à la page combien?";
       case ArtworkType.SERIE:
         return "Votre visionnage de la série " + this.selectedArtwork.title + "  commence à l'épisode combien?"

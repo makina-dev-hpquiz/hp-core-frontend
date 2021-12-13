@@ -1,5 +1,5 @@
 export enum ArtworkType {
-    LIVRE = "Livre",
-    FILM = "Film",
+    BOOK = "Livre",
+    MOVIE = "Film",
     SERIE = "Série"
 }
