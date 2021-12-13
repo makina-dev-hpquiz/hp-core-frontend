@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Artwork } from 'src/entities/artwork';
 import { Lecture } from 'src/entities/lecture';
+import { Question } from 'src/entities/Question';
 
 import {
   createConnection,
@@ -51,7 +52,7 @@ export class OrmService {
         name:"default",
         logging: ['error', 'query', 'schema'],
         synchronize: true,
-        entities: [Lecture, Artwork]
+        entities: [Lecture, Artwork, Question]
         
       });
       return await createConnection(dbOptions);
