@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Lecture } from "./lecture";
 import { Question } from "./Question";
 
 @Entity()
@@ -8,12 +9,14 @@ export class Group {
     public id: string;
 
 
-    public questions: Array<Question>;
-    
-
     @Column()
     public isCreated;
 
+    @OneToMany(() => Question, question => question.id)
+    public questions: Array<Question>;
+    
+    @OneToMany(() => Lecture, lecture => lecture.id)
+    public lecture: Lecture;
 
     constructor(){
         this.isCreated = new Date().toISOString();
