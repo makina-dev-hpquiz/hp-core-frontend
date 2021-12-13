@@ -1,47 +1,48 @@
 import { Injectable } from '@angular/core';
-import { GroupModel } from 'src/models/group.model';
 import { Lecture } from 'src/entities/lecture';
-import { QuestionModel } from 'src/models/question.model';
 import { ConfigureLectureService } from './configure-lecture.service';
+import { QuestionDaoService } from './dao/question-dao.service';
+import { Question } from 'src/entities/Question';
+import { Group } from 'src/entities/group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LectureService {
   public lecture: Lecture;
-  public  questions: Array<QuestionModel>;
-  public groups: Array<GroupModel>;
+  public  questions: Array<Question>;
+  public groups: Array<Group>;
 
-   constructor(private configureLecture: ConfigureLectureService) {
+   constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService) {
       this.lecture = this.configureLecture.getCurrentLecture();
-      //  this.lecture = new LectureModel(new Date().toDateString(), "Livre 1", this.questions);
-       this.questions= new Array<QuestionModel>();
-       this.groups = new Array<GroupModel>();
+       this.questions= new Array<Question>();
+       this.groups = new Array<Group>();
     }
 
     /**
      * Ajoute une question à la liste des questions en cours
      * @param question 
      */
-    addQuestion(question: QuestionModel) {
+    addQuestion(question: Question) {
         this.questions.push(question);
+        this.questionDao.saveQuestion(question);
     }
 
-    deleteQuestion(question: QuestionModel){}
+    deleteQuestion(question: Question){}
 
-    createGroupe(question: QuestionModel){
-      let g = new GroupModel();
+    createGroupe(question: Question){
+      let g = new Group();
       g.addQuestion(question)
       this.groups.push(g);
     }
 
     // TODO
-    addQuestionInGroupe(group: GroupModel, question: QuestionModel){
+    addQuestionInGroupe(group: Group, question: Question){
       group.addQuestion(question);
       // this.groups.find(group).addQuestion(question);
     }
 
     removeQuestionsInGroupe(){
-      
+
     }
 }

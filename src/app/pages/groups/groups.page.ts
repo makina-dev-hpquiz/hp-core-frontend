@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Group } from 'src/entities/group';
+import { Question } from 'src/entities/Question';
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
-import { GroupModel } from 'src/models/group.model';
-import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
 
 @Component({
@@ -13,10 +13,10 @@ import { LectureService } from 'src/providers/lecture.service';
 export class GroupsPage {
 
   public keyword: string;
-  public results: Array<QuestionModel>;
+  public results: Array<Question>;
 
-  public groups: GroupModel[];
-  public selectedQuestion: QuestionModel;
+  public groups: Group[];
+  public selectedQuestion: Question;
 
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService) {
     this.route.queryParams.subscribe(params => {
@@ -62,7 +62,7 @@ export class GroupsPage {
    * RG : La question ne peut pas être déjà dans le même groupe
    * @param group 
    */
-  public addInGroupe(group: GroupModel) {
+  public addInGroupe(group: Group) {
     if (this.selectedQuestion) {
       if (!group.questions.find(q => q.id === this.selectedQuestion.id)) {
         group.addQuestion(this.selectedQuestion);
@@ -88,7 +88,7 @@ export class GroupsPage {
    * @param group 
    * @param question 
    */
-  public removeQuestion(group: GroupModel, question: QuestionModel) {
+  public removeQuestion(group: Group, question: Question) {
     group.deleteQuestion(question);
     if (group.questions.length === 0) {
       this.groups.splice(this.groups.indexOf(group), 1);
@@ -101,13 +101,13 @@ export class GroupsPage {
       this.results = this.lectureService.questions.filter(q => q.question.toLowerCase().includes(this.keyword.toLowerCase()));
     } else {
 
-      this.results = new Array<QuestionModel>();
+      this.results = new Array<Question>();
     }
   }
 
-  selectQuestion(question: QuestionModel) {
+  selectQuestion(question: Question) {
     this.selectedQuestion = question;
-    this.results = new Array<QuestionModel>();
+    this.results = new Array<Question>();
     this.keyword = "";
   }
 

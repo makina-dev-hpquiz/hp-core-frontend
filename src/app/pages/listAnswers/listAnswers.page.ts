@@ -1,9 +1,9 @@
 import { Component, OnChanges } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
 
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
+import { Question } from 'src/entities/Question';
 
 @Component({
   selector: 'app-list-Answers',
@@ -12,7 +12,7 @@ import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 })
 export class ListAnswersPage{
 
-  public questions: QuestionModel[];
+  public questions: Question[];
   public keyword: string;
 
   constructor(private router: Router, private lectureService: LectureService) { }
@@ -33,7 +33,7 @@ export class ListAnswersPage{
    * Ouvre le détail de la question cliqué
    * @param question 
    */
-  public goToDetail(question: QuestionModel) {
+  public goToDetail(question: Question) {
     let navigationExtras: NavigationExtras = {
       state: {
         update: true,
@@ -72,7 +72,7 @@ export class ListAnswersPage{
    */
   private sortQuestions(){
     this.questions.sort((q1, q2) =>
-    (new Date(q1.dateOfCreation) > new Date(q2.dateOfCreation)) ? -1 : (new Date(q1.dateOfCreation) < new Date(q2.dateOfCreation)) ? 1 : 0
+    (new Date(q1.isUpdated) > new Date(q2.isUpdated)) ? -1 : (new Date(q1.isUpdated) < new Date(q2.isUpdated)) ? 1 : 0
     );
   }
 }

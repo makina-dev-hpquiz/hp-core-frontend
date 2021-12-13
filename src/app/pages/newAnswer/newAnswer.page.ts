@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonTextarea } from '@ionic/angular';
+import { Question } from 'src/entities/Question';
 import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
-import { QuestionModel } from 'src/models/question.model';
 import { LectureService } from 'src/providers/lecture.service';
 
 
@@ -24,7 +24,7 @@ export class NewAnswerPage {
   public difficulties;
   public qcmRep: string[];
 
-  public question: QuestionModel;
+  public question: Question;
 
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService) {
     this.updateState = false;
@@ -61,7 +61,7 @@ export class NewAnswerPage {
    */
   createNewQuestion() {
     this.updateState = false;
-    this.question = new QuestionModel();
+    this.question = new Question();
     this.question.type = TypeQuestion.QUESTION;
     this.question.difficulty = Difficulty.MOYEN;
 
@@ -122,11 +122,12 @@ export class NewAnswerPage {
    * @returns Boolean
    */
   private questionIsValid() {
-    if (this.question.question !== "") {
-      return true;
-    } else {
-      return false;
-    }
+    return this.question.question !== "" ? true : false;
+    // if (this.question.question !== "") {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 
 }
