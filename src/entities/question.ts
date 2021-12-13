@@ -22,7 +22,9 @@ export class Question {
     @Column()
     public question: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     public answer: string;
 
     @Column()
@@ -31,10 +33,14 @@ export class Question {
     @Column()
     public difficulty: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     public nbPlayer: number;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     public particularity: string;
 
     // @ManyToMany(() => Group, group => lecture.id)
@@ -45,4 +51,6 @@ export class Question {
         this.isCreated = new Date().toISOString();
         this.isUpdated = new Date().toISOString();
     }
+
+   
 }

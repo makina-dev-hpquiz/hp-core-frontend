@@ -20,11 +20,14 @@ export class LectureService {
     }
 
     /**
-     * Ajoute une question à la liste des questions en cours
+     * Ajoute une question à la liste des questions en cours et la transmet à la couche DAO pour la sauvegarder en bdd
+     * Si la question existe déjà dans dans la liste alors elle n'a pas ajouté de nouveau
      * @param question 
      */
     addQuestion(question: Question) {
-        this.questions.push(question);
+        if(!this.questions.find(q => q.id === question.id)) {
+          this.questions.push(question);
+        }
         this.questionDao.saveQuestion(question);
     }
 

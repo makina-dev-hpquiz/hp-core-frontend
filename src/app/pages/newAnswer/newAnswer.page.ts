@@ -62,6 +62,8 @@ export class NewAnswerPage {
   createNewQuestion() {
     this.updateState = false;
     this.question = new Question();
+    
+    this.question.lecture = this.lectureService.lecture;
     this.question.type = TypeQuestion.QUESTION;
     this.question.difficulty = Difficulty.MOYEN;
 
@@ -86,11 +88,8 @@ export class NewAnswerPage {
     if (this.question.type === TypeQuestion.QCM) {
       this.question.answer = this.qcmRep[0] + "/" + this.qcmRep[1] + "/" + this.qcmRep[2] + "/" + this.qcmRep[3];
     }
-
     if (this.questionIsValid()) {
-      if (!this.updateState) {
-        this.lectureService.addQuestion(this.question);
-      }
+      this.lectureService.addQuestion(this.question);
       this.createNewQuestion();
     }
 
@@ -100,7 +99,7 @@ export class NewAnswerPage {
    * L'application navigue vers l'écran Groups en sélectionnant la question actuelle
    */
   addInGroup() {
-    if (this.questionIsValid) {
+    if (this.questionIsValid()) {
       let navigationExtras: NavigationExtras = {
         state: {
           question: this.question
@@ -117,17 +116,11 @@ export class NewAnswerPage {
     this.duplicatedTitle = this.question.question;
   }
 
-  /**
+   /**
    * Indique si une question possède à un minimat un titre
    * @returns Boolean
    */
-  private questionIsValid() {
-    return this.question.question !== "" ? true : false;
-    // if (this.question.question !== "") {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    private questionIsValid(){
+      return this.question.question !== "" ? true : false;
   }
-
 }
