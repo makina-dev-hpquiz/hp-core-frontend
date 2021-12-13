@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GroupModel } from 'src/models/group.model';
 import { Lecture } from 'src/entities/lecture';
 import { QuestionModel } from 'src/models/question.model';
+import { ConfigureLectureService } from './configure-lecture.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class LectureService {
   public  questions: Array<QuestionModel>;
   public groups: Array<GroupModel>;
 
-   constructor() {
+   constructor(private configureLecture: ConfigureLectureService) {
+      this.lecture = this.configureLecture.getCurrentLecture();
       //  this.lecture = new LectureModel(new Date().toDateString(), "Livre 1", this.questions);
        this.questions= new Array<QuestionModel>();
        this.groups = new Array<GroupModel>();
@@ -37,5 +39,9 @@ export class LectureService {
     addQuestionInGroupe(group: GroupModel, question: QuestionModel){
       group.addQuestion(question);
       // this.groups.find(group).addQuestion(question);
+    }
+
+    removeQuestionsInGroupe(){
+      
     }
 }
