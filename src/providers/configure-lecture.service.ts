@@ -12,11 +12,17 @@ import { Artwork } from 'src/entities/artwork';
 export class ConfigureLectureService {
 
   private lecture: Lecture;
-  private lectures: Lecture[]
 
   constructor(private lectureDao: LectureDaoService, private artworkDao: ArtworkDaoService) {
    }
 
+   /**
+    * Transmet la lecture courante à un autre service
+    * @returns Lecture
+    */
+   getCurrentLecture(){
+     return this.lecture;
+   }
 
    /**
     * Initialise un nouvel object lecture
