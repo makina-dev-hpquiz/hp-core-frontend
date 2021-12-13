@@ -6,7 +6,7 @@ import { registerLocaleData } from '@angular/common';
 import { ArtworkType } from 'src/models/enums/typeArtworkEnum';
 import { Router } from '@angular/router';
 import { ConfigureLectureService } from 'src/providers/configure-lecture.service';
-import { LectureModel } from 'src/models/lecture.model';
+import { Lecture } from 'src/entities/lecture';
 import { ArtworkModel } from 'src/models/artwork.model';
 
 
@@ -23,7 +23,7 @@ export class ConfigureLecturePage {
   public typeArtwork;
 
   //DATA
-  public lecture: LectureModel;
+  public lecture: Lecture;
 
   public currentDateToDisplay: String;
   public selectedArtworkType: ArtworkType;
@@ -83,6 +83,8 @@ export class ConfigureLecturePage {
    * l'utilisateur est envoyé vers l'écran new question
    */
   public startLecture() {
+    this.lecture.livre = this.selectedArtwork.title;
+    this.configureLecture.saveLecture();
     this.router.navigate(['/tabs/']);
   }
 

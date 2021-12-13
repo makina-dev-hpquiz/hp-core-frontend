@@ -4,6 +4,7 @@
 
     <div>
       <span id="book-select">LIVRE 1</span>
+      {{test}}
       <span id="difficulty-select">
         <ion-select [value]=selectedDifficulty (ionChange)="difficultyChange($event)">
           <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}

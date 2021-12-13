@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Lecture } from 'src/entities/lecture';
+import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
+import { OrmService } from 'src/providers/orm.service';
 
 @Component({
   selector: 'app-home',
@@ -7,16 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  constructor(private ormService: OrmService, private lectureDao: LectureDaoService) { }
 
   public questions;
 
   public difficulties;
   public selectedDifficulty;
   public difficultyColor = "green";
+  public test: Lecture[];
 
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.ormService.ready();
+ 
+
+
+
     this.questions = [{"nb" : 13, "type" : "Question"},
     {"nb" : 3, "type" : "QCM"},
     {"nb" : 2, "type" : "Lexical"},
@@ -32,6 +41,16 @@ export class HomePage implements OnInit {
   this.difficulties = ["FACILE", "MOYEN", "DIFFICILE"];
   this.selectedDifficulty = this.difficulties[0];
   }
+
+
+  async ionViewWillEnter(){
+    console.log("##############")
+    this.test = await this.lectureDao.findAllLectures();
+    console.log(this.test);
+    console.log("##############")
+    console.log("ionViewWillEnter home")
+  }
+
 
   public countNbOfAnswersForSelectedDifficulty(){
     var totalNbOfAnswers = 0;

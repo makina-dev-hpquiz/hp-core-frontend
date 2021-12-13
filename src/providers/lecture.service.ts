@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { GroupModel } from 'src/models/group.model';
-import { LectureModel } from 'src/models/lecture.model';
+import { Lecture } from 'src/entities/lecture';
 import { QuestionModel } from 'src/models/question.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LectureService {
-  public lecture: LectureModel;
+  public lecture: Lecture;
   public  questions: Array<QuestionModel>;
   public groups: Array<GroupModel>;
 

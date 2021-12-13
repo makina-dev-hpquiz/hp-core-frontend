@@ -1,3 +1,4 @@
+import { Lecture } from 'src/entities/lecture';
 import { v4 as uuidv4 } from 'uuid';
 
 export class QuestionModel {
@@ -11,6 +12,8 @@ export class QuestionModel {
     public particularity: string;
     public question: string;
     public answer: string;
+
+    public lecture: Lecture;
 
     constructor() {
         this.id = uuidv4();

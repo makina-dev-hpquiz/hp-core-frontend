@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { ArtworkModel } from 'src/models/artwork.model';
 import { ArtworkType } from 'src/models/enums/typeArtworkEnum';
-import { LectureModel } from 'src/models/lecture.model';
+import { Lecture } from 'src/entities/lecture';
+import { LectureDaoService } from './dao/lecture-dao.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigureLectureService {
 
-  private lecture: LectureModel;
+  private lecture: Lecture;
 
-  constructor() {
+  constructor(private lectureDao: LectureDaoService) {
+   }
+
+
+   initializeNewLecture(){
+      this.lecture = new Lecture();
+      return this.lecture
    }
 
    /**
@@ -18,7 +25,7 @@ export class ConfigureLectureService {
    */
   getLecture(){
     if(!this.lecture) {
-      this.lecture = new LectureModel();
+      this.initializeNewLecture();
     }
 
     return this.lecture;
@@ -38,6 +45,6 @@ export class ConfigureLectureService {
   }
 
   saveLecture(){
-    // Call couche DAO
+    this.lectureDao.saveLecture(this.lecture);
   }
 }
