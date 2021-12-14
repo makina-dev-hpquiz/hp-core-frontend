@@ -4,6 +4,7 @@ import { ConfigureLectureService } from './configure-lecture.service';
 import { QuestionDaoService } from './dao/question-dao.service';
 import { Question } from 'src/entities/Question';
 import { Group } from 'src/entities/group';
+import { GroupDaoService } from './dao/group-dao.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,24 @@ export class LectureService {
   public questions: Array<Question>;
   public groups: Array<Group>;
 
-  constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService) {
-    this.lecture = this.configureLecture.getCurrentLecture();
+  private isInitialize: Boolean;
+
+  constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService,
+    private groupDao: GroupDaoService) {
     this.questions = new Array<Question>();
     this.groups = new Array<Group>();
+    this.isInitialize = false;
+  }
+
+
+  /**
+   * Initialise le service en récupérant l'item Lecture réalisé par le service ConfigureLectureService
+   */
+  initialize() {
+    if (!this.isInitialize) {
+      this.lecture = this.configureLecture.getCurrentLecture();
+      this.isInitialize = true;
+    }
   }
 
   /**
@@ -31,28 +46,58 @@ export class LectureService {
    * Si la question existe déjà dans dans la liste alors elle n'a pas ajouté de nouveau
    * @param question 
    */
-  addQuestion(question: Question) {
+  async addQuestion(question: Question) {
     if (!this.questions.find(q => q.id === question.id)) {
       this.questions.push(question);
     }
-    this.questionDao.saveQuestion(question);
+    await this.questionDao.saveQuestion(question);
   }
 
   deleteQuestion(question: Question) { }
 
-  createGroupe(question: Question) {
-    let g = new Group();
-    g.addQuestion(question)
-    this.groups.push(g);
+  /**
+   * Retourne la liste des groupes actuelles
+   */
+  public async refreshGroups(): Promise<Group[]> {
+    return await this.findGroups();
+  }
+
+  /**
+   * Créer un nouveau groupe avec une question
+   */
+  public async createGroupe(question: Question): Promise<Group[]> {
+    let g = new Group(this.lecture);
+    await this.addQuestionInGroupe(g, question);
+
+    return await this.findGroups();
   }
 
   // TODO
-  addQuestionInGroupe(group: Group, question: Question) {
-    group.addQuestion(question);
-    // this.groups.find(group).addQuestion(question);
+  async addQuestionInGroupe(group: Group, question: Question) {
+    if (!group.questions || !group.questions.find(q => q.id === question.id)) {
+      await this.groupDao.addQuestionInGroup(group, question);
+      this.groups = await this.groupDao.findGroupsByLecture(this.lecture);
+    }
+
+    return this.groups;
   }
 
-  removeQuestionsInGroupe() {
-
+  /**
+   * Supprime un group de la liste et récupère la liste des groupes mmis à jour
+   * @param group Group
+   * @param question Question
+   */
+  public async removeQuestionsInGroupe(group: Group, question: Question) {
+    await this.groupDao.removeQuestionInGroup(group, question);
+    return await this.findGroups();
   }
+
+  /**
+   * Demande à la couche DAO l'ensemble des groupes associés à la lecture courrante
+   */
+  private async findGroups() {
+    this.groups = await this.groupDao.findGroupsByLecture(this.lecture);
+    return this.groups;
+  }
+
 }

@@ -22,8 +22,6 @@ export class GroupsPage {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.selectedQuestion = this.router.getCurrentNavigation().extras.state.question;
-        console.log(this.selectedQuestion)
-
       }
     });
   }
@@ -31,6 +29,10 @@ export class GroupsPage {
   ngOnInit() {
     this.groups = this.lectureService.groups;
     this.keyword = "";
+  }
+
+  async ionViewWillEnter(){
+    this.groups = await this.lectureService.refreshGroups();
   }
 
   /**
@@ -48,9 +50,9 @@ export class GroupsPage {
   /**
    * Créer un nouveau groupe avec la question sélectionné
    */
-  public createGroupe() {
+  public async createGroupe() {
     if (this.selectedQuestion) {
-      this.lectureService.createGroupe(this.selectedQuestion);
+      this.groups = await this.lectureService.createGroupe(this.selectedQuestion);
       this.resetSelectedQuestion();
     } else {
       console.log("Pas de question selectionnée")
@@ -62,39 +64,30 @@ export class GroupsPage {
    * RG : La question ne peut pas être déjà dans le même groupe
    * @param group 
    */
-  public addInGroupe(group: Group) {
+  public async addInGroupe(group: Group) {
     if (this.selectedQuestion) {
-      if (!group.questions.find(q => q.id === this.selectedQuestion.id)) {
-        group.addQuestion(this.selectedQuestion);
+      this.groups =  await this.lectureService.addQuestionInGroupe(group, this.selectedQuestion);
         this.resetSelectedQuestion();
-      } else {
-        console.log("Déjà dans le groupe")
-      }
     } else {
       console.log("Pas de question selectionné")
     }
   }
 
   /**
-   * Reinitialise la question sélectionné
-   */
-  public resetSelectedQuestion() {
-    this.selectedQuestion = null;
-  }
-
-  /**
-   * Supprime la question passé en paramètre du groupe passé en paramètre,
-   * Si le group est vide, il est supprimé également
+   * Appelle le service qui gère la suppression de la question dans le groupe
    * @param group 
    * @param question 
    */
-  public removeQuestion(group: Group, question: Question) {
-    group.deleteQuestion(question);
-    if (group.questions.length === 0) {
-      this.groups.splice(this.groups.indexOf(group), 1);
-    }
+  public async removeQuestion(group: Group, question: Question) {
+    this.groups = await this.lectureService.removeQuestionsInGroupe(group, question);
   }
 
+  /**
+   * Reinitialise la question sélectionné
+   */
+   public resetSelectedQuestion() {
+    this.selectedQuestion = null;
+  } 
 
   public filter() {
     if (this.keyword !== "") {

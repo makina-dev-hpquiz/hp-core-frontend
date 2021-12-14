@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { group } from 'console';
 import { Group } from 'src/entities/group';
 import { Lecture } from 'src/entities/lecture';
 import { Question } from 'src/entities/Question';
@@ -29,7 +28,7 @@ export class GroupDaoService {
 /**
      * Supprime l'entité group fourni en paramètre de la base de données
      */
-  async removeGroup(group: Group) {
+  async deleteGroup(group: Group) {
     return await getRepository(Group).remove(group);
   }
 
@@ -38,24 +37,25 @@ export class GroupDaoService {
    * @param group Group
    * @param question 
    */
-  addQuestionInGroup(group: Group, question: Question){
+  async addQuestionInGroup(group: Group, question: Question){
     group.addQuestion(question);
-    this.saveGroup(group);
+    await this.saveGroup(group);
   }
 
   /**
-   * Supprime la question fourni au groupe et sauvegarde la modification
-   * Si le groupe n'a plus de question alors il est supprimé
+   * Spprime la question du groupe puis sauvegarde le group ou
+   *  le supprime s'il ne possède plus de questions
    * 
    * @param group Group
    * @param question 
    */
-  removeQuestionInGroup(group: Group, question: Question){
+  async removeQuestionInGroup(group: Group, question: Question){
     group.deleteQuestion(question);
-    this.saveGroup(group);
 
     if(group.questions.length === 0) {
-      this.removeGroup(group)
+      await this.deleteGroup(group)
+    } else {
+     await this.saveGroup(group);
     }
   }
 
@@ -63,10 +63,12 @@ export class GroupDaoService {
    * Récupère des groupes liées à une lecture
    * @param lecture 
    */
-  findGroupsByLecture(lecture: Lecture){
-    getRepository(Group).find({
-      where: {lecture: lecture},
-      order: {isCreated: 'DESC'}
+  async findGroupsByLecture(lecture: Lecture) : Promise<Group[]>{
+    return await getRepository(Group).find({
+      where: { lecture: lecture },
+      order: { isCreated: 'DESC' },
+      relations: ["lecture", "questions"],
+
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonTextarea } from '@ionic/angular';
 import { Question } from 'src/entities/Question';
@@ -12,7 +12,7 @@ import { LectureService } from 'src/providers/lecture.service';
   templateUrl: 'newAnswer.page.html',
   styleUrls: ['newAnswer.page.scss']
 })
-export class NewAnswerPage {
+export class NewAnswerPage  implements OnInit{
 
   @ViewChild('questionInput', { read: IonTextarea }) ionTextarea: IonTextarea;
 
@@ -45,6 +45,9 @@ export class NewAnswerPage {
 
 
   ngOnInit() {
+
+    this.lectureService.initialize();
+
     this.TYPE_QUESTION = TypeQuestion;
 
     this.questionsType = TypeQuestionList;

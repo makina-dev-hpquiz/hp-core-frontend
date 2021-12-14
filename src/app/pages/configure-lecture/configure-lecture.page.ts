@@ -89,8 +89,6 @@ export class ConfigureLecturePage {
    * l'utilisateur est envoyé vers l'écran new question
    */
   public async startLecture() {
-
-    console.log(this.selectedArtwork)
     if(this.selectedArtwork.title) {
       this.lecture.artwork = this.selectedArtwork;
       await this.configureLecture.saveLecture();

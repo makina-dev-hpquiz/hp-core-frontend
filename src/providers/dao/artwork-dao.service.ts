@@ -17,7 +17,6 @@ export class ArtworkDaoService{
   public async saveArtwork(artwork: Artwork) {
     try {
       return await getRepository(Artwork).save(artwork);
-
     } catch (error) {
       console.log('ArtworkDaoService - saveArtwork : La sauvegarde a echoué' + error);
     }

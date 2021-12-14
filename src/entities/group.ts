@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Lecture } from "./lecture";
 import { Question } from "./Question";
 
@@ -6,23 +6,27 @@ import { Question } from "./Question";
 export class Group {
 
     @PrimaryGeneratedColumn()
-    public id: string;
-
+    public id: number;
 
     @Column()
-    public isCreated;
+    public isCreated: string;
 
-    @OneToMany(() => Question, question => question.id)
-    public questions: Array<Question>;
+    @ManyToMany(() => Question)
+    @JoinTable()
+    public questions: Question[];
     
-    @OneToMany(() => Lecture, lecture => lecture.id)
+    @ManyToOne(() => Lecture)
     public lecture: Lecture;
 
-    constructor(){
+    constructor(lecture: Lecture){
         this.isCreated = new Date().toISOString();
+        this.lecture = lecture;
     }
 
     public addQuestion(question){
+        if(!this.questions) {
+            this.questions = new Array();
+        }
         this.questions.push(question);
     }
 
