@@ -46,8 +46,8 @@ export class ConfigureLectureService {
    * Transfert à la couche ArtworkDao, un objet Artwork à sauvegarder
    * @param artwork 
    */
-  addArtwork(artwork: Artwork){
-    this.artworkDao.saveArtwork(artwork);
+  async addArtwork(artwork: Artwork){
+    return await this.artworkDao.saveArtwork(artwork);
   }
 
   /**

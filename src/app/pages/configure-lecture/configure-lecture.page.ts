@@ -78,9 +78,8 @@ export class ConfigureLecturePage {
   public async newArtwork() {
     let newArtwork = prompt("Nom du nouvelle oeuvre de type " + this.selectedArtworkType, "");
     if (newArtwork) {
-
       this.selectedArtwork = new Artwork(newArtwork, this.selectedArtworkType);
-      await this.configureLecture.addArtwork( this.selectedArtwork);
+      this.selectedArtwork = await this.configureLecture.addArtwork( this.selectedArtwork);
       this.artworksList.push(this.selectedArtwork);
     }
   }
@@ -89,10 +88,12 @@ export class ConfigureLecturePage {
    * Lance la lecture, enregistre en base, initialise le service de lecture et
    * l'utilisateur est envoyé vers l'écran new question
    */
-  public startLecture() {
+  public async startLecture() {
+
+    console.log(this.selectedArtwork)
     if(this.selectedArtwork.title) {
       this.lecture.artwork = this.selectedArtwork;
-      this.configureLecture.saveLecture();
+      await this.configureLecture.saveLecture();
       this.router.navigate(['/tabs/']);
     }
   }

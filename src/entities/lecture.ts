@@ -10,8 +10,9 @@ export class Lecture {
     @Column()
     public date: string;
 
-    @ManyToOne(() => Artwork, artwork => artwork.id) 
+    @ManyToOne(() => Artwork) 
     public artwork: Artwork;
+    
 
     // @OneToMany(type => QuestionModel, question => question.lecture) 
     // public questions: Array<QuestionModel>;
