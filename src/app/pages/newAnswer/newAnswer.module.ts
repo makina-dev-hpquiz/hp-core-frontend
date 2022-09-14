@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { NewAnswerPage } from './newAnswer.page';
 
 import { NewAnswerPageRoutingModule } from './newAnswer-routing.module';
-import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ComponentsModule } from 'src/app/components/ComponentsModule';
 
 @NgModule({

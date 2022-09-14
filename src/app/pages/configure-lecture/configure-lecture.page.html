@@ -51,7 +51,7 @@
   </ion-select>
 
   <!-- ### Page de début de lecture ### -->
-  <div *ngIf="selectedArtworkType != FILM && artworksList.length > 0 && selectedArtwork.title">
+  <div *ngIf="selectedArtworkType != typeArtwork.MOVIE && artworksList.length > 0 && selectedArtwork.title">
     <ion-label class="start-page-label" slot="start">
       {{displayTextStartLecture()}}
     </ion-label>

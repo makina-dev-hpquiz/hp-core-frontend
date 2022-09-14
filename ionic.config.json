@@ -1,5 +1,6 @@
 {
-  "name": "hp-core-frontend",
+  "name": "hp-core",
+  "version": "0.0.1",
   "integrations": {
     "cordova": {}
   },
