@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-
+console.log("wasm used");
 module.exports = {
     mode: 'production',
     plugins: [

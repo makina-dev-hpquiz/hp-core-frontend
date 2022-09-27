@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Group } from 'src/entities/group';
 import { Lecture } from 'src/entities/lecture';
 import { Question } from 'src/entities/Question';
-import { getRepository } from 'typeorm';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +12,23 @@ export class GroupDaoService {
 
   /**
    *   
-     * Sauvegarde une entité Group de la base de données
+   * Sauvegarde une entité Group de la base de données
    * @param group 
    * @returns 
    */
   async saveGroup(group: Group){
-    try {
-      return await getRepository(Group).save(group);
-    } catch (error) {
-      console.log('GroupDaoService - saveGroup : La sauvegarde a echoué' + error);
-    }
+    // try {
+    //   return await getRepository(Group).save(group);
+    // } catch (error) {
+    //   console.log('GroupDaoService - saveGroup : La sauvegarde a echoué' + error);
+    // }
   }
 
 /**
      * Supprime l'entité group fourni en paramètre de la base de données
      */
   async deleteGroup(group: Group) {
-    return await getRepository(Group).remove(group);
+    // return await getRepository(Group).remove(group);
   }
 
   /**
@@ -38,8 +37,8 @@ export class GroupDaoService {
    * @param question 
    */
   async addQuestionInGroup(group: Group, question: Question){
-    group.addQuestion(question);
-    await this.saveGroup(group);
+    // group.addQuestion(question);
+    // await this.saveGroup(group);
   }
 
   /**
@@ -50,25 +49,25 @@ export class GroupDaoService {
    * @param question 
    */
   async removeQuestionInGroup(group: Group, question: Question){
-    group.deleteQuestion(question);
+    // group.deleteQuestion(question);
 
-    if(group.questions.length === 0) {
-      await this.deleteGroup(group)
-    } else {
-     await this.saveGroup(group);
-    }
+    // if(group.questions.length === 0) {
+    //   await this.deleteGroup(group)
+    // } else {
+    //  await this.saveGroup(group);
+    // }
   }
 
-  /**
-   * Récupère des groupes liées à une lecture
-   * @param lecture 
-   */
-  async findGroupsByLecture(lecture: Lecture) : Promise<Group[]>{
-    return await getRepository(Group).find({
-      where: { lecture: lecture },
-      order: { isCreated: 'DESC' },
-      relations: ["lecture", "questions"],
+  // /**
+  //  * Récupère des groupes liées à une lecture
+  //  * @param lecture 
+  //  */
+  // async findGroupsByLecture(lecture: Lecture) : Promise<Group[]>{
+  //   return await getRepository(Group).find({
+  //     where: { lecture: lecture },
+  //     order: { isCreated: 'DESC' },
+  //     relations: ["lecture", "questions"],
 
-    });
-  }
+  //   });
+  // }
 }

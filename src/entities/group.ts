@@ -1,21 +1,16 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Lecture } from "./lecture";
 import { Question } from "./Question";
 
-@Entity()
 export class Group {
 
-    @PrimaryGeneratedColumn()
     public id: number;
 
-    @Column()
     public isCreated: string;
 
-    @ManyToMany(() => Question)
-    @JoinTable()
+    // @ManyToMany(() => Question)
     public questions: Question[];
     
-    @ManyToOne(() => Lecture)
+    // @ManyToOne(() => Lecture)
     public lecture: Lecture;
 
     constructor(lecture: Lecture){

@@ -13,4 +13,4 @@
 # _modules\typeorm\browser\driver\react-native'
 
 
-replace 'this.sqlite = require("react-native-sqlite-storage");' '' 'node_modules/typeorm/browser/driver/react-native/ReactNativeDriver.js'
+# replace 'this.sqlite = require("react-native-sqlite-storage");' '' 'node_modules/typeorm/browser/driver/react-native/ReactNativeDriver.js'

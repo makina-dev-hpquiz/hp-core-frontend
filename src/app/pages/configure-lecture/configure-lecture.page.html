@@ -46,7 +46,7 @@
     </ion-icon>
   </ion-item>
   <ion-select [(ngModel)]="selectedArtwork" *ngIf="artworksList.length > 0">
-    <ion-select-option *ngFor="let artwork of artworksList" [value]="artwork">{{artwork.title}}
+    <ion-select-option *ngFor="let artwork of artworksList" [value]="artwork">{{artwork.id}} {{artwork.title}}
     </ion-select-option>
   </ion-select>
 

@@ -76,7 +76,7 @@ export class LectureService {
   async addQuestionInGroupe(group: Group, question: Question) {
     if (!group.questions || !group.questions.find(q => q.id === question.id)) {
       await this.groupDao.addQuestionInGroup(group, question);
-      this.groups = await this.groupDao.findGroupsByLecture(this.lecture);
+      // this.groups = await this.groupDao.findGroupsByLecture(this.lecture);
     }
 
     return this.groups;
@@ -96,7 +96,7 @@ export class LectureService {
    * Demande à la couche DAO l'ensemble des groupes associés à la lecture courrante
    */
   private async findGroups() {
-    this.groups = await this.groupDao.findGroupsByLecture(this.lecture);
+    // this.groups = await this.groupDao.findGroupsByLecture(this.lecture);
     return this.groups;
   }
 

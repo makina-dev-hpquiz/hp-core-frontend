@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 
+console.log("asm used");
+
+console.log(__dirname+"../node_modules/sql.js/dist/sql-asm.js")
 module.exports = {
     mode: 'development',
     plugins: [

@@ -11,11 +11,8 @@
       "schematics": {},
       "architect": {
         "build": {          
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "customWebpackConfig": {
-              "path": "./config/webpack.asm.js"
-            },
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -73,7 +70,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "app:build"
           },
@@ -82,7 +79,6 @@
               "browserTarget": "app:build:production"
             },
             "ci": {
-              "progress": false
             }
           }
         },

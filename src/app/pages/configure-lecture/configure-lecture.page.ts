@@ -18,7 +18,7 @@ import { Artwork } from 'src/entities/artwork';
   templateUrl: './configure-lecture.page.html',
   styleUrls: ['./configure-lecture.page.scss'],
 })
-export class ConfigureLecturePage {
+export class ConfigureLecturePage implements OnInit{
 
   //CONST 
   public typeArtwork;
@@ -43,9 +43,13 @@ export class ConfigureLecturePage {
     this.selectedArtwork = new Artwork();
 
     this.artworksList = new Array();
-    this.getArtworkByArtworkType();
 
     
+  }
+  async ngOnInit(): Promise<void> {
+    
+    
+    await this.getArtworkByArtworkType();
   }
 
 
@@ -53,9 +57,9 @@ export class ConfigureLecturePage {
    * Lorsque le type sélectionné dans la liste déroulante Type d'oeuvre change,
    * On met à jour la liste des oeuvres associées au type
    */
-  public selectedTypeChange() {
+  public async selectedTypeChange() {
     this.selectedArtwork = new Artwork();
-    this.getArtworkByArtworkType();
+    await this.getArtworkByArtworkType();
   }
 
 
@@ -80,6 +84,7 @@ export class ConfigureLecturePage {
     if (newArtwork) {
       this.selectedArtwork = new Artwork(newArtwork, this.selectedArtworkType);
       this.selectedArtwork = await this.configureLecture.addArtwork( this.selectedArtwork);
+      console.log("Selected Artwork : ", this.selectedArtwork.id, this.selectedArtwork.title);
       this.artworksList.push(this.selectedArtwork);
     }
   }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Lecture } from 'src/entities/lecture';
 import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
-import { OrmService } from 'src/providers/orm.service';
+
 
 import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
+import { DatabaseService } from 'src/providers/database.service';
+
+
 
 @Component({
   selector: 'app-home',
@@ -18,13 +21,13 @@ export class HomePage implements OnInit {
   public selectedDifficulty: String;
   public test: Lecture[];
 
-  constructor(private ormService: OrmService, private lectureDao: LectureDaoService) {
+  constructor(private lectureDao: LectureDaoService) {
     this.difficulties = DifficultyList;
     this.selectedDifficulty = Difficulty.FACILE;
    }
 
   async ngOnInit() {
-    await this.ormService.ready();
+   
 
     this.questions = [{"nb" : 13, "type" : "Question"},
     {"nb" : 3, "type" : "QCM"},
