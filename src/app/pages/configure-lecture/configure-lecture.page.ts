@@ -20,7 +20,7 @@ import { Artwork } from 'src/entities/artwork';
 })
 export class ConfigureLecturePage implements OnInit{
 
-  //CONST 
+  //CONST
   public typeArtwork;
 
   //DATA
@@ -31,11 +31,11 @@ export class ConfigureLecturePage implements OnInit{
   public selectedArtwork: Artwork;
   public artworksList: Artwork[];
 
-  
+
   constructor(private router: Router, private configureLecture: ConfigureLectureService) {
     this.lecture = configureLecture.initializeNewLecture();
 
-    registerLocaleData(localeFr, 'fr'); 
+    registerLocaleData(localeFr, 'fr');
     this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
 
     this.typeArtwork = ArtworkType;
@@ -44,11 +44,11 @@ export class ConfigureLecturePage implements OnInit{
 
     this.artworksList = new Array();
 
-    
+
   }
   async ngOnInit(): Promise<void> {
-    
-    
+
+
     await this.getArtworkByArtworkType();
   }
 
@@ -65,14 +65,15 @@ export class ConfigureLecturePage implements OnInit{
 
   /**
    * Retourne le texte pour le label demandant à quel page commence la lecture
+   *
    * @returns String
    */
   public displayTextStartLecture() {
     switch (this.selectedArtworkType) {
       case ArtworkType.BOOK:
-        return "Votre lecture du livre " + this.selectedArtwork.title + " commence à la page combien?";
+        return 'Votre lecture du livre ' + this.selectedArtwork.title + ' commence à la page combien?';
       case ArtworkType.SERIE:
-        return "Votre visionnage de la série " + this.selectedArtwork.title + "  commence à l'épisode combien?"
+        return 'Votre visionnage de la série ' + this.selectedArtwork.title + '  commence à l\'épisode combien?';
     }
   }
 
@@ -80,11 +81,11 @@ export class ConfigureLecturePage implements OnInit{
    * Ouvre une petite fenêtre dans l'objectif de créer une nouvelle oeuvre avec le type sélectionné
    */
   public async newArtwork() {
-    let newArtwork = prompt("Nom du nouvelle oeuvre de type " + this.selectedArtworkType, "");
+    const newArtwork = prompt('Nom du nouvelle oeuvre de type ' + this.selectedArtworkType, '');
     if (newArtwork) {
       this.selectedArtwork = new Artwork(newArtwork, this.selectedArtworkType);
       this.selectedArtwork = await this.configureLecture.addArtwork( this.selectedArtwork);
-      console.log("Selected Artwork : ", this.selectedArtwork.id, this.selectedArtwork.title);
+      console.log('Selected Artwork : ', this.selectedArtwork.id, this.selectedArtwork.title);
       this.artworksList.push(this.selectedArtwork);
     }
   }
@@ -113,7 +114,7 @@ export class ConfigureLecturePage implements OnInit{
    * Renvoi à l'écran d'accueil
    */
   public backHome(){
-    this.router.navigate(["/"]);
+    this.router.navigate(['/']);
   }
 
 }

@@ -28,7 +28,7 @@ export class GroupsPage {
 
   ngOnInit() {
     this.groups = this.lectureService.groups;
-    this.keyword = "";
+    this.keyword = '';
   }
 
   async ionViewWillEnter(){
@@ -37,12 +37,13 @@ export class GroupsPage {
 
   /**
    * TODO Code en doublon, à transformer en component
-   * @param typeName 
-   * @returns 
+   *
+   * @param typeName
+   * @returns
    */
   public getMiniNameType(typeName: String) {
     if(typeName === TypeQuestion.QCM) {
-      return "Qc";
+      return 'Qc';
     } else {
     return typeName.substring(0, 1).toUpperCase();
     }  }
@@ -55,28 +56,30 @@ export class GroupsPage {
       this.groups = await this.lectureService.createGroupe(this.selectedQuestion);
       this.resetSelectedQuestion();
     } else {
-      console.log("Pas de question selectionnée")
+      console.log('Pas de question selectionnée');
     }
   }
 
   /**
    * Ajoute la question sélectionné dans le groupe cliqué
    * RG : La question ne peut pas être déjà dans le même groupe
-   * @param group 
+   *
+   * @param group
    */
   public async addInGroupe(group: Group) {
     if (this.selectedQuestion) {
       this.groups =  await this.lectureService.addQuestionInGroupe(group, this.selectedQuestion);
         this.resetSelectedQuestion();
     } else {
-      console.log("Pas de question selectionné")
+      console.log('Pas de question selectionné');
     }
   }
 
   /**
    * Appelle le service qui gère la suppression de la question dans le groupe
-   * @param group 
-   * @param question 
+   *
+   * @param group
+   * @param question
    */
   public async removeQuestion(group: Group, question: Question) {
     this.groups = await this.lectureService.removeQuestionsInGroupe(group, question);
@@ -87,10 +90,10 @@ export class GroupsPage {
    */
    public resetSelectedQuestion() {
     this.selectedQuestion = null;
-  } 
+  }
 
   public filter() {
-    if (this.keyword !== "") {
+    if (this.keyword !== '') {
       this.results = this.lectureService.questions.filter(q => q.question.toLowerCase().includes(this.keyword.toLowerCase()));
     } else {
 
@@ -101,7 +104,7 @@ export class GroupsPage {
   selectQuestion(question: Question) {
     this.selectedQuestion = question;
     this.results = new Array<Question>();
-    this.keyword = "";
+    this.keyword = '';
   }
 
 }

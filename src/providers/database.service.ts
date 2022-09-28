@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
+import { Injectable } from '@angular/core';
+import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/';
 import { SQLitePorter } from '@awesome-cordova-plugins/sqlite-porter/ngx';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,14 +11,13 @@ export class DatabaseService {
     private storage: SQLiteObject;
 
     constructor(private httpClient: HttpClient,
-        private sqlite: SQLite, 
-        private sqlPorter: SQLitePorter) 
+        private sqlPorter: SQLitePorter)
         {}
 
     private async initialize() {
-        console.log("Intialize sqlite storage")
-
-        await this.sqlite.create({
+        
+        console.log('Intialize sqlite storage');
+        await SQLite.create({
             name: 'data.db',
             location: 'default'
         })
@@ -32,7 +31,7 @@ export class DatabaseService {
                     .catch(error => console.error(error));
             });
 
-            console.log("Tables created");
+            console.log('Tables created');
         })
         .catch(e => console.log(e));
 
@@ -40,6 +39,7 @@ export class DatabaseService {
 
     /**
      * Retourne un objet storage déjà initialisé
+     *
      * @returns SQLiteObject
      */
     public async getDatabase(): Promise<SQLiteObject> {

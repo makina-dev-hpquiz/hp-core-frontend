@@ -9,8 +9,8 @@ export class LectureDaoService {
   constructor() {   }
 
   /**
-     * Supprime l'entité lecture fourni en paramètre de la base de données
-     */
+   * Supprime l'entité lecture fourni en paramètre de la base de données
+   */
   public async removeLecture(lecture: Lecture) {
     // if (lecture) {
     //   await getRepository(Lecture).remove(lecture);
@@ -18,8 +18,8 @@ export class LectureDaoService {
   }
 
   /**
-     * Sauvegarde une entité lecture de la base de données
-     */
+   * Sauvegarde une entité lecture de la base de données
+   */
   public async saveLecture(lecture: Lecture) {
     // try {
     //   return await getRepository(Lecture).save(lecture);
@@ -30,6 +30,7 @@ export class LectureDaoService {
 
   /**
    * Retourne une liste de lecture
+   *
    * @returns Lecture[]
    */
   public async findAllLectures(): Promise<Lecture[]> {

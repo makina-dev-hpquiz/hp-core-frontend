@@ -44,7 +44,8 @@ export class LectureService {
   /**
    * Ajoute une question à la liste des questions en cours et la transmet à la couche DAO pour la sauvegarder en bdd
    * Si la question existe déjà dans dans la liste alors elle n'a pas ajouté de nouveau
-   * @param question 
+   *
+   * @param question
    */
   async addQuestion(question: Question) {
     if (!this.questions.find(q => q.id === question.id)) {
@@ -66,7 +67,7 @@ export class LectureService {
    * Créer un nouveau groupe avec une question
    */
   public async createGroupe(question: Question): Promise<Group[]> {
-    let g = new Group(this.lecture);
+    const g = new Group(this.lecture);
     await this.addQuestionInGroupe(g, question);
 
     return await this.findGroups();
@@ -84,6 +85,7 @@ export class LectureService {
 
   /**
    * Supprime un group de la liste et récupère la liste des groupes mmis à jour
+   *
    * @param group Group
    * @param question Question
    */

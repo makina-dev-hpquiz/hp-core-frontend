@@ -19,25 +19,26 @@ export class ListAnswersPage{
 
   ngOnInit() {
     this.questions = this.lectureService.questions;
-    this.keyword = "";
+    this.keyword = '';
   }
 
   ionViewWillEnter(){
-    if(this.keyword === "") {
+    if(this.keyword === '') {
       this.questions = this.lectureService.questions;
     }
     this.sortQuestions();
-    
+
   }
   /**
    * Ouvre le détail de la question cliqué
-   * @param question 
+   *
+   * @param question
    */
   public goToDetail(question: Question) {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       state: {
         update: true,
-        question: question
+        question
       }
     };
     this.router.navigate(['/tabs/detail'], navigationExtras);
@@ -47,13 +48,14 @@ export class ListAnswersPage{
   /**
    * Retourne le premier caractère de la chaîne fourni en paramètre.
    * TODO Attention pas de distinction entre Question : Q et QCM : Q
+   *
    * @param typeName string
    * @returns string
    */
   public getMiniNameType(typeName: String) {
 
     if (typeName === TypeQuestion.QCM) {
-      return "Qc";
+      return 'Qc';
     } else {
       return typeName.substring(0, 1).toUpperCase();
     }

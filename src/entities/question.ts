@@ -1,4 +1,4 @@
-import { Lecture } from "./lecture";
+import { Lecture } from './lecture';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -13,7 +13,7 @@ export class Question {
 
     isUpdated: string;
 
-    
+
     public question: string;
 
     public answer: string;
@@ -35,5 +35,5 @@ export class Question {
         this.isUpdated = new Date().toISOString();
     }
 
-   
+
 }

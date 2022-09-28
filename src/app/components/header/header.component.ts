@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  public title= "Mode lecture"
+  public title= 'Mode lecture';
   constructor() { }
 
   ngOnInit() {}

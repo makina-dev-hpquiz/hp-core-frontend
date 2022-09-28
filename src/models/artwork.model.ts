@@ -1,4 +1,4 @@
-import { ArtworkType } from "./enums/typeArtworkEnum";
+import { ArtworkType } from './enums/typeArtworkEnum';
 
 export class ArtworkModel {
 

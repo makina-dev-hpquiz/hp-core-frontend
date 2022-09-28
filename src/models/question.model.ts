@@ -2,7 +2,7 @@ import { Lecture } from 'src/entities/lecture';
 import { v4 as uuidv4 } from 'uuid';
 
 export class QuestionModel {
-    
+
     public id: string;
     public dateOfCreation: string;
 

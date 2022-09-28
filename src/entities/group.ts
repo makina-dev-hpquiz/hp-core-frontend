@@ -1,5 +1,5 @@
-import { Lecture } from "./lecture";
-import { Question } from "./Question";
+import { Lecture } from './lecture';
+import { Question } from './Question';
 
 export class Group {
 
@@ -9,7 +9,7 @@ export class Group {
 
     // @ManyToMany(() => Question)
     public questions: Question[];
-    
+
     // @ManyToOne(() => Lecture)
     public lecture: Lecture;
 

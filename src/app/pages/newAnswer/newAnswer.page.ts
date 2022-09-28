@@ -34,9 +34,9 @@ export class NewAnswerPage  implements OnInit{
         this.updateState = this.router.getCurrentNavigation().extras.state.update;
         this.question = this.router.getCurrentNavigation().extras.state.question;
         if (this.question.type === TypeQuestion.QCM) {
-          this.qcmRep = this.question.answer.split("/");
+          this.qcmRep = this.question.answer.split('/');
         } else {
-          this.qcmRep = ["", "", "", ""];
+          this.qcmRep = ['', '', '', ''];
         }
 
       }
@@ -52,7 +52,7 @@ export class NewAnswerPage  implements OnInit{
 
     this.questionsType = TypeQuestionList;
     this.difficulties = DifficultyList;
-    this.duplicatedTitle = "";
+    this.duplicatedTitle = '';
 
     if (!this.updateState) {
       this.createNewQuestion();
@@ -60,20 +60,20 @@ export class NewAnswerPage  implements OnInit{
   }
 
   /**
-   * Créer une nouvelle question 
+   * Créer une nouvelle question
    */
   createNewQuestion() {
     this.updateState = false;
     this.question = new Question();
-    
+
     this.question.lecture = this.lectureService.lecture;
     this.question.type = TypeQuestion.QUESTION;
     this.question.difficulty = Difficulty.MOYEN;
 
     this.question.question = this.duplicatedTitle;
-    this.duplicatedTitle = "";
+    this.duplicatedTitle = '';
 
-    this.qcmRep = ["", "", "", ""];
+    this.qcmRep = ['', '', '', ''];
     if (this.ionTextarea) {
       this.ionTextarea.setFocus();
     }
@@ -89,7 +89,7 @@ export class NewAnswerPage  implements OnInit{
    */
   addQuestion() {
     if (this.question.type === TypeQuestion.QCM) {
-      this.question.answer = this.qcmRep[0] + "/" + this.qcmRep[1] + "/" + this.qcmRep[2] + "/" + this.qcmRep[3];
+      this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];
     }
     if (this.questionIsValid()) {
       this.lectureService.addQuestion(this.question);
@@ -103,7 +103,7 @@ export class NewAnswerPage  implements OnInit{
    */
   addInGroup() {
     if (this.questionIsValid()) {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         state: {
           question: this.question
         }
@@ -120,10 +120,11 @@ export class NewAnswerPage  implements OnInit{
   }
 
    /**
-   * Indique si une question possède à un minimat un titre
-   * @returns Boolean
-   */
+    * Indique si une question possède à un minimat un titre
+    *
+    * @returns Boolean
+    */
     private questionIsValid(){
-      return this.question.question !== "" ? true : false;
+      return this.question.question !== '' ? true : false;
   }
 }

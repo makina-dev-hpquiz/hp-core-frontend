@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'configure-lecture',
     loadChildren: () => import('./pages/configure-lecture/configure-lecture.module').then( m => m.ConfigureLecturePageModule)
   }
- 
+
 ];
 @NgModule({
   imports: [

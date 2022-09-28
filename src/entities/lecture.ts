@@ -1,4 +1,4 @@
-import { Artwork } from "./artwork";
+import { Artwork } from './artwork';
 
 export class Lecture {
 
@@ -6,20 +6,20 @@ export class Lecture {
 
     public date: string;
 
-    // @ManyToOne(() => Artwork) 
+    // @ManyToOne(() => Artwork)
     public artwork: Artwork;
-    
 
-    // @OneToMany(type => QuestionModel, question => question.lecture) 
+
+    // @OneToMany(type => QuestionModel, question => question.lecture)
     // public questions: Array<QuestionModel>;
 
     public startPage: string;
 
     public endPage: string;
 
-    public isInProgress: boolean
+    public isInProgress: boolean;
 
-    constructor() { 
+    constructor() {
         this.date = new Date().toISOString();
         this.isInProgress = true;
     }

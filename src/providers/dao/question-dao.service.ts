@@ -10,8 +10,8 @@ export class QuestionDaoService {
   constructor() { }
 
    /**
-     * Sauvegarde une entité lecture de la base de données
-     */
+    * Sauvegarde une entité lecture de la base de données
+    */
     public async saveQuestion(question: Question) {
       // try {
       //   return await getRepository(Question).save(question);
@@ -25,9 +25,9 @@ export class QuestionDaoService {
   //   * @returns Question[]
   //   */
   //  public async findAllQuestionsByLecture(lecture: Lecture): Promise<Question[]> {
-  //    return await getRepository(Question).find({ 
+  //    return await getRepository(Question).find({
   //     where: {lecture: lecture },
-  //     order: { isUpdated: "DESC"} 
+  //     order: { isUpdated: "DESC"}
   //   });
   //  }
 

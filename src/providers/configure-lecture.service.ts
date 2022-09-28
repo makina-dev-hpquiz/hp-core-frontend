@@ -18,6 +18,7 @@ export class ConfigureLectureService {
 
    /**
     * Transmet la lecture courante à un autre service
+    *
     * @returns Lecture
     */
    getCurrentLecture(){
@@ -26,25 +27,28 @@ export class ConfigureLectureService {
 
    /**
     * Initialise un nouvel object lecture
+    *
     * @returns Lecture
     */
    initializeNewLecture(){
       this.lecture = new Lecture();
-      return this.lecture
+      return this.lecture;
    }
-  
+
 
   /**
-   * Récupère depuis le service Dao la liste des oeuvres liées au type selectionné 
+   * Récupère depuis le service Dao la liste des oeuvres liées au type selectionné
+   *
    * @returns List<string>
    */
-  async findArtworkByType(artworkType: ArtworkType) : Promise<Artwork[]>{
+  async findArtworkByType(artworkType: ArtworkType): Promise<Artwork[]>{
     return await this.artworkDao.findAllArtworksByType(artworkType);
   }
 
   /**
    * Transfert à la couche ArtworkDao, un objet Artwork à sauvegarder
-   * @param artwork 
+   *
+   * @param artwork
    */
   async addArtwork(artwork: Artwork){
     return await this.artworkDao.saveArtwork(artwork);

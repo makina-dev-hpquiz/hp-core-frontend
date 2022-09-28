@@ -1,4 +1,4 @@
-import { QuestionModel } from "./question.model";
+import { QuestionModel } from './question.model';
 import { v4 as uuidv4 } from 'uuid';
 
 export class GroupModel {

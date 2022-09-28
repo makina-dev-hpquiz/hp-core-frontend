@@ -11,10 +11,11 @@ export class GroupDaoService {
   constructor() { }
 
   /**
-   *   
+   *
    * Sauvegarde une entité Group de la base de données
-   * @param group 
-   * @returns 
+   *
+   * @param group
+   * @returns
    */
   async saveGroup(group: Group){
     // try {
@@ -25,16 +26,17 @@ export class GroupDaoService {
   }
 
 /**
-     * Supprime l'entité group fourni en paramètre de la base de données
-     */
+ * Supprime l'entité group fourni en paramètre de la base de données
+ */
   async deleteGroup(group: Group) {
     // return await getRepository(Group).remove(group);
   }
 
   /**
    * Ajoute une question au groupe et sauvegarde la modification
+   *
    * @param group Group
-   * @param question 
+   * @param question
    */
   async addQuestionInGroup(group: Group, question: Question){
     // group.addQuestion(question);
@@ -44,9 +46,9 @@ export class GroupDaoService {
   /**
    * Spprime la question du groupe puis sauvegarde le group ou
    *  le supprime s'il ne possède plus de questions
-   * 
+   *
    * @param group Group
-   * @param question 
+   * @param question
    */
   async removeQuestionInGroup(group: Group, question: Question){
     // group.deleteQuestion(question);
@@ -60,7 +62,7 @@ export class GroupDaoService {
 
   // /**
   //  * Récupère des groupes liées à une lecture
-  //  * @param lecture 
+  //  * @param lecture
   //  */
   // async findGroupsByLecture(lecture: Lecture) : Promise<Group[]>{
   //   return await getRepository(Group).find({

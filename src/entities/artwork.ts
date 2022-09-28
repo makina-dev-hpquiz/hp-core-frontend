@@ -1,5 +1,5 @@
 
-import { Lecture } from "./lecture";
+import { Lecture } from './lecture';
 
 export class Artwork {
     id: number;
