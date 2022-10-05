@@ -9,6 +9,11 @@ import { DatabaseService } from '../database.service';
 export class ArtworkDaoService {
 
   private table = 'artwork';
+
+  private addRequest = 'INSERT INTO ' + this.table + ' (title, type) VALUES (?, ?);';
+  private findAllByTypeRequest = 'SELECT * FROM ' + this.table+ ' WHERE type = ? ORDER BY id DESC';
+  private findByTitleRequest = 'SELECT * FROM ' + this.table + ' WHERE title = ?'
+
   constructor(private databaseService: DatabaseService) { }
 
   private database: SQLiteObject;
@@ -17,14 +22,13 @@ export class ArtworkDaoService {
    * Sauvegarde une entité lecture de la base de données
    */
   public async saveArtwork(artwork: Artwork) {
-    let artworkSaved: Artwork;
     console.log('ArtworkDaoService.saveArtwork : ', artwork.title, artwork.type);
     try {
-      (await this.databaseService.getDatabase()).executeSql('INSERT INTO ' + this.table + ' (title, type) VALUES (?, ?);', [artwork.title, artwork.type]);
+      (await this.databaseService.getDatabase()).executeSql(this.addRequest, [artwork.title, artwork.type]);
     } catch (error) {
       console.log('Erreur saveArtwork ', error);
     }
-    return await this.findArtwork(artwork);
+    return await this.findArtworkByTitle(artwork);
   }
 
   /**
@@ -38,7 +42,7 @@ export class ArtworkDaoService {
     this.database = await this.databaseService.getDatabase();
 
     console.log('ArtworkDaoService.findAllArtworksByType');
-    (await this.database.executeSql('SELECT * FROM ' + this.table+ ' WHERE type = ? ORDER BY id DESC', [type]).then(res => {
+    (await this.database.executeSql(this.findAllByTypeRequest, [type]).then(res => {
       for (let i = 0; i < res.rows.length; i++) {
         artworks.push(res.rows.item(i));
       }
@@ -47,14 +51,11 @@ export class ArtworkDaoService {
     return artworks;
   }
 
-  public async findArtwork(artwork: Artwork) {
-    let x;
+  public async findArtworkByTitle(artwork: Artwork) {
     console.log('findArtwork ?', artwork.title);
-   return  (await this.databaseService.getDatabase()).executeSql('SELECT * FROM ' + this.table + ' WHERE title = ?', [artwork.title]).then(res =>
-      // console.log(res.rows.item(0));
+   return  (await this.databaseService.getDatabase()).executeSql(this.findByTitleRequest, [artwork.title]).then(res =>
        res.rows.item(0) //TODO is Null?
     );
-
   }
 
 
