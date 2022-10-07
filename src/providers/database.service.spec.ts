@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('DatabaseService', () => {
     let service: DatabaseService;
     beforeEach(() => {
-      
+
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
       providers: [SQLitePorter]

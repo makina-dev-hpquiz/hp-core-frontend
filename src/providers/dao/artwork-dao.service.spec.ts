@@ -15,17 +15,30 @@ describe('ArtworkDaoService', () => {
 
   const table = 'table';
 
+  // private Properties
+  const storage = 'storage';
+  const database = 'database';
+  const addRequest = 'addRequest';
+  const findAllByTypeRequest = 'findAllByTypeRequest';
+  const findByTitleRequest = 'findByTitleRequest';
+  const findAllRequest = 'findAllRequest';
+
+
+  // private Method
+  const extractResultSet = 'extractResultSet';
+
+
   const artworks = new Array(
     new Artwork('HP1', 'Film'),
     new Artwork('HP2', 'Film')
-  )
+  );
   const res = {
     rows: {
         length: artworks.length,
         values: artworks,
-        item(number){return this.values[number]}
+        item(number){return this.values[number];}
       }
-  }
+  };
 
 
   beforeEach(() => {
@@ -33,7 +46,7 @@ describe('ArtworkDaoService', () => {
       jasmine.createSpyObj<SQLiteObject>('SQLiteObject', ['executeSql']);
     mockDatabaseService =
       jasmine.createSpyObj<DatabaseService>('DatabaseService', ['getDatabase']);
-    mockDatabaseService['storage'] = mockSQLiteObject;
+    mockDatabaseService[storage] = mockSQLiteObject;
 
     TestBed.configureTestingModule({
       providers: [
@@ -44,8 +57,7 @@ describe('ArtworkDaoService', () => {
       ]
     });
     service = TestBed.inject(ArtworkDaoService);
-    service['database'] = mockSQLiteObject;
-    
+    service[database] = mockSQLiteObject;
     mockDatabaseService.getDatabase.and.returnValue(of(mockSQLiteObject).toPromise());
   });
 
@@ -55,15 +67,15 @@ describe('ArtworkDaoService', () => {
 
 
   it('TNR requêtes', () => {
-    let addRequestExpected = 'INSERT INTO ' + service[table] + ' (title, type) VALUES (?, ?);';
-    let findAllByTypeRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE type = ? ORDER BY id DESC;';
-    let findByTitleRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE title = ?;'
-    let findAllRequestExpected = 'SELECT * FROM '+service[table]+';';
+    const addRequestExpected = 'INSERT INTO ' + service[table] + ' (title, type) VALUES (?, ?);';
+    const findAllByTypeRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE type = ? ORDER BY id DESC;';
+    const findByTitleRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE title = ?;';
+    const findAllRequestExpected = 'SELECT * FROM '+service[table]+';';
 
-    expect(addRequestExpected).toEqual(service['addRequest']);
-    expect(findAllByTypeRequestExpected).toEqual(service['findAllByTypeRequest']);
-    expect(findByTitleRequestExpected).toEqual(service['findByTitleRequest']);
-    expect(findAllRequestExpected).toEqual(service['findAllRequest']);
+    expect(addRequestExpected).toEqual(service[addRequest]);
+    expect(findAllByTypeRequestExpected).toEqual(service[findAllByTypeRequest]);
+    expect(findByTitleRequestExpected).toEqual(service[findByTitleRequest]);
+    expect(findAllRequestExpected).toEqual(service[findAllRequest]);
 
   });
 
@@ -71,53 +83,52 @@ describe('ArtworkDaoService', () => {
   it('Trouvé les artworks de type film', async () => {
     await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
 
-    let films = await service.findAllArtworksByType('film');
+    const films = await service.findAllArtworksByType('film');
     expect(artworks).toEqual(films);
   });
 
-  
-  it('Trouvé l\'artwork avec le titre Les Animaux fantastiques', async () => {
-    const artworks = new Array(
-      new Artwork('Les Animaux fantastiques', 'Film')
-    )
-   
-    const res = {
-      rows: {
-          length: artworks.length,
-          values: artworks,
-          item(number){return this.values[number]}
-        }
-    }
-    
-    await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
 
-    let film = await service.findArtworkByTitle(artworks[0]);
-    expect(artworks[0]).toEqual(film);
+  it('Trouvé l\'artwork avec le titre Les Animaux fantastiques', async () => {
+    const artworks2 = new Array(
+      new Artwork('Les Animaux fantastiques', 'Film')
+    );
+
+    const resSpecific = {
+      rows: {
+          length: artworks2.length,
+          values: artworks2,
+          item(number){return this.values[number];}
+        }
+    };
+
+    await mockSQLiteObject.executeSql.and.returnValue(of(resSpecific).toPromise());
+
+    const film = await service.findArtworkByTitle(artworks2[0]);
+    expect(artworks2[0]).toEqual(film);
   });
 
   it('Sauvegarder un artwork', async () => {
-    let film = new Artwork('Les Animaux fantastiques', 'Film');
-    let findArtworkSpy = spyOn(service, 'findArtworkByTitle');
+    const film = new Artwork('Les Animaux fantastiques', 'Film');
+    const findArtworkSpy = spyOn(service, 'findArtworkByTitle');
     await findArtworkSpy.and.returnValue(of(film).toPromise());
 
-    let filmSaved = await service.saveArtwork(film);
+    const filmSaved = await service.saveArtwork(film);
     expect(filmSaved).toEqual(film);
   });
 
-  it('FindAll', async() => {
+  it('FindAll', async () => {
     await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
 
-    let films = await service.findAll();
+    const films = await service.findAll();
     expect(artworks).toEqual(films);
   });
 
 
 
-  it('private extractResultSet', async() => {
-    let artworksResult = service['extractResultSet'](res);
-    
+  it('private extractResultSet', async () => {
+    const artworksResult = service[extractResultSet](res);
     expect(artworks).toEqual(artworksResult);
-  }); 
+  });
 
 
 });

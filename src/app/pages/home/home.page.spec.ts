@@ -1,10 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { SQLiteObject } from '@awesome-cordova-plugins/sqlite';
-import { SQLitePorter } from '@awesome-cordova-plugins/sqlite-porter/ngx';
 import { IonicModule } from '@ionic/angular';
 import { of } from 'rxjs';
 import { Artwork } from 'src/entities/artwork';
+import { Lecture } from 'src/entities/lecture';
+import { ArtworkModel } from 'src/models/artwork.model';
 import { ArtworkDaoService } from 'src/providers/dao/artwork-dao.service';
 import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
 
@@ -20,14 +20,22 @@ describe('HomePage', () => {
   const artworks = new Array(
     new Artwork('HP1', 'Film'),
     new Artwork('HP2', 'Film')
-  )
- 
+  );
+
+  const lectures = new Array(
+    new Lecture(),
+    new Lecture(),
+    new Lecture(),
+  );
+
+  const lecturesStr = 'lectures';
+  const sortByRecent = 'sortByRecent';
+
 
   beforeEach(waitForAsync(() => {
 
     mockLectureDaoService = jasmine.createSpyObj<LectureDaoService>('LectureDaoService', ['findAllByArtwork']);
     mockArtworkDaoService = jasmine.createSpyObj<ArtworkDaoService>('ArtworkDaoService', ['findAll']);
-
 
     TestBed.configureTestingModule({
       declarations: [HomePage],
@@ -36,7 +44,7 @@ describe('HomePage', () => {
         {
         provide: LectureDaoService,
         useValue: mockLectureDaoService
-        }, 
+        },
         {
           provide: ArtworkDaoService,
           useValue: mockArtworkDaoService
@@ -45,6 +53,7 @@ describe('HomePage', () => {
     }).compileComponents();
 
     mockArtworkDaoService.findAll.and.returnValue(of(artworks).toPromise());
+    mockLectureDaoService.findAllByArtwork.and.returnValue(of(lectures).toPromise());
 
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
@@ -57,11 +66,27 @@ describe('HomePage', () => {
 
 
   it('countNbOfAnswersForSelectedDifficulty', () => {
-    //TODO 
+    //TODO
   });
 
   it('home.getArtworks récupéation des oeuvres',async () => {
     await component.getArtworks();
-    expect(artworks.length).toEqual(component['artworksList'].length);
+    expect(artworks.length).toEqual(component.artworksList.length);
+    expect(lectures.length).toEqual(component.artworksList[0][lecturesStr].length);
+  });
+
+  it('sortByRecent', () =>{
+
+    const artworksList = new Array(
+      new ArtworkModel(artworks[0]),
+      new ArtworkModel(artworks[1]),
+    );
+
+    artworksList[1].dateRecentLecture = new Date();
+
+    component.artworksList = artworksList;
+    component[sortByRecent]();
+    expect(component.artworksList[0].title).toEqual('HP2');
+
   });
 });
