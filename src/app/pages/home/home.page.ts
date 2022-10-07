@@ -5,6 +5,8 @@ import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
 
 import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
 import { DatabaseService } from 'src/providers/database.service';
+import { ArtworkModel } from 'src/models/artwork.model';
+import { ArtworkDaoService } from 'src/providers/dao/artwork-dao.service';
 
 
 
@@ -17,18 +19,20 @@ export class HomePage implements OnInit {
 
   public questions;
 
+  public artworksList: ArtworkModel[];
+
   public difficulties: string[];
   public selectedDifficulty: String;
   public test: Lecture[];
-
-  constructor(private lectureDao: LectureDaoService) {
+  
+  constructor(private lectureDao: LectureDaoService, private artworkDao: ArtworkDaoService) {
     this.difficulties = DifficultyList;
     this.selectedDifficulty = Difficulty.FACILE;
    }
 
-  async ngOnInit() {
 
-
+  async ngOnInit() {    
+    this.artworksList = new Array();
     this.questions = [{nb : 13, type : 'Question'},
     {nb : 3, type : 'QCM'},
     {nb : 2, type : 'Lexical'},
@@ -39,15 +43,18 @@ export class HomePage implements OnInit {
     {nb : 3, type : 'Vrai ou faux'},
     {nb : 3, type : 'Affirmation'}
   ];
-
   }
+
+  async ionViewDidEnter(){
+    await this.getArtworks();
+   }
 
   /**
    * Compte le nombre total de questions
    *
    * @returns number
    */
-  public countNbOfAnswersForSelectedDifficulty(){
+  public countNbOfAnswersForSelectedDifficulty(){ //TODO
     let totalNbOfAnswers = 0;
    if(this.questions != undefined) {
     this.questions.forEach(question => {
@@ -55,6 +62,16 @@ export class HomePage implements OnInit {
     });
   }
     return totalNbOfAnswers;
+  }
+
+  public async getArtworks(){
+    this.artworksList = new Array();
+    await this.artworkDao.findAll().then(artworks => {
+      artworks.forEach(artwork => {
+        this.artworksList.push(new ArtworkModel(artwork))
+      });
+
+    })
   }
 
 }

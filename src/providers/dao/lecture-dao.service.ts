@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Artwork } from 'src/entities/artwork';
 import { Lecture } from 'src/entities/lecture';
 
 @Injectable({
@@ -37,5 +38,10 @@ export class LectureDaoService {
     // return await getRepository(Lecture).find({ order: { id: "DESC"} });
     return null;
   }
+
+  public async findAllByArtwork(artwork: Artwork): Promise<Lecture[]> {
+    
+    return null;
+  } 
 
 }

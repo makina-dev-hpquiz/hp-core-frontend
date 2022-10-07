@@ -3,7 +3,12 @@
     <ion-title>home</ion-title>
 
     <div>
-      <span id="book-select">LIVRE 1</span>
+      <span id="book-select">
+        <ion-select [(ngModel)]=artworksList >
+          <ion-select-option *ngFor="let artwork of artworksList" value="{{artwork}}">{{artwork.title}}
+          </ion-select-option>
+        </ion-select>
+      </span>
       <span id="difficulty-select">
         <ion-select [(ngModel)]=selectedDifficulty >
           <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}

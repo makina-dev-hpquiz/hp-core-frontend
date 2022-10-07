@@ -15,6 +15,19 @@ describe('ArtworkDaoService', () => {
 
   const table = 'table';
 
+  const artworks = new Array(
+    new Artwork('HP1', 'Film'),
+    new Artwork('HP2', 'Film')
+  )
+  const res = {
+    rows: {
+        length: artworks.length,
+        values: artworks,
+        item(number){return this.values[number]}
+      }
+  }
+
+
   beforeEach(() => {
     mockSQLiteObject =
       jasmine.createSpyObj<SQLiteObject>('SQLiteObject', ['executeSql']);
@@ -43,29 +56,19 @@ describe('ArtworkDaoService', () => {
 
   it('TNR requêtes', () => {
     let addRequestExpected = 'INSERT INTO ' + service[table] + ' (title, type) VALUES (?, ?);';
-    let findAllByTypeRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE type = ? ORDER BY id DESC';
-    let findByTitleRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE title = ?'
+    let findAllByTypeRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE type = ? ORDER BY id DESC;';
+    let findByTitleRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE title = ?;'
+    let findAllRequestExpected = 'SELECT * FROM '+service[table]+';';
 
     expect(addRequestExpected).toEqual(service['addRequest']);
     expect(findAllByTypeRequestExpected).toEqual(service['findAllByTypeRequest']);
     expect(findByTitleRequestExpected).toEqual(service['findByTitleRequest']);
+    expect(findAllRequestExpected).toEqual(service['findAllRequest']);
 
   });
 
 
   it('Trouvé les artworks de type film', async () => {
-    const artworks = new Array(
-      new Artwork('HP1', 'Film'),
-      new Artwork('HP2', 'Film')
-    )
-    const res = {
-      rows: {
-          length: artworks.length,
-          values: artworks,
-          item(number){return this.values[number]}
-        }
-    }
-
     await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
 
     let films = await service.findAllArtworksByType('film');
@@ -77,6 +80,7 @@ describe('ArtworkDaoService', () => {
     const artworks = new Array(
       new Artwork('Les Animaux fantastiques', 'Film')
     )
+   
     const res = {
       rows: {
           length: artworks.length,
@@ -84,6 +88,7 @@ describe('ArtworkDaoService', () => {
           item(number){return this.values[number]}
         }
     }
+    
     await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
 
     let film = await service.findArtworkByTitle(artworks[0]);
@@ -98,6 +103,21 @@ describe('ArtworkDaoService', () => {
     let filmSaved = await service.saveArtwork(film);
     expect(filmSaved).toEqual(film);
   });
+
+  it('FindAll', async() => {
+    await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
+
+    let films = await service.findAll();
+    expect(artworks).toEqual(films);
+  });
+
+
+
+  it('private extractResultSet', async() => {
+    let artworksResult = service['extractResultSet'](res);
+    
+    expect(artworks).toEqual(artworksResult);
+  }); 
 
 
 });

@@ -45,6 +45,10 @@ export class ConfigureLectureService {
     return await this.artworkDao.findAllArtworksByType(artworkType);
   }
 
+  // async findAll() { TODO pour test
+  //   return await this.artworkDao.findAll();
+  // }
+
   /**
    * Transfert à la couche ArtworkDao, un objet Artwork à sauvegarder
    *
