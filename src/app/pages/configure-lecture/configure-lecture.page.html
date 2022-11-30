@@ -23,16 +23,16 @@
     <ion-radio-group [(ngModel)]="selectedArtworkType" (ionChange)="selectedTypeChange()">
       <ion-col>
         <ion-item lines="none">
-          <ion-radio [value]="typesArtwork.BOOK">Livre</ion-radio>
-          <ion-label>Livre</ion-label>
+          <ion-radio [value]="typesArtwork.BOOK"></ion-radio>
+          <ion-label>{{typesArtwork.BOOK}}</ion-label>
         </ion-item>
         <ion-item lines="none">
           <ion-radio [value]="typesArtwork.MOVIE"></ion-radio>
-          <ion-label>Film</ion-label>
+          <ion-label>{{typesArtwork.MOVIE}}</ion-label>
         </ion-item>
         <ion-item lines="none">
           <ion-radio [value]="typesArtwork.SERIE"></ion-radio>
-          <ion-label>Série</ion-label>
+          <ion-label>{{typesArtwork.SERIE}}</ion-label>
         </ion-item>
       </ion-col>
     </ion-radio-group>
