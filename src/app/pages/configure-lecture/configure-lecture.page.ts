@@ -15,7 +15,7 @@ import { Artwork } from 'src/entities/artwork';
   templateUrl: './configure-lecture.page.html',
   styleUrls: ['./configure-lecture.page.scss'],
 })
-export class ConfigureLecturePage implements OnInit{
+export class ConfigureLecturePage implements OnInit {
 
   //CONST
   public typesArtwork;
@@ -72,7 +72,7 @@ export class ConfigureLecturePage implements OnInit{
   }
 
   /**
-   * Ouvre une petite fenêtre dans l'objectif de créer une nouvelle oeuvre avec le type sélectionné
+   * Ouvre un popup permettant de créer une nouvelle oeuvre avec le type sélectionné
    */
   public async newArtwork() {
     const newArtwork = prompt('Nom du nouvelle oeuvre de type ' + this.selectedArtworkType, '');
@@ -80,10 +80,28 @@ export class ConfigureLecturePage implements OnInit{
       this.selectedArtwork = await this.configureLecture.addArtwork(
         new Artwork(newArtwork, this.selectedArtworkType));
       console.log('Selected Artwork : ', this.selectedArtwork.id, this.selectedArtwork.title);
-      
-      this.artworksList = await this.configureLecture.findArtworksByType(this.selectedArtworkType);
-      this.selectedArtwork = this.artworksList.find(artwork => artwork.id === this.selectedArtwork.id);
+      await this.refreshArtworkList();
     }
+  }
+
+  /**
+   * Ouvre un popup permettant de mettre à jour le titre d'une oeuvre.
+   */
+  public async updateArtwork() {
+    const updateArtwork = prompt('Mettre à jour le nom de l\'oeuvre ' + this.selectedArtwork.title, this.selectedArtwork.title);
+    if (updateArtwork) {
+      this.selectedArtwork.title = updateArtwork;
+      await this.configureLecture.updateArtwork(this.selectedArtwork);
+      await this.refreshArtworkList();
+    }
+  }
+
+  /**
+   * Raffraichît la liste et resélectionne l'artwork
+   */
+  private async refreshArtworkList() {
+    this.artworksList = await this.configureLecture.findArtworksByType(this.selectedArtworkType);
+    this.selectedArtwork = await this.artworksList.find(artwork => artwork.id === this.selectedArtwork.id);
   }
 
   /**
@@ -91,7 +109,7 @@ export class ConfigureLecturePage implements OnInit{
    * l'utilisateur est envoyé vers l'écran new question
    */
   public async startLecture() {
-    if(this.selectedArtwork.title) {
+    if (this.selectedArtwork.title) {
       this.lecture.artwork = this.selectedArtwork;
       await this.configureLecture.saveLecture();
       this.router.navigate(['/tabs/']);
@@ -102,14 +120,14 @@ export class ConfigureLecturePage implements OnInit{
    * Récupère les oeuvres associées au type selectionné
    * et les placent dans la liste affichée
    */
-   private async getArtworksByArtworkType() {
+  private async getArtworksByArtworkType() {
     this.artworksList = await this.configureLecture.findArtworksByType(this.selectedArtworkType);
   }
 
   /**
    * Renvoi à l'écran d'accueil
    */
-  public backHome(){
+  public backHome() {
     this.router.navigate(['/']);
   }
 

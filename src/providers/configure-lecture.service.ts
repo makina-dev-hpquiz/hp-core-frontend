@@ -10,6 +10,7 @@ import { Artwork } from 'src/entities/artwork';
   providedIn: 'root'
 })
 export class ConfigureLectureService {
+ 
 
   private lecture: Lecture;
 
@@ -56,6 +57,10 @@ export class ConfigureLectureService {
    */
   async addArtwork(artwork: Artwork){
     return await this.artworkDao.saveArtwork(artwork);
+  }
+
+  async updateArtwork(artwork: Artwork) {
+    await this.artworkDao.updateArtwork(artwork);
   }
 
   /**

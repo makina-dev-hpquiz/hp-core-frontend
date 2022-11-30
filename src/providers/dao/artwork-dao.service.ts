@@ -9,9 +9,11 @@ import { AbstractDaoService } from './abstract-dao.service';
 })
 export class ArtworkDaoService extends AbstractDaoService {
 
+
   private table = 'artwork';
 
   private addRequest = 'INSERT INTO ' + this.table + ' (title, type) VALUES (?, ?);';
+  private updateRequest = 'UPDATE '+this.table+' SET title = ?, type = ? WHERE id = ?;'
   private findAllByTypeRequest = 'SELECT * FROM ' + this.table + ' WHERE type = ? ORDER BY id DESC;';
   private findByTitleRequest = 'SELECT * FROM ' + this.table + ' WHERE title = ?;';
   private findAllRequest = 'SELECT * FROM ' + this.table + ';';
@@ -39,6 +41,19 @@ export class ArtworkDaoService extends AbstractDaoService {
       console.log('Erreur saveArtwork ', error);
     }
     return await this.findArtworkByTitle(artwork);
+  }
+
+  /**
+   * Met à jour l'entité Artwork en BDD 
+   * @param artwork 
+   */
+  async updateArtwork(artwork: Artwork) {
+    console.log('ArtworkDaoService.updateArtwork : ', artwork.id, artwork.title, artwork.type); 
+    try {
+      (await this.databaseService.getDatabase()).executeSql(this.updateRequest, [artwork.title, artwork.type, artwork.id]);
+    } catch (error) {
+      console.log('Erreur updateArtwork ', error);
+    }
   }
 
   /**
