@@ -41,7 +41,7 @@ export class ConfigureLectureService {
    *
    * @returns List<string>
    */
-  async findArtworkByType(artworkType: ArtworkType): Promise<Artwork[]>{
+  async findArtworksByType(artworkType: ArtworkType): Promise<Artwork[]>{
     return await this.artworkDao.findAllArtworksByType(artworkType);
   }
 

@@ -7,11 +7,8 @@ import { ArtworkType } from 'src/models/enums/typeArtworkEnum';
 import { Router } from '@angular/router';
 import { ConfigureLectureService } from 'src/providers/configure-lecture.service';
 import { Lecture } from 'src/entities/lecture';
-import { ArtworkModel } from 'src/models/artwork.model';
+import { ArtworkModel } from 'src/models/artwork.model'; //TODO
 import { Artwork } from 'src/entities/artwork';
-
-
-
 
 @Component({
   selector: 'app-configure-lecture',
@@ -21,7 +18,7 @@ import { Artwork } from 'src/entities/artwork';
 export class ConfigureLecturePage implements OnInit{
 
   //CONST
-  public typeArtwork;
+  public typesArtwork;
 
   //DATA
   public lecture: Lecture;
@@ -38,18 +35,15 @@ export class ConfigureLecturePage implements OnInit{
     registerLocaleData(localeFr, 'fr');
     this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
 
-    this.typeArtwork = ArtworkType;
-    this.selectedArtworkType = this.typeArtwork.BOOK;
+    this.typesArtwork = ArtworkType;
+    this.selectedArtworkType = this.typesArtwork.BOOK;
     this.selectedArtwork = new Artwork();
 
     this.artworksList = new Array();
-
-
   }
+
   async ngOnInit(): Promise<void> {
-
-
-    await this.getArtworkByArtworkType();
+    await this.getArtworksByArtworkType();
   }
 
 
@@ -59,7 +53,7 @@ export class ConfigureLecturePage implements OnInit{
    */
   public async selectedTypeChange() {
     this.selectedArtwork = new Artwork();
-    await this.getArtworkByArtworkType();
+    await this.getArtworksByArtworkType();
   }
 
 
@@ -73,7 +67,7 @@ export class ConfigureLecturePage implements OnInit{
       case ArtworkType.BOOK:
         return 'Votre lecture du livre ' + this.selectedArtwork.title + ' commence à la page combien?';
       case ArtworkType.SERIE:
-        return 'Votre visionnage de la série ' + this.selectedArtwork.title + '  commence à l\'épisode combien?';
+        return 'Votre visionnage de la série ' + this.selectedArtwork.title + ' commence à l\'épisode combien?';
     }
   }
 
@@ -87,7 +81,7 @@ export class ConfigureLecturePage implements OnInit{
         new Artwork(newArtwork, this.selectedArtworkType));
       console.log('Selected Artwork : ', this.selectedArtwork.id, this.selectedArtwork.title);
       
-      this.artworksList = await this.configureLecture.findArtworkByType(this.selectedArtworkType);
+      this.artworksList = await this.configureLecture.findArtworksByType(this.selectedArtworkType);
       this.selectedArtwork = this.artworksList.find(artwork => artwork.id === this.selectedArtwork.id);
     }
   }
@@ -108,8 +102,8 @@ export class ConfigureLecturePage implements OnInit{
    * Récupère les oeuvres associées au type selectionné
    * et les placent dans la liste affichée
    */
-   private async getArtworkByArtworkType() {
-    this.artworksList = await this.configureLecture.findArtworkByType(this.selectedArtworkType);
+   private async getArtworksByArtworkType() {
+    this.artworksList = await this.configureLecture.findArtworksByType(this.selectedArtworkType);
   }
 
   /**
