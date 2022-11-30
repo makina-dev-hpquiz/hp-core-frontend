@@ -83,10 +83,12 @@ export class ConfigureLecturePage implements OnInit{
   public async newArtwork() {
     const newArtwork = prompt('Nom du nouvelle oeuvre de type ' + this.selectedArtworkType, '');
     if (newArtwork) {
-      this.selectedArtwork = new Artwork(newArtwork, this.selectedArtworkType);
-      this.selectedArtwork = await this.configureLecture.addArtwork( this.selectedArtwork);
+      this.selectedArtwork = await this.configureLecture.addArtwork(
+        new Artwork(newArtwork, this.selectedArtworkType));
       console.log('Selected Artwork : ', this.selectedArtwork.id, this.selectedArtwork.title);
-      this.artworksList.push(this.selectedArtwork);
+      
+      this.artworksList = await this.configureLecture.findArtworkByType(this.selectedArtworkType);
+      this.selectedArtwork = this.artworksList.find(artwork => artwork.id === this.selectedArtwork.id);
     }
   }
 
