@@ -22,6 +22,7 @@ describe('ArtworkDaoService', () => {
   const findAllByTypeRequest = 'findAllByTypeRequest';
   const findByTitleRequest = 'findByTitleRequest';
   const findAllRequest = 'findAllRequest';
+  const updateRequest = 'updateRequest';
 
 
   // private Method
@@ -71,11 +72,13 @@ describe('ArtworkDaoService', () => {
     const findAllByTypeRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE type = ? ORDER BY id DESC;';
     const findByTitleRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE title = ?;';
     const findAllRequestExpected = 'SELECT * FROM '+service[table]+';';
+    const updateRequestExpected = 'UPDATE '+service[table]+' SET title = ?, type = ? WHERE id = ?;';
 
     expect(addRequestExpected).toEqual(service[addRequest]);
     expect(findAllByTypeRequestExpected).toEqual(service[findAllByTypeRequest]);
     expect(findByTitleRequestExpected).toEqual(service[findByTitleRequest]);
     expect(findAllRequestExpected).toEqual(service[findAllRequest]);
+    expect(updateRequestExpected).toEqual(service[updateRequest]);
 
   });
 

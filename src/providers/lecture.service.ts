@@ -14,7 +14,7 @@ export class LectureService {
   public questions: Array<Question>;
   public groups: Array<Group>;
 
-  private isInitialize: Boolean;
+  private isInitialize: boolean;
 
   constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService,
     private groupDao: GroupDaoService) {

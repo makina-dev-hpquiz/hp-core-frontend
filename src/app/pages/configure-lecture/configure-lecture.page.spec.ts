@@ -11,16 +11,16 @@ import { ConfigureLectureService } from 'src/providers/configure-lecture.service
 
 import { ConfigureLecturePage } from './configure-lecture.page';
 
-const selectedArtworkType = ArtworkType.BOOK;
+const selectedArtworkType = ArtworkType.book;
 
 const artwork1: Artwork = {
   id: 1,
-  title : 'Le Hobbit',
+  title: 'Le Hobbit',
   type: selectedArtworkType
 };
 const artwork2: Artwork = {
   id: 2,
-  title : 'Harry Potter 1',
+  title: 'Harry Potter 1',
   type: selectedArtworkType
 };
 
@@ -31,15 +31,24 @@ describe('ConfigureLecturePage', () => {
 
   let mockConfigureLectureService: jasmine.SpyObj<ConfigureLectureService>;
 
+  // Nom de propriétés privées
+  const router = 'router';
+  const bookDisplayStartText = 'bookDisplayStartText';
+  const serieDisplayStartText = 'serieDisplayStartText';
+  const replaceValue = 'replaceValue';
+  const getArtworksByArtworkType = 'getArtworksByArtworkType';
+
+  // Methodes privées
+  const refreshArtworkList = 'refreshArtworkList';
 
   beforeEach(waitForAsync(async () => {
     mockConfigureLectureService =
-    jasmine.createSpyObj<ConfigureLectureService>('ConfigureLectureService', [
-      'initializeNewLecture', 'addArtwork', 'findArtworksByType', 'saveLecture', 'updateArtwork'
-    ]);
+      jasmine.createSpyObj<ConfigureLectureService>('ConfigureLectureService', [
+        'initializeNewLecture', 'addArtwork', 'findArtworksByType', 'saveLecture', 'updateArtwork'
+      ]);
 
     TestBed.configureTestingModule({
-      declarations: [ ConfigureLecturePage ],
+      declarations: [ConfigureLecturePage],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes(routes)],
       providers: [
         {
@@ -65,28 +74,102 @@ describe('ConfigureLecturePage', () => {
     spyOn(window, 'prompt').and.returnValue('Batman');
     const artwork3: Artwork = {
       id: 3,
-      title : 'Batman',
+      title: 'Batman',
       type: selectedArtworkType
     };
 
     await mockConfigureLectureService.addArtwork.and.returnValue(of(artwork3).toPromise());
     await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2, artwork3]).toPromise());
- 
+
     await component.newArtwork();
-;
+    ;
     expect(component.selectedArtwork.title).toEqual(artwork3.title);
     expect(component.artworksList.length).toEqual(3);
 
-  })
+  });
 
   it('Mettre à jour une oeuvre', async () => {
     component.selectedArtwork = artwork2;
-    spyOn(window, 'prompt').and.returnValue('Harry Potter 2')
+    spyOn(window, 'prompt').and.returnValue('Harry Potter 2');
     await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
 
     await component.updateArtwork();
     expect(component.artworksList.length).toEqual(2);
+  });
+
+  it('selectedTypeChange', async () => {
+    component.selectedArtworkType = ArtworkType.book;
+    component.selectedArtwork = artwork1;
+    expect(component.selectedArtwork.title).toEqual(artwork1.title);
+
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
+    await component.selectedTypeChange();
+
+    expect(component.selectedArtwork.title).toEqual(new Artwork().title);
+    expect(component.artworksList.length).toEqual(2);
 
 
-  }) 
+    component.selectedArtworkType = ArtworkType.movie;
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([]).toPromise());
+    await component.selectedTypeChange();
+    expect(component.selectedArtwork.title).toEqual(new Artwork().title);
+    expect(component.artworksList.length).toEqual(0);
+
+    component.selectedArtworkType = ArtworkType.serie;
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of(
+      [new Artwork('Game of Thrones', ArtworkType.serie)]).toPromise());
+    await component.selectedTypeChange();
+    expect(component.selectedArtwork.title).toEqual(new Artwork().title);
+    expect(component.artworksList.length).toEqual(1);
+
+  });
+
+  it('displayTextStartLecture', () => {
+    component.selectedArtworkType = ArtworkType.book;
+    component.selectedArtwork = artwork1;
+    let str = component.displayTextStartLecture();
+
+    expect(component[bookDisplayStartText].replace(component[replaceValue], artwork1.title)).toEqual(str);
+
+    const artwork3 = new Artwork('Game of Thrones', ArtworkType.serie);
+    component.selectedArtworkType = ArtworkType.serie;
+    component.selectedArtwork = artwork3;
+    str = component.displayTextStartLecture();
+    expect(component[serieDisplayStartText].replace(component[replaceValue], artwork3.title)).toEqual(str);
+
+    component.selectedArtworkType = ArtworkType.movie;
+    str = component.displayTextStartLecture();
+    expect(str).toBeFalsy();
+  });
+
+  it('startLecture', async () => {
+    component.selectedArtwork = new Artwork();
+    await component.startLecture();
+    expect(component[router].navigated).toBeFalse();
+
+    component.selectedArtwork = artwork1;
+    await component.startLecture();
+    expect(component[router].navigated).toBeTrue();
+  });
+
+  it('backToHome', async () => {
+    expect(component[router].navigated).toBeFalse();
+    await component.backToHome();
+    expect(component[router].navigated).toBeTrue();
+
+  });
+
+  it('private refreshArtworkList', async () => {
+    component.selectedArtwork = artwork2;
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
+    await component[refreshArtworkList]();
+    expect(component.artworksList.length).toEqual(2);
+    expect(component.selectedArtwork.id).toEqual(artwork2.id);
+  });
+
+  it('private getArtworksByArtworkType', async () => {
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
+    await component[getArtworksByArtworkType]();
+    expect(component.artworksList.length).toEqual(2);
+  });
 });

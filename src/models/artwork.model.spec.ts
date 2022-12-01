@@ -5,7 +5,7 @@ import { ArtworkModel } from './artwork.model';
 describe('ArtworkModel', () => {
 
     const getDefaultDate = 'getDefaultDate';
-    
+
     it('determinateRecentLecture', () => {
         const artwork = new Artwork('HP1', 'Film');
         const artworkModelWithoutLecture = new ArtworkModel(artwork);

@@ -20,7 +20,7 @@ describe('LectureDaoService', () => {
     rows: {
         length: lectures.length,
         values: lectures,
-        item(number){return this.values[number];}
+        item(index: number){return this.values[index];}
       }
   };
 
@@ -31,7 +31,6 @@ describe('LectureDaoService', () => {
   const findAllByArtworkRequest = 'findAllByArtworkRequest';
 
   // private Method
-
   let mockDatabaseService: jasmine.SpyObj<DatabaseService>;
   let mockSQLiteObject: jasmine.SpyObj<SQLiteObject>;
 

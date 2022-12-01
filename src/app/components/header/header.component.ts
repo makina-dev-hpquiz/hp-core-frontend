@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'header-lecture',
+  selector: 'app-header-lecture',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })

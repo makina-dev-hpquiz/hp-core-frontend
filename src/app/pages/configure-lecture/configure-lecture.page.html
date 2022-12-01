@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" (click)="backHome()">
+    <ion-buttons slot="start" (click)="backToHome()">
       <ion-icon size="large"  name="chevron-back-outline"></ion-icon>
     </ion-buttons>
     <ion-title>Nouvelle lecture !</ion-title>
@@ -52,7 +52,7 @@
   </ion-select>
 
   <!-- ### Page de début de lecture ### -->
-  <div *ngIf="selectedArtworkType != typesArtwork.MOVIE && artworksList.length > 0 && selectedArtwork.title">
+  <div *ngIf="selectedArtworkType !== typesArtwork.MOVIE && artworksList.length > 0 && selectedArtwork.title">
     <ion-label class="start-page-label" slot="start">
       {{displayTextStartLecture()}}
     </ion-label>

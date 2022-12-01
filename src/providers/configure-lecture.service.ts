@@ -10,7 +10,7 @@ import { Artwork } from 'src/entities/artwork';
   providedIn: 'root'
 })
 export class ConfigureLectureService {
- 
+
 
   private lecture: Lecture;
 
@@ -22,7 +22,7 @@ export class ConfigureLectureService {
     *
     * @returns Lecture
     */
-   getCurrentLecture(){
+   public getCurrentLecture(){
      return this.lecture;
    }
 
@@ -31,7 +31,7 @@ export class ConfigureLectureService {
     *
     * @returns Lecture
     */
-   initializeNewLecture(){
+   public initializeNewLecture(){
       this.lecture = new Lecture();
       return this.lecture;
    }
@@ -42,7 +42,7 @@ export class ConfigureLectureService {
    *
    * @returns List<string>
    */
-  async findArtworksByType(artworkType: ArtworkType): Promise<Artwork[]>{
+  public async findArtworksByType(artworkType: ArtworkType): Promise<Artwork[]>{
     return await this.artworkDao.findAllArtworksByType(artworkType);
   }
 
@@ -55,18 +55,18 @@ export class ConfigureLectureService {
    *
    * @param artwork
    */
-  async addArtwork(artwork: Artwork){
+  public async addArtwork(artwork: Artwork){
     return await this.artworkDao.saveArtwork(artwork);
   }
 
-  async updateArtwork(artwork: Artwork) {
+  public async updateArtwork(artwork: Artwork) {
     await this.artworkDao.updateArtwork(artwork);
   }
 
   /**
    * Transfert à la couche LectureDao, un objet lecture à sauvegarder
    */
-  saveLecture(){
+   public saveLecture(){
     this.lectureDao.saveLecture(this.lecture);
   }
 }
