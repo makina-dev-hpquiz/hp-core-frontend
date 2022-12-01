@@ -23,16 +23,16 @@
     <ion-radio-group [(ngModel)]="selectedArtworkType" (ionChange)="selectedTypeChange()">
       <ion-col>
         <ion-item lines="none">
-          <ion-radio [value]="typesArtwork.BOOK"></ion-radio>
-          <ion-label>{{typesArtwork.BOOK}}</ion-label>
+          <ion-radio [value]="typesArtwork.book"></ion-radio>
+          <ion-label>{{typesArtwork.book}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-radio [value]="typesArtwork.MOVIE"></ion-radio>
-          <ion-label>{{typesArtwork.MOVIE}}</ion-label>
+          <ion-radio [value]="typesArtwork.movie"></ion-radio>
+          <ion-label>{{typesArtwork.movie}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-radio [value]="typesArtwork.SERIE"></ion-radio>
-          <ion-label>{{typesArtwork.SERIE}}</ion-label>
+          <ion-radio [value]="typesArtwork.serie"></ion-radio>
+          <ion-label>{{typesArtwork.serie}}</ion-label>
         </ion-item>
       </ion-col>
     </ion-radio-group>
@@ -52,7 +52,7 @@
   </ion-select>
 
   <!-- ### Page de début de lecture ### -->
-  <div *ngIf="selectedArtworkType !== typesArtwork.MOVIE && artworksList.length > 0 && selectedArtwork.title">
+  <div *ngIf="selectedArtworkType !== typesArtwork.movie && artworksList.length > 0 && selectedArtwork.title">
     <ion-label class="start-page-label" slot="start">
       {{displayTextStartLecture()}}
     </ion-label>
@@ -61,5 +61,5 @@
 
 
 
-  <ion-button class="bottom-button" (click)="startLecture()">Commencer la lecture</ion-button>
+  <ion-button [disabled]="!selectedArtwork.title" class="bottom-button" (click)="startLecture()">Commencer la lecture</ion-button>
 </ion-content>
