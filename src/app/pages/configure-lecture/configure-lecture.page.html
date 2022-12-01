@@ -38,11 +38,11 @@
     </ion-radio-group>
   </div>
   <!-- ### Selection de l'oeuvre ### -->
-  <ion-item lines="none">
+  <ion-item lines="none" *ngIf="selectedArtworkType">
     <ion-label slot="start">
       Choisir un {{selectedArtworkType}}
     </ion-label>
-    <ion-icon (click)="newArtwork()" multiple="false" style="margin-left: -20%;" slot="start" name="add-circle-outline">
+    <ion-icon  (click)="newArtwork()" multiple="false" style="margin-left: -20%;" slot="start" name="add-circle-outline">
     </ion-icon>
     <ion-icon (click)="updateArtwork()" *ngIf="selectedArtwork.title" name="settings-outline" slot="end" ></ion-icon>
   </ion-item>
@@ -56,7 +56,7 @@
     <ion-label class="start-page-label" slot="start">
       {{displayTextStartLecture()}}
     </ion-label>
-    <ion-input placeholder="Exemple : 154"></ion-input>
+    <ion-input [(ngModel)]='lecture.startPage' placeholder="Exemple : 154"></ion-input>
   </div>
 
 

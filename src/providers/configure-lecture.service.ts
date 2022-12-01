@@ -66,7 +66,8 @@ export class ConfigureLectureService {
   /**
    * Transfert à la couche LectureDao, un objet lecture à sauvegarder
    */
-   public saveLecture(){
-    this.lectureDao.saveLecture(this.lecture);
+   public async saveLecture(){
+    this.lecture = await this.lectureDao.saveLecture(this.lecture);
+    console.log('Lecture saved !', this.lecture);
   }
 }

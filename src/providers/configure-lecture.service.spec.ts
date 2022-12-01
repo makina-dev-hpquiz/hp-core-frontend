@@ -50,9 +50,9 @@ describe('ConfigureLectureService', () => {
   });
 
 
-  it('initializeNewLecture', () => {
+  it('initializeNewLecture', async () => {
     const initializeLecture = service.initializeNewLecture();
-    new Promise(resolve => setTimeout(resolve, 500));
+    await (new Promise(resolve => setTimeout(resolve, 500)));
     expect(initializeLecture.date).not.toEqual(new Lecture().date);
     expect(service.getCurrentLecture().date).toEqual(initializeLecture.date);
   });
@@ -84,7 +84,18 @@ describe('ConfigureLectureService', () => {
   });
 
   it('saveLecture', async () => {
+    const film = new Artwork('Les Animaux fantastiques', ArtworkType.movie);
+    let lect = new Lecture();
+    lect.artwork = film;
+    service[lecture] = lect;
+
+    await mockLectureDaoService.saveLecture.and.returnValue(of(lect).toPromise());
+
+
     await service.saveLecture();
     expect(mockLectureDaoService.saveLecture).toHaveBeenCalled();
+    lect = service[lecture];
+    expect(lect.artwork.type).toEqual(ArtworkType.movie);
+
   });
 });

@@ -37,7 +37,7 @@ describe('ArtworkDaoService', () => {
     rows: {
         length: artworks.length,
         values: artworks,
-        item(number){return this.values[number];}
+        item(index: number){return this.values[index];}
       }
   };
 
@@ -100,7 +100,7 @@ describe('ArtworkDaoService', () => {
       rows: {
           length: artworks2.length,
           values: artworks2,
-          item(number){return this.values[number];}
+          item(index: number){return this.values[index];}
         }
     };
 

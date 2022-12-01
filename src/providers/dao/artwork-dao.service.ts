@@ -17,7 +17,8 @@ export class ArtworkDaoService extends AbstractDaoService {
   private findAllByTypeRequest = 'SELECT * FROM ' + this.table + ' WHERE type = ? ORDER BY id DESC;';
   private findByTitleRequest = 'SELECT * FROM ' + this.table + ' WHERE title = ?;';
   private findAllRequest = 'SELECT * FROM ' + this.table + ';';
-  private findAll2Request = 'SELECT * FROM ' + this.table + ' JOIN lecture (' + this.table + '.id=lecture.id) ORDER BY lecture.date DESC'; //TODO
+  private findAll2Request = 'SELECT * FROM ' + this.table + ' JOIN lecture (' +
+   this.table + '.id=lecture.id) ORDER BY lecture.date DESC'; //TODO
 
   private database: SQLiteObject;
 
