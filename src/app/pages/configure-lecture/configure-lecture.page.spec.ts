@@ -35,11 +35,13 @@ describe('ConfigureLecturePage', () => {
   const router = 'router';
   const bookDisplayStartText = 'bookDisplayStartText';
   const serieDisplayStartText = 'serieDisplayStartText';
+  const movieDisplayStartText = 'movieDisplayStartText';
   const replaceValue = 'replaceValue';
   const getArtworksByArtworkType = 'getArtworksByArtworkType';
 
   // Methodes privées
   const refreshArtworkList = 'refreshArtworkList';
+  const selectFirstArtwork = 'selectFirstArtwork';
 
   beforeEach(waitForAsync(async () => {
     mockConfigureLectureService =
@@ -79,7 +81,7 @@ describe('ConfigureLecturePage', () => {
     };
 
     await mockConfigureLectureService.addArtwork.and.returnValue(of(artwork3).toPromise());
-    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2, artwork3]).toPromise());
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork3, artwork1, artwork2]).toPromise());
 
     await component.newArtwork();
     ;
@@ -105,7 +107,7 @@ describe('ConfigureLecturePage', () => {
     await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
     await component.selectedTypeChange();
 
-    expect(component.selectedArtwork.title).toEqual(new Artwork().title);
+    expect(component.selectedArtwork.title).toEqual(artwork1.title);
     expect(component.artworksList.length).toEqual(2);
 
 
@@ -115,11 +117,12 @@ describe('ConfigureLecturePage', () => {
     expect(component.selectedArtwork.title).toEqual(new Artwork().title);
     expect(component.artworksList.length).toEqual(0);
 
+    const nameSerie = 'Game of Thrones';
     component.selectedArtworkType = ArtworkType.serie;
     await mockConfigureLectureService.findArtworksByType.and.returnValue(of(
-      [new Artwork('Game of Thrones', ArtworkType.serie)]).toPromise());
+      [new Artwork(nameSerie, ArtworkType.serie)]).toPromise());
     await component.selectedTypeChange();
-    expect(component.selectedArtwork.title).toEqual(new Artwork().title);
+    expect(component.selectedArtwork.title).toEqual(nameSerie);
     expect(component.artworksList.length).toEqual(1);
 
   });
@@ -137,9 +140,11 @@ describe('ConfigureLecturePage', () => {
     str = component.displayTextStartLecture();
     expect(component[serieDisplayStartText].replace(component[replaceValue], artwork3.title)).toEqual(str);
 
+    const artwork4 = new Artwork('Batman Begins', ArtworkType.movie);
+    component.selectedArtwork = artwork4;
     component.selectedArtworkType = ArtworkType.movie;
     str = component.displayTextStartLecture();
-    expect(str).toBeFalsy();
+    expect(component[movieDisplayStartText].replace(component[replaceValue], artwork4.title)).toEqual(str);
   });
 
   it('startLecture', async () => {
@@ -159,6 +164,13 @@ describe('ConfigureLecturePage', () => {
 
   });
 
+  it('resetStartLecture', () => {
+    component.lecture.startPage = '3';
+    expect(component.lecture.startPage).toBeTruthy();
+    component.resetStartLecture();
+    expect(component.lecture.startPage).toBeFalsy();
+  });
+
   it('private refreshArtworkList', async () => {
     component.selectedArtwork = artwork2;
     await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
@@ -171,5 +183,20 @@ describe('ConfigureLecturePage', () => {
     await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
     await component[getArtworksByArtworkType]();
     expect(component.artworksList.length).toEqual(2);
+  });
+
+  it('private selectFirstArtwork', async () => {
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([]).toPromise());
+    await component[getArtworksByArtworkType]();
+    await component[selectFirstArtwork]();
+    expect(component.artworksList.length).toEqual(0);
+    expect(component.selectedArtwork.title).toBeFalsy();
+
+    await mockConfigureLectureService.findArtworksByType.and.returnValue(of([artwork1, artwork2]).toPromise());
+    await component[getArtworksByArtworkType]();
+    await component[selectFirstArtwork]();
+    expect(component.artworksList.length).toEqual(2);
+    expect(component.selectedArtwork.title).toEqual(artwork1.title);
+
   });
 });

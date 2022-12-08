@@ -42,17 +42,17 @@
     <ion-label slot="start">
       Choisir un {{selectedArtworkType}}
     </ion-label>
-    <ion-icon  (click)="newArtwork()" multiple="false" style="margin-left: -20%;" slot="start" name="add-circle-outline">
+    <ion-icon  (click)="newArtwork()" style="margin-left: -20%;" slot="start" name="add-circle-outline">
     </ion-icon>
     <ion-icon (click)="updateArtwork()" *ngIf="selectedArtwork.title" name="settings-outline" slot="end" ></ion-icon>
   </ion-item>
-  <ion-select [(ngModel)]="selectedArtwork" *ngIf="artworksList.length > 0">
+  <ion-select [(ngModel)]="selectedArtwork" *ngIf="artworksList.length > 0" (ionChange)="resetStartLecture()">
     <ion-select-option *ngFor="let artwork of artworksList" [value]="artwork">{{artwork.id}} {{artwork.title}}
     </ion-select-option>
   </ion-select>
 
   <!-- ### Page de début de lecture ### -->
-  <div *ngIf="selectedArtworkType !== typesArtwork.movie && artworksList.length > 0 && selectedArtwork.title">
+  <div *ngIf="artworksList.length > 0 && selectedArtwork.title">
     <ion-label class="start-page-label" slot="start">
       {{displayTextStartLecture()}}
     </ion-label>

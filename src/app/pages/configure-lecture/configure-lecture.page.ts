@@ -28,8 +28,9 @@ export class ConfigureLecturePage implements OnInit {
   public selectedArtwork: Artwork;
   public artworksList: Artwork[];
 
-  private bookDisplayStartText = 'Votre lecture du livre :? commence à la page combien?';
-  private serieDisplayStartText  = 'Votre visionnage de la série :? commence à l\'épisode combien?';
+  private bookDisplayStartText = 'Votre lecture du livre :? commence à la page :';
+  private serieDisplayStartText = 'Votre visionnage de la série :? commence à l\'épisode :';
+  private movieDisplayStartText = 'Votre film ou lecture audio :? commence à la minute :';
   private replaceValue = ':?';
 
   constructor(private router: Router, private configureLecture: ConfigureLectureService) {
@@ -39,14 +40,14 @@ export class ConfigureLecturePage implements OnInit {
     this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
 
     this.typesArtwork = ArtworkType;
-    this.selectedArtworkType = this.typesArtwork.BOOK;
+    this.selectedArtworkType = this.typesArtwork.book;
     this.selectedArtwork = new Artwork();
 
     this.artworksList = new Array();
   }
 
   async ngOnInit(): Promise<void> {
-    await this.getArtworksByArtworkType();
+    await this.getArtworksAndSelectFirst();
   }
 
 
@@ -57,7 +58,8 @@ export class ConfigureLecturePage implements OnInit {
    */
   public async selectedTypeChange() {
     this.selectedArtwork = new Artwork();
-    await this.getArtworksByArtworkType();
+    await this.getArtworksAndSelectFirst();
+    this.resetStartLecture();
   }
 
 
@@ -71,7 +73,10 @@ export class ConfigureLecturePage implements OnInit {
       case ArtworkType.book:
         return this.bookDisplayStartText.replace(this.replaceValue, this.selectedArtwork.title);
       case ArtworkType.serie:
-        return this.serieDisplayStartText.replace(this.replaceValue, this.selectedArtwork.title);    }
+        return this.serieDisplayStartText.replace(this.replaceValue, this.selectedArtwork.title);
+      case ArtworkType.movie:
+        return this.movieDisplayStartText.replace(this.replaceValue, this.selectedArtwork.title);
+    }
   }
 
   /**
@@ -83,7 +88,7 @@ export class ConfigureLecturePage implements OnInit {
       this.selectedArtwork = await this.configureLecture.addArtwork(
         new Artwork(newArtwork, this.selectedArtworkType));
       console.log('Selected Artwork : ', this.selectedArtwork.id, this.selectedArtwork.title);
-      await this.refreshArtworkList();
+      await this.getArtworksAndSelectFirst();
     }
   }
 
@@ -121,9 +126,16 @@ export class ConfigureLecturePage implements OnInit {
     await this.router.navigate(['/']);
   }
 
-   /**
-    * Raffraichît la liste et resélectionne l'artwork
-    */
+  /**
+   * Reset la valeur de startPage de l'entité Lecture
+   */
+  public resetStartLecture() {
+    this.lecture.startPage = '';
+  }
+
+  /**
+   * Raffraichît la liste et resélectionne l'artwork
+   */
   private async refreshArtworkList() {
     await this.getArtworksByArtworkType();
     this.selectedArtwork = await this.artworksList.find(artwork => artwork.id === this.selectedArtwork.id);
@@ -133,7 +145,27 @@ export class ConfigureLecturePage implements OnInit {
    * Récupère les oeuvres associées au type selectionné
    * et les placent dans la liste affichée
    */
-   private async getArtworksByArtworkType() {
+  private async getArtworksByArtworkType() {
     this.artworksList = await this.configureLecture.findArtworksByType(this.selectedArtworkType);
   }
+
+  /**
+   * Récupère les oeuvres associées au type selectionné
+   * et les placent dans la liste affichée, le premier élélement de la liste devient l'artwork sélectionné.
+   */
+  private async getArtworksAndSelectFirst() {
+    await this.getArtworksByArtworkType();
+    await this.selectFirstArtwork();
+  }
+
+  /**
+   * Sélectionne le premier artwork de la liste
+   */
+  private async selectFirstArtwork() {
+    if (this.artworksList && this.artworksList.length > 0) {
+      this.selectedArtwork = this.artworksList[0];
+    }
+  }
+
+
 }

@@ -126,7 +126,7 @@ describe('ArtworkDaoService', () => {
     expect(artworks).toEqual(films);
   });
 
-  it('Mettre à jour un artwork', async() => {
+  it('Mettre à jour un artwork', async () => {
     const film = new Artwork('Les Animaux fantastiques', 'Film');
     await service.updateArtwork(film);
     expect(mockSQLiteObject.executeSql).toHaveBeenCalled();
