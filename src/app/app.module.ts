@@ -10,13 +10,14 @@ import { AppComponent } from './app.component';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { SQLitePorter } from '@awesome-cordova-plugins/sqlite-porter/ngx';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 
 
 @NgModule({
     declarations: [AppComponent],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-    providers: [SQLite, SQLitePorter, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    providers: [SQLite, SQLitePorter, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenOrientation],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

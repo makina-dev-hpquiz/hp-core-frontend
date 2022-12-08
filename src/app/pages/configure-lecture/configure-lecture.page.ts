@@ -9,6 +9,7 @@ import { ConfigureLectureService } from 'src/providers/configure-lecture.service
 import { Lecture } from 'src/entities/lecture';
 import { ArtworkModel } from 'src/models/artwork.model'; //TODO
 import { Artwork } from 'src/entities/artwork';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-configure-lecture',
@@ -33,7 +34,9 @@ export class ConfigureLecturePage implements OnInit {
   private movieDisplayStartText = 'Votre film ou lecture audio :? commence à la minute :';
   private replaceValue = ':?';
 
-  constructor(private router: Router, private configureLecture: ConfigureLectureService) {
+  constructor(private router: Router, private configureLecture: ConfigureLectureService, private screenOrientation: ScreenOrientation) {
+
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     this.lecture = configureLecture.initializeNewLecture();
 
     registerLocaleData(localeFr, 'fr');
