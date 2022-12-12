@@ -11,6 +11,8 @@ import { ConfigureLectureService } from 'src/providers/configure-lecture.service
 
 import { ConfigureLecturePage } from './configure-lecture.page';
 
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
+
 const selectedArtworkType = ArtworkType.book;
 
 const artwork1: Artwork = {
@@ -30,6 +32,7 @@ describe('ConfigureLecturePage', () => {
   let fixture: ComponentFixture<ConfigureLecturePage>;
 
   let mockConfigureLectureService: jasmine.SpyObj<ConfigureLectureService>;
+  let mockScreenOrientation: jasmine.SpyObj<ScreenOrientation>;
 
   // Nom de propriétés privées
   const router = 'router';
@@ -48,6 +51,15 @@ describe('ConfigureLecturePage', () => {
       jasmine.createSpyObj<ConfigureLectureService>('ConfigureLectureService', [
         'initializeNewLecture', 'addArtwork', 'findArtworksByType', 'saveLecture', 'updateArtwork'
       ]);
+    mockScreenOrientation = jasmine.createSpyObj<ScreenOrientation>('ScreenOrientation', ['lock'],{
+      ORIENTATIONS : {'PORTRAIT': 'PORTRAIT', 
+      'PORTRAIT_PRIMARY': 'PORTRAIT_PRIMARY',
+      'PORTRAIT_SECONDARY': 'PORTRAIT_SECONDARY',
+      'LANDSCAPE_PRIMARY': 'LANDSCAPE_PRIMARY',
+      'LANDSCAPE_SECONDARY': 'LANDSCAPE_SECONDARY',
+      'LANDSCAPE': 'LANDSCAPE',
+      'ANY': 'ANY'},
+    });
 
     TestBed.configureTestingModule({
       declarations: [ConfigureLecturePage],
@@ -56,6 +68,10 @@ describe('ConfigureLecturePage', () => {
         {
           provide: ConfigureLectureService,
           useValue: mockConfigureLectureService
+        },
+        {
+          provide: ScreenOrientation,
+          useValue: mockScreenOrientation
         }
       ]
     }).compileComponents();
