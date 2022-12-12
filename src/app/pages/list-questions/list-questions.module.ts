@@ -2,9 +2,9 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ListAnswersPage } from './listAnswers.page';
+import { ListQuestionsPage } from './list-questions.page';
 
-import { ListAnswersPageRoutingModule } from './listAnswers-routing.module';
+import { ListQuestionsPageRoutingModule } from './list-questions-routing.module';
 import { ComponentsModule } from 'src/app/components/ComponentsModule';
 
 @NgModule({
@@ -12,9 +12,9 @@ import { ComponentsModule } from 'src/app/components/ComponentsModule';
     IonicModule,
     CommonModule,
     FormsModule,
-    ListAnswersPageRoutingModule,
+    ListQuestionsPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [ListAnswersPage]
+  declarations: [ListQuestionsPage]
 })
-export class ListAnswersPageModule {}
+export class ListQuestionsPageModule {}

@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        loadChildren: () => import('../listAnswers/listAnswers.module').then(m => m.ListAnswersPageModule)
+        loadChildren: () => import('../list-questions/list-questions.module').then(m => m.ListQuestionsPageModule)
       },
       {
         path: 'new',

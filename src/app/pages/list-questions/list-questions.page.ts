@@ -6,11 +6,11 @@ import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { Question } from 'src/entities/Question';
 
 @Component({
-  selector: 'app-list-Answers',
-  templateUrl: 'listAnswers.page.html',
-  styleUrls: ['listAnswers.page.scss']
+  selector: 'app-list-questions',
+  templateUrl: 'list-questions.page.html',
+  styleUrls: ['list-questions.page.scss']
 })
-export class ListAnswersPage{
+export class ListQuestionsPage{
 
   public questions: Question[];
   public keyword: string;
@@ -18,8 +18,6 @@ export class ListAnswersPage{
   constructor(private router: Router, private lectureService: LectureService) { }
 
   ngOnInit() {
-    console.log('~############### ngOnInit');
-    console.log(this.lectureService.questions);
     this.questions = this.lectureService.questions;
     this.keyword = '';
   }

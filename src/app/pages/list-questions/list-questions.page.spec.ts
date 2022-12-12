@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ListAnswersPage } from './listAnswers.page';
+import { ListQuestionsPage } from './list-questions.page';
 import { routes } from 'src/app/app-routing.module';
 import { LectureService } from 'src/providers/lecture.service';
 import { Question } from 'src/entities/Question';
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 
-describe('ListAnswersPage', () => {
-  let component: ListAnswersPage;
-  let fixture: ComponentFixture<ListAnswersPage>;
+describe('ListQuestionsPage', () => {
+  let component: ListQuestionsPage;
+  let fixture: ComponentFixture<ListQuestionsPage>;
 
   let mockLectureService: jasmine.SpyObj<LectureService>;
   const q1 = new Question();
@@ -26,7 +26,7 @@ describe('ListAnswersPage', () => {
     mockLectureService = jasmine.createSpyObj<LectureService>('LectureService', [], {questions});
 
     TestBed.configureTestingModule({
-      declarations: [ListAnswersPage],
+      declarations: [ListQuestionsPage],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes(routes)],
       providers: [
         {
@@ -36,7 +36,7 @@ describe('ListAnswersPage', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ListAnswersPage);
+    fixture = TestBed.createComponent(ListQuestionsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
