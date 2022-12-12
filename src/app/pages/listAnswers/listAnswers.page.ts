@@ -18,6 +18,8 @@ export class ListAnswersPage{
   constructor(private router: Router, private lectureService: LectureService) { }
 
   ngOnInit() {
+    console.log('~############### ngOnInit');
+    console.log(this.lectureService.questions);
     this.questions = this.lectureService.questions;
     this.keyword = '';
   }

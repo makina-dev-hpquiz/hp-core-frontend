@@ -54,6 +54,8 @@ export class LectureService {
     await this.questionDao.saveQuestion(question);
   }
 
+  async updateQuestion(question: Question) {}
+
   deleteQuestion(question: Question) { }
 
   /**

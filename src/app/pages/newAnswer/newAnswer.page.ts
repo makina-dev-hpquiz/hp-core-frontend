@@ -6,6 +6,7 @@ import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { LectureService } from 'src/providers/lecture.service';
 
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-new-answer',
@@ -26,11 +27,17 @@ export class NewAnswerPage  implements OnInit{
 
   public question: Question;
 
-  constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService) {
+  constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService,
+    private screenOrientation: ScreenOrientation) {
+
+    this.screenOrientation.unlock();
     this.updateState = false;
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
+        console.log('#######################################');
+        console.log(this.router.getCurrentNavigation().extras.state);
+        console.log('#######################################');
         this.updateState = this.router.getCurrentNavigation().extras.state.update;
         this.question = this.router.getCurrentNavigation().extras.state.question;
         if (this.question.type === TypeQuestion.QCM) {

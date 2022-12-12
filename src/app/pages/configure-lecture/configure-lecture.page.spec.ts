@@ -52,13 +52,13 @@ describe('ConfigureLecturePage', () => {
         'initializeNewLecture', 'addArtwork', 'findArtworksByType', 'saveLecture', 'updateArtwork'
       ]);
     mockScreenOrientation = jasmine.createSpyObj<ScreenOrientation>('ScreenOrientation', ['lock'],{
-      ORIENTATIONS : {'PORTRAIT': 'PORTRAIT', 
-      'PORTRAIT_PRIMARY': 'PORTRAIT_PRIMARY',
-      'PORTRAIT_SECONDARY': 'PORTRAIT_SECONDARY',
-      'LANDSCAPE_PRIMARY': 'LANDSCAPE_PRIMARY',
-      'LANDSCAPE_SECONDARY': 'LANDSCAPE_SECONDARY',
-      'LANDSCAPE': 'LANDSCAPE',
-      'ANY': 'ANY'},
+      ORIENTATIONS : {PORTRAIT: 'PORTRAIT',
+      PORTRAIT_PRIMARY: 'PORTRAIT_PRIMARY',
+      PORTRAIT_SECONDARY: 'PORTRAIT_SECONDARY',
+      LANDSCAPE_PRIMARY: 'LANDSCAPE_PRIMARY',
+      LANDSCAPE_SECONDARY: 'LANDSCAPE_SECONDARY',
+      LANDSCAPE: 'LANDSCAPE',
+      ANY: 'ANY'},
     });
 
     TestBed.configureTestingModule({
