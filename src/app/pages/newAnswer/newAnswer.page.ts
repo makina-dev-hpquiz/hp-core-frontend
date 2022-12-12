@@ -15,7 +15,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 })
 export class NewAnswerPage  implements OnInit{
 
-  @ViewChild('questionInput', { read: IonTextarea }) ionTextarea: IonTextarea;
+  @ViewChild('questionTitleInput', { read: IonTextarea }) questionTitleInput: IonTextarea;
 
   public updateState: Boolean;
   public duplicatedTitle: string;
@@ -35,9 +35,6 @@ export class NewAnswerPage  implements OnInit{
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        console.log('#######################################');
-        console.log(this.router.getCurrentNavigation().extras.state);
-        console.log('#######################################');
         this.updateState = this.router.getCurrentNavigation().extras.state.update;
         this.question = this.router.getCurrentNavigation().extras.state.question;
         if (this.question.type === TypeQuestion.QCM) {
@@ -50,9 +47,7 @@ export class NewAnswerPage  implements OnInit{
     });
   }
 
-
   ngOnInit() {
-
     this.lectureService.initialize();
 
     this.TYPE_QUESTION = TypeQuestion;
@@ -81,13 +76,13 @@ export class NewAnswerPage  implements OnInit{
     this.duplicatedTitle = '';
 
     this.qcmRep = ['', '', '', ''];
-    if (this.ionTextarea) {
-      this.ionTextarea.setFocus();
+    if (this.questionTitleInput) {
+      this.questionTitleInput.setFocus();
     }
   }
 
   ionViewDidEnter() {
-    this.ionTextarea.setFocus();
+    this.questionTitleInput.setFocus();
   }
 
   /**

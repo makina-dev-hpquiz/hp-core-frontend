@@ -8,6 +8,8 @@ import { routes } from 'src/app/app-routing.module';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { LectureService } from 'src/providers/lecture.service';
 import { Router } from '@angular/router';
+import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
+import { TypeQuestion, TypeQuestionList } from 'src/models/enums/typeQuestionEnum';
 
 
 describe('NewAnswerPage', () => {
@@ -49,5 +51,11 @@ describe('NewAnswerPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(mockScreenOrientation.unlock).toHaveBeenCalled();
+    expect(component.updateState).toBeFalse();
+    expect(component.difficulties).toEqual(DifficultyList);
+    expect(component.questionsType).toEqual(TypeQuestionList);
+    expect(component.question.type).toEqual(TypeQuestion.QUESTION);
+    expect(component.question.difficulty).toEqual(Difficulty.MOYEN);
   });
 });
