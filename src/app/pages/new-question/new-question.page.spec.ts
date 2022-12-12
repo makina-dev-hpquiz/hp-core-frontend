@@ -8,8 +8,8 @@ import { routes } from 'src/app/app-routing.module';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { LectureService } from 'src/providers/lecture.service';
 import { Router } from '@angular/router';
-import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
-import { TypeQuestion, TypeQuestionList } from 'src/models/enums/typeQuestionEnum';
+import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
+import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 
 
 describe('NewQuestionPage', () => {
@@ -23,7 +23,8 @@ describe('NewQuestionPage', () => {
 
   beforeEach(waitForAsync(() => {
     mockScreenOrientation = jasmine.createSpyObj<ScreenOrientation>('ScreenOrientation', ['unlock']);
-    mockLectureService = jasmine.createSpyObj<LectureService>('LectureService', ['initialize', 'addQuestion', 'updateQuestion', 'deleteQuestion']);
+    mockLectureService = jasmine.createSpyObj<LectureService>('LectureService',
+    ['initialize', 'addQuestion', 'updateQuestion', 'deleteQuestion']);
 
 
     TestBed.configureTestingModule({
@@ -53,9 +54,9 @@ describe('NewQuestionPage', () => {
     expect(component).toBeTruthy();
     expect(mockScreenOrientation.unlock).toHaveBeenCalled();
     expect(component.updateState).toBeFalse();
-    expect(component.difficulties).toEqual(DifficultyList);
-    expect(component.questionsType).toEqual(TypeQuestionList);
-    expect(component.question.type).toEqual(TypeQuestion.QUESTION);
-    expect(component.question.difficulty).toEqual(Difficulty.MOYEN);
+    expect(component.difficulties).toEqual(difficultyList);
+    expect(component.questionsType).toEqual(typeQuestionList);
+    expect(component.question.type).toEqual(TypeQuestion.question);
+    expect(component.question.difficulty).toEqual(Difficulty.moyen);
   });
 });

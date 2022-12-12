@@ -23,7 +23,7 @@
     </div>
 
     <ion-list>
-      <div *ngIf="question.type === TYPE_QUESTION.QUESTION">
+      <div *ngIf="question.type === typeQuestion.question">
         <ion-item>
           <ion-textarea #questionTitleInput [(ngModel)]="question.question" placeholder="Balance ta question ! ">
           </ion-textarea>
@@ -36,7 +36,7 @@
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.QCM">
+      <div *ngIf="question.type === typeQuestion.qcm">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" placeholder="Balance ton QCM ! "></ion-textarea>
         </ion-item>
@@ -54,7 +54,7 @@
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.LEXICAL">
+      <div *ngIf="question.type === typeQuestion.lexical">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" placeholder="Citer tour à tour le matériel scolaire ... ">
           </ion-textarea>
@@ -64,31 +64,31 @@
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.CHAUDRON">
+      <div *ngIf="question.type === typeQuestion.chaudron">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" rows="6" placeholder="Chaudron"></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.DEBAT">
+      <div *ngIf="question.type === typeQuestion.debat">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" rows="6" placeholder="Prêt, feu, débattage! "></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.SPEECH">
+      <div *ngIf="question.type === typeQuestion.speech">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" rows="2" placeholder="Speech"></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.GAGE">
+      <div *ngIf="question.type === typeQuestion.gage">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" rows="4" placeholder="Gage!"></ion-textarea>
         </ion-item>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.VRAI_OU_FAUX">
+      <div *ngIf="question.type === typeQuestion.vraiOuFaux">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" rows="2" placeholder="Vrai ou faux? !"></ion-textarea>
         </ion-item>
@@ -106,7 +106,7 @@
         </ion-radio-group>
       </div>
 
-      <div *ngIf="question.type === TYPE_QUESTION.AFFIRMATION">
+      <div *ngIf="question.type === typeQuestion.affirmation">
         <ion-item>
           <ion-textarea [(ngModel)]="question.question" rows="4" placeholder="Laquel est vrai?!"></ion-textarea>
         </ion-item>

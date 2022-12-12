@@ -3,7 +3,7 @@ import { Lecture } from 'src/entities/lecture';
 import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
 
 
-import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
+import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
 import { DatabaseService } from 'src/providers/database.service';
 import { ArtworkModel } from 'src/models/artwork.model';
 import { ArtworkDaoService } from 'src/providers/dao/artwork-dao.service';
@@ -28,8 +28,8 @@ export class HomePage implements OnInit {
   public test: Lecture[];
 
   constructor(private lectureDao: LectureDaoService, private artworkDao: ArtworkDaoService) {
-    this.difficulties = DifficultyList;
-    this.selectedDifficulty = Difficulty.FACILE;
+    this.difficulties = difficultyList;
+    this.selectedDifficulty = Difficulty.facile; 
   }
 
 

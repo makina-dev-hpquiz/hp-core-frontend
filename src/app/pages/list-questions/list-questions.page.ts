@@ -54,7 +54,7 @@ export class ListQuestionsPage{
    */
   public getMiniNameType(typeName: String) {
 
-    if (typeName === TypeQuestion.QCM) {
+    if (typeName === TypeQuestion.qcm) {
       return 'Qc';
     } else {
       return typeName.substring(0, 1).toUpperCase();

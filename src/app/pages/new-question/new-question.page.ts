@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonTextarea } from '@ionic/angular';
 import { Question } from 'src/entities/Question';
-import { DifficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
-import { TypeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
+import { difficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
+import { typeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { LectureService } from 'src/providers/lecture.service';
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
@@ -17,10 +17,10 @@ export class NewQuestionPage  implements OnInit{
 
   @ViewChild('questionTitleInput', { read: IonTextarea }) questionTitleInput: IonTextarea;
 
-  public updateState: Boolean;
+  public updateState: boolean;
   public duplicatedTitle: string;
 
-  public TYPE_QUESTION;
+  public typeQuestion;
   public questionsType;
   public difficulties;
   public qcmRep: string[];
@@ -37,7 +37,7 @@ export class NewQuestionPage  implements OnInit{
       if (this.router.getCurrentNavigation().extras.state) {
         this.updateState = this.router.getCurrentNavigation().extras.state.update;
         this.question = this.router.getCurrentNavigation().extras.state.question;
-        if (this.question.type === TypeQuestion.QCM) {
+        if (this.question.type === TypeQuestion.qcm) {
           this.qcmRep = this.question.answer.split('/');
         } else {
           this.qcmRep = ['', '', '', ''];
@@ -50,10 +50,10 @@ export class NewQuestionPage  implements OnInit{
   ngOnInit() {
     this.lectureService.initialize();
 
-    this.TYPE_QUESTION = TypeQuestion;
+    this.typeQuestion = TypeQuestion;
 
-    this.questionsType = TypeQuestionList;
-    this.difficulties = DifficultyList;
+    this.questionsType = typeQuestionList;
+    this.difficulties = difficultyList;
     this.duplicatedTitle = '';
 
     if (!this.updateState) {
@@ -69,8 +69,8 @@ export class NewQuestionPage  implements OnInit{
     this.question = new Question();
 
     this.question.lecture = this.lectureService.lecture;
-    this.question.type = TypeQuestion.QUESTION;
-    this.question.difficulty = Difficulty.MOYEN;
+    this.question.type = TypeQuestion.question;
+    this.question.difficulty = Difficulty.moyen;
 
     this.question.question = this.duplicatedTitle;
     this.duplicatedTitle = '';
@@ -90,7 +90,7 @@ export class NewQuestionPage  implements OnInit{
    * RG Pour QCM, concat des différents champs avec un séparateur / La première réponse est la bonne.
    */
   addQuestion() {
-    if (this.question.type === TypeQuestion.QCM) {
+    if (this.question.type === TypeQuestion.qcm) {
       this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];
     }
     if (this.questionIsValid()) {

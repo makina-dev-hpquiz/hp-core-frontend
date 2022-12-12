@@ -15,8 +15,8 @@ describe('ListQuestionsPage', () => {
 
   let mockLectureService: jasmine.SpyObj<LectureService>;
   const q1 = new Question();
-  q1.type = TypeQuestion.QUESTION;
-  q1.difficulty = Difficulty.MOYEN;
+  q1.type = TypeQuestion.question;
+  q1.difficulty = Difficulty.moyen;
   q1.question = 'Intitulé de la question';
   const questions: Question[] = [
     q1

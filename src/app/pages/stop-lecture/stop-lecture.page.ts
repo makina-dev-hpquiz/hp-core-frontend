@@ -23,13 +23,13 @@ export class StopLecturePage implements OnInit {
     this.nbQuestions = this.lectureService.questions.length;
     this.lectureService.questions.forEach(q => {
       switch (q.difficulty) {
-        case Difficulty.FACILE:
+        case Difficulty.facile:
           this.nbQuestionPerDifficulty[0]++;
           break;
-        case Difficulty.MOYEN:
+        case Difficulty.moyen:
           this.nbQuestionPerDifficulty[1]++;
           break;
-        case Difficulty.DIFFICILE:
+        case Difficulty.difficile:
           this.nbQuestionPerDifficulty[2]++;
           break;
       }
