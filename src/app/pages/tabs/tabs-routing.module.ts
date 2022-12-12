@@ -13,11 +13,11 @@ const routes: Routes = [
       },
       {
         path: 'new',
-        loadChildren: () => import('../newAnswer/newAnswer.module').then(m => m.NewAnswerPageModule)
+        loadChildren: () => import('../new-question/new-question.module').then(m => m.NewQuestionPageModule)
       },
       {
         path: 'detail',
-        loadChildren: () => import('../newAnswer/newAnswer.module').then(m => m.NewAnswerPageModule)
+        loadChildren: () => import('../new-question/new-question.module').then(m => m.NewQuestionPageModule)
       },
       {
         path: 'groups',

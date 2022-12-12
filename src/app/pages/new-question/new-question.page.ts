@@ -9,11 +9,11 @@ import { LectureService } from 'src/providers/lecture.service';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
-  selector: 'app-new-answer',
-  templateUrl: 'newAnswer.page.html',
-  styleUrls: ['newAnswer.page.scss']
+  selector: 'app-new-question',
+  templateUrl: 'new-question.page.html',
+  styleUrls: ['new-question.page.scss']
 })
-export class NewAnswerPage  implements OnInit{
+export class NewQuestionPage  implements OnInit{
 
   @ViewChild('questionTitleInput', { read: IonTextarea }) questionTitleInput: IonTextarea;
 

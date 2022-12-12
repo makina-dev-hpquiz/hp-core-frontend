@@ -3,9 +3,9 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NewAnswerPage } from './newAnswer.page';
+import { NewQuestionPage } from './new-question.page';
 
-import { NewAnswerPageRoutingModule } from './newAnswer-routing.module';
+import { NewQuestionPageRoutingModule } from './new-question-routing.module';
 import { ComponentsModule } from 'src/app/components/ComponentsModule';
 
 @NgModule({
@@ -13,9 +13,9 @@ import { ComponentsModule } from 'src/app/components/ComponentsModule';
     IonicModule,
     CommonModule,
     FormsModule,
-    NewAnswerPageRoutingModule,
+    NewQuestionPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [NewAnswerPage]
+  declarations: [NewQuestionPage]
 })
-export class NewAnswerPageModule {}
+export class NewQuestionPageModule {}

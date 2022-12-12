@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NewAnswerPage } from './newAnswer.page';
+import { NewQuestionPage } from './new-question.page';
 import { of } from 'rxjs';
 import { routes } from 'src/app/app-routing.module';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
@@ -12,9 +12,9 @@ import { Difficulty, DifficultyList } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion, TypeQuestionList } from 'src/models/enums/typeQuestionEnum';
 
 
-describe('NewAnswerPage', () => {
-  let component: NewAnswerPage;
-  let fixture: ComponentFixture<NewAnswerPage>;
+describe('NewQuestionPage', () => {
+  let component: NewQuestionPage;
+  let fixture: ComponentFixture<NewQuestionPage>;
 
   let mockLectureService: jasmine.SpyObj<LectureService>;
   let mockScreenOrientation: jasmine.SpyObj<ScreenOrientation>;
@@ -27,7 +27,7 @@ describe('NewAnswerPage', () => {
 
 
     TestBed.configureTestingModule({
-      declarations: [NewAnswerPage],
+      declarations: [NewQuestionPage],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes(routes)],
       providers: [
         {
@@ -44,7 +44,7 @@ describe('NewAnswerPage', () => {
     router = TestBed.inject(Router);
     spyOn(router, 'getCurrentNavigation').and.returnValue({ extras: { state: undefined } } as any);
 
-    fixture = TestBed.createComponent(NewAnswerPage);
+    fixture = TestBed.createComponent(NewQuestionPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
