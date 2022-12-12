@@ -105,6 +105,7 @@ export class NewQuestionPage  implements OnInit{
    */
   addInGroup() {
     if (this.questionIsValid()) {
+      //TODO Sauvegarde en bdd
       const navigationExtras: NavigationExtras = {
         state: {
           question: this.question
@@ -118,6 +119,7 @@ export class NewQuestionPage  implements OnInit{
    * Duplique le titre de la question pour une utilisation ultérieur
    */
   duplicateTitle() {
+    //TODO A développer
     this.duplicatedTitle = this.question.question;
   }
 
@@ -127,6 +129,7 @@ export class NewQuestionPage  implements OnInit{
     * @returns Boolean
     */
     private questionIsValid(){
-      return this.question.question !== '' ? true : false;
+      //TODO Manque this.question.answer !== '' ? true : false;
+      return this.question.question? true : false;
   }
 }

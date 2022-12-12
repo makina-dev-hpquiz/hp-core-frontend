@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
 
   constructor(private lectureDao: LectureDaoService, private artworkDao: ArtworkDaoService) {
     this.difficulties = difficultyList;
-    this.selectedDifficulty = Difficulty.facile; 
+    this.selectedDifficulty = Difficulty.facile;
   }
 
 

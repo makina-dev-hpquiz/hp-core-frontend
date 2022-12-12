@@ -25,7 +25,7 @@
     <ion-list>
       <div *ngIf="question.type === typeQuestion.question">
         <ion-item>
-          <ion-textarea #questionTitleInput [(ngModel)]="question.question" placeholder="Balance ta question ! ">
+          <ion-textarea #questionTitleInput id="questionTitleInput" name="questionTitleInput" [(ngModel)]="question.question" placeholder="Balance ta question ! ">
           </ion-textarea>
         </ion-item>
         <ion-item>
