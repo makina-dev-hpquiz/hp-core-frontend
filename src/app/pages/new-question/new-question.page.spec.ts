@@ -58,5 +58,38 @@ describe('NewQuestionPage', () => {
     expect(component.questionsType).toEqual(typeQuestionList);
     expect(component.question.type).toEqual(TypeQuestion.question);
     expect(component.question.difficulty).toEqual(Difficulty.moyen);
+    
+    expect(component.questionTitleInput.ionFocus).toBeTruthy();
+  });
+
+  it('createNewQuestion', async () => {
+    expect(await (await component.questionTitleInput.getInputElement()).innerHTML).not.toEqual(document.activeElement.innerHTML);
+    component.createNewQuestion();
+    expect(component.question.type).toEqual(TypeQuestion.question);
+    expect(component.question.difficulty).toEqual(Difficulty.moyen);
+    expect(component.duplicatedTitle).toEqual('');
+    expect(component.qcmRep[0]).toEqual('');
+    expect(await (await component.questionTitleInput.getInputElement()).innerHTML).toEqual(document.activeElement.innerHTML);
+  });
+
+  it('ionViewDidEnter', async () => {
+    component.ionViewDidEnter();
+    expect(await (await component.questionTitleInput.getInputElement()).innerHTML).toEqual(document.activeElement.innerHTML);
+  });
+
+  it('addQuestion', () => {
+
+  });
+
+  it('addInGroup', () => {
+
+  });
+
+  it('duplicateTitle', () => {
+
+  });
+
+  it('questionIsValid', () => {
+
   });
 });

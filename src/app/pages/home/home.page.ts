@@ -82,8 +82,5 @@ export class HomePage implements OnInit {
   private sortByRecent(){
     this.artworksList.sort((a,b) =>
     DateUtils.compare(a.dateRecentLecture.toISOString(), b.dateRecentLecture.toISOString()));
-
   }
-
-
 }
