@@ -46,7 +46,7 @@ export class NewQuestionPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.typeQuestion = TypeQuestion;
 
     this.questionsType = typeQuestionList;
@@ -59,9 +59,18 @@ export class NewQuestionPage implements OnInit {
   }
 
   /**
+   * Réinitialise les valeurs questions/réponses lors du changement de type
+   */
+  public typeChange(){
+    this.question.question = '';
+    this.question.answer = '';
+    this.qcmRep = ['', '', '', ''];
+  }
+
+  /**
    * Créer une nouvelle question
    */
-  createNewQuestion() {
+  public createNewQuestion() { //TODO Private?
     this.updateState = false;
     this.question = new Question();
 
@@ -75,7 +84,7 @@ export class NewQuestionPage implements OnInit {
     }
   }
 
-  ionViewDidEnter() {
+  public ionViewDidEnter() {
     this.questionTitleInput.setFocus();
   }
 
@@ -93,7 +102,7 @@ export class NewQuestionPage implements OnInit {
   /**
    * L'application navigue vers l'écran Groups en sélectionnant la question actuelle
    */
-  addInGroup() {
+  public addInGroup() {
     if (this.questionIsValid()) {
       //TODO Sauvegarde en bdd
       const navigationExtras: NavigationExtras = {
@@ -108,7 +117,7 @@ export class NewQuestionPage implements OnInit {
   /**
    * Duplique le titre de la question pour une utilisation ultérieur
    */
-  duplicate() {
+  public duplicate() {
     if (this.updateState) {
     } else {
       this.saveQuestion();
@@ -116,15 +125,25 @@ export class NewQuestionPage implements OnInit {
   }
 
   /**
-   * Indique si une question possède à un minimat un titre
+   * Indique si une question est valide, elle doit disposer :
+   * D'une question, d'une réponse, d'un type et d'une difficulté
    *
    * @returns Boolean
    */
-  private questionIsValid() {
-    //TODO Manque this.question.answer !== '' ? true : false;
-    return this.question.question ? true : false;
+  public questionIsValid() {
+    return (this.question.type && this.question.difficulty && this.question.question &&
+      this.question.answer && this.question.type !== TypeQuestion.qcm) ||
+   ((this.question.type === TypeQuestion.chaudron ||
+    this.question.type === TypeQuestion.debat ||
+    this.question.type === TypeQuestion.gage ||
+    this.question.type === TypeQuestion.speech) && this.question.question && this.question.difficulty) ||
+    (this.question.type === TypeQuestion.qcm  && this.question.difficulty && this.question.question &&
+    this.qcmRep[0] && this.qcmRep[1] && this.qcmRep[2] && this.qcmRep[3]) ? true : false;
   }
 
+  /**
+   * Appel le service d'enregistrement en BDD d'une question dans le cas ou celle ci est valide.
+   */
   private async saveQuestion() {
     if (this.question.type === TypeQuestion.qcm) {
       this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];

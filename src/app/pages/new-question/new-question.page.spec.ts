@@ -13,7 +13,6 @@ import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnu
 import { Question } from 'src/entities/Question';
 
 //Méthode privée
-const questionIsValid = 'questionIsValid';
 const saveQuestion = 'saveQuestion';
 
 
@@ -268,17 +267,89 @@ describe('NewQuestionPage', () => {
     //TODO A développer
   });
 
+  it('typeChange', () => {
+    component.question.question = 'Question';
+    component.question.answer = 'Réponse';
+    component.qcmRep = ['1', '2', '3', '4'];
+    expect(component.question.question).toBeTruthy();
+    expect(component.question.answer).toBeTruthy();
+    expect(component.qcmRep[0]).toBeTruthy();
+    expect(component.qcmRep[1]).toBeTruthy();
+    expect(component.qcmRep[2]).toBeTruthy();
+    expect(component.qcmRep[3]).toBeTruthy();
+
+    component.typeChange();
+    expect(component.question.question).toBeFalsy();
+    expect(component.question.answer).toBeFalsy();
+    expect(component.qcmRep[0]).toBeFalsy();
+    expect(component.qcmRep[1]).toBeFalsy();
+    expect(component.qcmRep[2]).toBeFalsy();
+    expect(component.qcmRep[3]).toBeFalsy();
+  });
+
   it('questionIsValid', () => {
     component.question = new Question();
-    expect(component[questionIsValid]()).toBeFalse();
+    expect(component.questionIsValid()).toBeFalse();
 
+    // Question / Lexical / Vrai ou faux / Affirmation
     component.question.question = 'Question';
-    expect(component[questionIsValid]()).toBeTrue();
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.answer = 'Réponse';
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.type = TypeQuestion.question;
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.difficulty = Difficulty.facile;
+    expect(component.questionIsValid()).toBeTrue();
 
-    // component.question.question = 'Question';
-    // expect(component[questionIsValid]()).toBeFalse();
-    // component.question.answer = 'Réponse';
-    // expect(component[questionIsValid]()).toBeTrue();
+    component.question.type = TypeQuestion.qcm;
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.type = TypeQuestion.lexical;
+    expect(component.questionIsValid()).toBeTrue();
+    component.question.type = TypeQuestion.vraiOuFaux;
+    expect(component.questionIsValid()).toBeTrue();
+    component.question.type = TypeQuestion.affirmation;
+    expect(component.questionIsValid()).toBeTrue();
+
+    component.question.answer = '';
+    component.question.question = '';
+    component.question.difficulty = '';
+    // Chaufron / Debat / Speech / Gage
+    component.question.type = TypeQuestion.chaudron;
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.difficulty = Difficulty.facile;
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.question = 'Question';
+    expect(component.questionIsValid()).toBeTrue();
+    component.question.type = TypeQuestion.debat;
+    expect(component.questionIsValid()).toBeTrue();
+    component.question.type = TypeQuestion.speech;
+    expect(component.questionIsValid()).toBeTrue();
+    component.question.type = TypeQuestion.gage;
+    expect(component.questionIsValid()).toBeTrue();
+
+
+    component.question.answer = '';
+    component.question.question = '';
+    component.question.difficulty = '';
+    // QCM
+    component.question.type = TypeQuestion.qcm;
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.difficulty = Difficulty.facile;
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.question = 'Question';
+    expect(component.questionIsValid()).toBeFalse();
+    component.question.answer = 'Réponse';
+    expect(component.questionIsValid()).toBeFalse();
+    component.qcmRep[0] = '1';
+    expect(component.questionIsValid()).toBeFalse();
+    component.qcmRep[1] = '2';
+    expect(component.questionIsValid()).toBeFalse();
+    component.qcmRep[2] = '3';
+    expect(component.questionIsValid()).toBeFalse();
+    component.qcmRep[3] = '4';
+    expect(component.questionIsValid()).toBeTrue();
+    component.question.answer = '';
+    expect(component.questionIsValid()).toBeTrue();
   });
 
   it('private saveQuestion ', async () => {

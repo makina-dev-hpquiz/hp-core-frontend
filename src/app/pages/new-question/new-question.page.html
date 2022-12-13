@@ -3,7 +3,7 @@
 <ion-content>
   <div>
     <span [ngClass]="question.difficulty.toLowerCase()" id="question-type-select">
-      <ion-select [(ngModel)]="question.type" [value]=question.type>
+      <ion-select [(ngModel)]="question.type" [value]=question.type (ionChange)="typeChange()">
         <ion-select-option *ngFor="let questionType of questionsType" value="{{questionType}}">{{questionType}}
         </ion-select-option>
       </ion-select>
@@ -19,7 +19,7 @@
   <div> 
     <div class="title-question">
       <ion-label>Intitulé</ion-label>
-      <ion-icon (click)="duplicate()" size="large" name="duplicate-outline"></ion-icon>
+      <ion-icon [hidden]="!questionIsValid()" (click)="duplicate()" size="large" name="duplicate-outline"></ion-icon>
     </div>
 
     <ion-list>
@@ -159,11 +159,11 @@
     </ion-accordion>
   </ion-accordion-group>
   <div>
-    <ion-button (click)="addQuestion()" class="bottom-button">
+    <ion-button [disabled]="!questionIsValid()" (click)="addQuestion()" class="bottom-button">
       <ion-label *ngIf="!updateState">Ajouter</ion-label>
       <ion-label *ngIf="updateState">Mettre à jour</ion-label>
     </ion-button>
-    <ion-button (click)="addInGroup()">
+    <ion-button [disabled]="!questionIsValid()" (click)="addInGroup()">
       G+
     </ion-button>
   </div>
