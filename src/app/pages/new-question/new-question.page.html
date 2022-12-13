@@ -9,14 +9,14 @@
       </ion-select>
     </span>
     <span id="difficulty-select">
-      <ion-select [(ngModel)]="question.difficulty">
+      <ion-select  [(ngModel)]="question.difficulty">
         <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}
         </ion-select-option>
       </ion-select>
     </span>
   </div>
-  <div>
 
+  <div>
     <div class="title-question">
       <ion-label>Intitulé</ion-label>
       <ion-icon (click)="duplicateTitle()" size="large" name="duplicate-outline"></ion-icon>
@@ -32,67 +32,67 @@
           <ion-label>Réponse : </ion-label>
         </ion-item>
         <ion-item>
-          <ion-input [(ngModel)]="question.answer" placeholder="Bonne réponse ! "></ion-input>
+          <ion-input name='answerInput' [(ngModel)]="question.answer" placeholder="Bonne réponse ! "></ion-input>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.qcm">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" placeholder="Balance ton QCM ! "></ion-textarea>
+          <ion-textarea  name='questionQcmInput' [(ngModel)]="question.question" placeholder="Balance ton QCM ! "></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-input [(ngModel)]="qcmRep[0]" placeholder="La bonne réponse"></ion-input>
+          <ion-input name='rep1QcmInput' [(ngModel)]="qcmRep[0]" placeholder="La bonne réponse"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input [(ngModel)]="qcmRep[1]" placeholder="Rep2"></ion-input>
+          <ion-input name='rep2QcmInput' [(ngModel)]="qcmRep[1]" placeholder="Rep2"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input [(ngModel)]="qcmRep[2]" placeholder="Rep3"></ion-input>
+          <ion-input name='rep3QcmInput' [(ngModel)]="qcmRep[2]" placeholder="Rep3"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input [(ngModel)]="qcmRep[3]" placeholder="Rep4"></ion-input>
+          <ion-input name='rep4QcmInput' [(ngModel)]="qcmRep[3]" placeholder="Rep4"></ion-input>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.lexical">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" placeholder="Citer tour à tour le matériel scolaire ... ">
+          <ion-textarea name='questionLexicalInput' [(ngModel)]="question.question" placeholder="Citer tour à tour le matériel scolaire ... ">
           </ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-textarea [(ngModel)]="question.answer" rows="6" placeholder="Une grosse liste ! "></ion-textarea>
+          <ion-textarea name='answerLexicalInput' [(ngModel)]="question.answer" rows="6" placeholder="Une grosse liste ! "></ion-textarea>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.chaudron">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" rows="6" placeholder="Chaudron"></ion-textarea>
+          <ion-textarea name='chaudronInput' [(ngModel)]="question.question" rows="6" placeholder="Chaudron"></ion-textarea>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.debat">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" rows="6" placeholder="Prêt, feu, débattage! "></ion-textarea>
+          <ion-textarea name='debatInput' [(ngModel)]="question.question" rows="6" placeholder="Prêt, feu, débattage! "></ion-textarea>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.speech">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" rows="2" placeholder="Speech"></ion-textarea>
+          <ion-textarea name='speechInput' [(ngModel)]="question.question" rows="2" placeholder="Speech"></ion-textarea>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.gage">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" rows="4" placeholder="Gage!"></ion-textarea>
+          <ion-textarea name='gageInput' [(ngModel)]="question.question" rows="4" placeholder="Gage!"></ion-textarea>
         </ion-item>
       </div>
 
       <div *ngIf="question.type === typeQuestion.vraiOuFaux">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" rows="2" placeholder="Vrai ou faux? !"></ion-textarea>
+          <ion-textarea name='questionVraiOuFauxInput' [(ngModel)]="question.question" rows="2" placeholder="Vrai ou faux? !"></ion-textarea>
         </ion-item>
-        <ion-radio-group [(ngModel)]="question.answer" name="VF" value="Vrai">
+        <ion-radio-group name='answerVraiOuFauxInput' [(ngModel)]="question.answer" name="VF" value="Vrai">
           <ion-item>
             <ion-item>
               <ion-label>Vrai</ion-label>
@@ -108,10 +108,10 @@
 
       <div *ngIf="question.type === typeQuestion.affirmation">
         <ion-item>
-          <ion-textarea [(ngModel)]="question.question" rows="4" placeholder="Laquel est vrai?!"></ion-textarea>
+          <ion-textarea name='questionAffirmationInput' [(ngModel)]="question.question" rows="4" placeholder="Laquel est vrai?!"></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-input [(ngModel)]="question.answer" rows="2" placeholder="Réponse"></ion-input>
+          <ion-input name='answerAffirmationInput' [(ngModel)]="question.answer" rows="2" placeholder="Réponse"></ion-input>
         </ion-item>
       </div>
 

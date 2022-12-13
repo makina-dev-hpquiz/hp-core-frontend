@@ -81,6 +81,128 @@ describe('NewQuestionPage', () => {
 
   });
 
+  it('Adaptation des champs en fonction du type de question sélectionné', () => {
+    component.question.type = TypeQuestion.question;
+
+    expect(document.getElementsByName('questionTitleInput')).toBeTruthy();
+    expect(document.getElementsByName('answerInput')).toBeTruthy();
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+    
+    component.question.type = TypeQuestion.qcm;
+    
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput')).toBeTruthy();
+    expect(document.getElementsByName('rep1QcmInput')).toBeTruthy();
+    expect(document.getElementsByName('rep2QcmInput')).toBeTruthy();
+    expect(document.getElementsByName('rep3QcmInput')).toBeTruthy();
+    expect(document.getElementsByName('rep4QcmInput')).toBeTruthy();
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+
+    
+    component.question.type = TypeQuestion.lexical;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput')).toBeTruthy();
+    expect(document.getElementsByName('answerLexicalInput')).toBeTruthy();
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+    component.question.type = TypeQuestion.chaudron;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput')).toBeTruthy();
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+    
+    component.question.type = TypeQuestion.debat;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput')).toBeTruthy();
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+     
+    component.question.type = TypeQuestion.speech;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput')).toBeTruthy();
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+    component.question.type = TypeQuestion.gage;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput')).toBeTruthy();
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+    component.question.type = TypeQuestion.vraiOuFaux;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput')).toBeTruthy();
+    expect(document.getElementsByName('answerVraiOuFauxInput')).toBeTruthy();
+    expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
+
+    component.question.type = TypeQuestion.affirmation;
+
+    // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
+    expect(document.getElementsByName('questionQcmInput').length).toEqual(0);
+    expect(document.getElementsByName('questionLexicalInput').length).toEqual(0);
+    expect(document.getElementsByName('chaudronInput').length).toEqual(0);
+    expect(document.getElementsByName('debatInput').length).toEqual(0);
+    expect(document.getElementsByName('speechInput').length).toEqual(0);
+    expect(document.getElementsByName('gageInput').length).toEqual(0);
+    expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
+    expect(document.getElementsByName('questionAffirmationInput')).toBeTruthy();
+    expect(document.getElementsByName('answerAffirmationInput')).toBeTruthy();
+  });
+
   it('ionViewDidEnter', async () => {
     spyOn(component.questionTitleInput, 'setFocus');
     expect(component.questionTitleInput.setFocus).not.toHaveBeenCalled();
