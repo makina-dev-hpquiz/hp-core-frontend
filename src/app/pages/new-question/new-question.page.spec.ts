@@ -94,9 +94,9 @@ describe('NewQuestionPage', () => {
     expect(document.getElementsByName('gageInput').length).toEqual(0);
     expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
     expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
-    
+
     component.question.type = TypeQuestion.qcm;
-    
+
     // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
     expect(document.getElementsByName('questionQcmInput')).toBeTruthy();
     expect(document.getElementsByName('rep1QcmInput')).toBeTruthy();
@@ -112,7 +112,7 @@ describe('NewQuestionPage', () => {
     expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
 
 
-    
+
     component.question.type = TypeQuestion.lexical;
 
     // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
@@ -138,7 +138,7 @@ describe('NewQuestionPage', () => {
     expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
     expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
 
-    
+
     component.question.type = TypeQuestion.debat;
 
     // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);
@@ -151,7 +151,7 @@ describe('NewQuestionPage', () => {
     expect(document.getElementsByName('questionVraiOuFauxInput').length).toEqual(0);
     expect(document.getElementsByName('questionAffirmationInput').length).toEqual(0);
 
-     
+
     component.question.type = TypeQuestion.speech;
 
     // expect(document.getElementsByName('questionTitleInput').length).toEqual(0);

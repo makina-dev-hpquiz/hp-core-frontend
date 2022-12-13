@@ -2,13 +2,13 @@
 
 <ion-content>
   <div>
-    <span id="question-type-select">
+    <span [ngClass]="question.difficulty.toLowerCase()" id="question-type-select">
       <ion-select [(ngModel)]="question.type" [value]=question.type>
         <ion-select-option *ngFor="let questionType of questionsType" value="{{questionType}}">{{questionType}}
         </ion-select-option>
       </ion-select>
     </span>
-    <span id="difficulty-select">
+    <span [ngClass]="question.difficulty.toLowerCase()" id="difficulty-select">
       <ion-select  [(ngModel)]="question.difficulty">
         <ion-select-option *ngFor="let difficulty of difficulties" value="{{difficulty}}">{{difficulty}}
         </ion-select-option>
@@ -16,7 +16,7 @@
     </span>
   </div>
 
-  <div>
+  <div> 
     <div class="title-question">
       <ion-label>Intitulé</ion-label>
       <ion-icon (click)="duplicateTitle()" size="large" name="duplicate-outline"></ion-icon>
