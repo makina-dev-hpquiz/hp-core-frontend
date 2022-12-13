@@ -14,6 +14,7 @@ import { Question } from 'src/entities/Question';
 
 //Méthode privée
 const questionIsValid = 'questionIsValid';
+const saveQuestion = 'saveQuestion';
 
 
 describe('NewQuestionPage', () => {
@@ -73,7 +74,6 @@ describe('NewQuestionPage', () => {
     component.createNewQuestion();
     expect(component.question.type).toEqual(TypeQuestion.question);
     expect(component.question.difficulty).toEqual(Difficulty.moyen);
-    expect(component.duplicatedTitle).toEqual('');
     expect(component.qcmRep[0]).toEqual('');
 
 
@@ -256,7 +256,15 @@ describe('NewQuestionPage', () => {
     expect(router.navigate).toHaveBeenCalled();
   });
 
-  it('duplicateTitle', () => {
+  it('Duplique une question ', () => {
+
+    const saveQuestionSpy = spyOn<any>(component, saveQuestion);
+    expect(saveQuestionSpy).not.toHaveBeenCalled();
+    component.duplicate();
+    expect(saveQuestionSpy).toHaveBeenCalled();
+  });
+
+  it('Duplique une question existante', () => {
     //TODO A développer
   });
 
@@ -271,5 +279,23 @@ describe('NewQuestionPage', () => {
     // expect(component[questionIsValid]()).toBeFalse();
     // component.question.answer = 'Réponse';
     // expect(component[questionIsValid]()).toBeTrue();
+  });
+
+  it('private saveQuestion ', async () => {
+    component.question.question = 'Question';
+    component.question.type = TypeQuestion.qcm;
+    component.qcmRep[0] = 'Réponse 1';
+    component.qcmRep[1] = 'Réponse 2';
+    component.qcmRep[2] = 'Réponse 3';
+    component.qcmRep[3] = 'Réponse 4';
+    spyOn(component, 'createNewQuestion');
+
+    await component[saveQuestion]();
+
+    expect(component.question.answer).toContain(component.qcmRep[0]);
+    expect(component.question.answer).toContain(component.qcmRep[1]);
+    expect(component.question.answer).toContain(component.qcmRep[2]);
+    expect(component.question.answer).toContain(component.qcmRep[3]);
+    expect(mockLectureService.addQuestion).toHaveBeenCalled();
   });
 });

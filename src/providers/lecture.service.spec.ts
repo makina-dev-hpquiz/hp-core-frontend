@@ -43,12 +43,12 @@ describe('LectureService', () => {
   });
 
   it('addQuestion', () => {
-    let q1 = new Question();
+    const q1 = new Question();
     q1.question = 'Question';
     q1.answer = 'Réponse';
     q1.difficulty = Difficulty.moyen;
     q1.type = TypeQuestion.question;
-    
+
     service.addQuestion(q1);
     expect(mockQuestionDaoService.saveQuestion).toHaveBeenCalled();
   });

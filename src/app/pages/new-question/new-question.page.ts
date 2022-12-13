@@ -13,12 +13,11 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
   templateUrl: 'new-question.page.html',
   styleUrls: ['new-question.page.scss']
 })
-export class NewQuestionPage  implements OnInit{
+export class NewQuestionPage implements OnInit {
 
   @ViewChild('questionTitleInput', { read: IonTextarea }) questionTitleInput: IonTextarea;
 
   public updateState: boolean;
-  public duplicatedTitle: string;
 
   public typeQuestion;
   public questionsType;
@@ -52,7 +51,6 @@ export class NewQuestionPage  implements OnInit{
 
     this.questionsType = typeQuestionList;
     this.difficulties = difficultyList;
-    this.duplicatedTitle = '';
 
     if (!this.updateState) {
       this.lectureService.initialize();
@@ -71,9 +69,6 @@ export class NewQuestionPage  implements OnInit{
     this.question.type = TypeQuestion.question;
     this.question.difficulty = Difficulty.moyen;
 
-    this.question.question = this.duplicatedTitle;
-    this.duplicatedTitle = '';
-
     this.qcmRep = ['', '', '', ''];
     if (this.questionTitleInput) {
       this.questionTitleInput.setFocus();
@@ -89,14 +84,10 @@ export class NewQuestionPage  implements OnInit{
    * RG Pour QCM, concat des différents champs avec un séparateur / La première réponse est la bonne.
    */
   public async addQuestion() {
-    if (this.question.type === TypeQuestion.qcm) {
-      this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];
-    }
+    this.saveQuestion();
     if (this.questionIsValid()) {
-      await this.lectureService.addQuestion(this.question);
       this.createNewQuestion();
     }
-
   }
 
   /**
@@ -117,18 +108,29 @@ export class NewQuestionPage  implements OnInit{
   /**
    * Duplique le titre de la question pour une utilisation ultérieur
    */
-  duplicateTitle() {
-    //TODO A développer
-    this.duplicatedTitle = this.question.question;
+  duplicate() {
+    if (this.updateState) {
+    } else {
+      this.saveQuestion();
+    }
   }
 
-   /**
-    * Indique si une question possède à un minimat un titre
-    *
-    * @returns Boolean
-    */
-    private questionIsValid(){
-      //TODO Manque this.question.answer !== '' ? true : false;
-      return this.question.question? true : false;
+  /**
+   * Indique si une question possède à un minimat un titre
+   *
+   * @returns Boolean
+   */
+  private questionIsValid() {
+    //TODO Manque this.question.answer !== '' ? true : false;
+    return this.question.question ? true : false;
+  }
+
+  private async saveQuestion() {
+    if (this.question.type === TypeQuestion.qcm) {
+      this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];
+    }
+    if (this.questionIsValid()) {
+      await this.lectureService.addQuestion(this.question);
+    }
   }
 }

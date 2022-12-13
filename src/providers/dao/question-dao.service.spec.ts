@@ -14,7 +14,7 @@ describe('QuestionDaoService', () => {
 
   let mockDatabaseService: jasmine.SpyObj<DatabaseService>;
   let mockSQLiteObject: jasmine.SpyObj<SQLiteObject>;
-  
+
   // private Properties
   const storage = 'storage';
   const database = 'database ';
@@ -26,11 +26,11 @@ describe('QuestionDaoService', () => {
   const findNewestQuestion = 'findNewestQuestion';
 
   const question = new Question();
-  question.question = "Question";
-  question.answer = "Réponse";
+  question.question = 'Question';
+  question.answer = 'Réponse';
   question.type = TypeQuestion.question;
   question.difficulty = Difficulty.moyen;
-  
+
   const lecture = new Lecture();
   lecture.id = 1;
   question.lecture = lecture;
@@ -51,7 +51,7 @@ describe('QuestionDaoService', () => {
       ]
     });
     service = TestBed.inject(QuestionDaoService);
-    
+
     service[database] = mockSQLiteObject;
     mockDatabaseService.getDatabase.and.returnValue(of(mockSQLiteObject).toPromise());
   });
@@ -61,10 +61,10 @@ describe('QuestionDaoService', () => {
   });
 
   it('TNR requêtes', () => {
-    const addRequestExpected = 'INSERT INTO ' + service[table] + 
+    const addRequestExpected = 'INSERT INTO ' + service[table] +
     ' (question, answer, type, difficulty, nb_player, particularity, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?);';
     const findNewestQuestionRequestExpected = 'SELECT * FROM ' + service[table] + ' ORDER BY id DESC LIMIT 1';
-    
+
     expect(addRequestExpected).toEqual(service[addRequest]);
     expect(findNewestQuestionRequestExpected).toEqual(service[findNewestQuestionRequest]);
   });
@@ -73,7 +73,7 @@ describe('QuestionDaoService', () => {
 
     const findNewestQuestionSpy = spyOn<any>(service, 'findNewestQuestion');
     await findNewestQuestionSpy.and.returnValue(of(question).toPromise());
-    
+
     const questionSaved = await service.saveQuestion(question);
     expect(questionSaved).toEqual(question);
   });
@@ -90,7 +90,7 @@ describe('QuestionDaoService', () => {
           item(index: number){return this.values[index];}
         }
     };
-    
+
     await mockSQLiteObject.executeSql.and.returnValue(of(resSpecific).toPromise());
 
     const film = await service[findNewestQuestion]();

@@ -25,11 +25,13 @@ export class QuestionDaoService extends AbstractDaoService  {
    * Sauvegarde une entité lecture de la base de données
    */
   public async saveQuestion(question: Question) {
-    console.log('QuestionDaoService.saveQuestion : ', question.question, question.answer, question.type, question.difficulty, question.lecture.id);
+    console.log('QuestionDaoService.saveQuestion : ',
+    question.question, question.answer, question.type, question.difficulty, question.lecture.id);
     try {
       (await this.databaseService.getDatabase()).executeSql(this.addRequest,
-        [question.question, question.answer, question.type, question.difficulty, question.nbPlayer, question.particularity, question.lecture.id]);
-        
+        [question.question, question.answer, question.type,
+          question.difficulty, question.nbPlayer, question.particularity, question.lecture.id]);
+
         return await this.findNewestQuestion();
       } catch (error) {
       console.log('Erreur saveQuestion ', error);
