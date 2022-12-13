@@ -210,19 +210,19 @@ describe('NewQuestionPage', () => {
     expect(component.questionTitleInput.setFocus).toHaveBeenCalled();
   });
 
-  it('addQuestion', () => {
+  it('addQuestion', async () => {
     component.question.type = TypeQuestion.question;
     component.question.question = 'Question';
     component.question.answer = 'Réponse';
     spyOn(component, 'createNewQuestion');
 
-    component.addQuestion();
+    await component.addQuestion();
 
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
     expect(component.createNewQuestion).toHaveBeenCalled();
   });
 
-  it('addQuestion QCM Question', () => {
+  it('addQuestion QCM Question', async () => {
     component.question.question = 'Question';
     component.question.type = TypeQuestion.qcm;
     component.qcmRep[0] = 'Réponse 1';
@@ -231,7 +231,7 @@ describe('NewQuestionPage', () => {
     component.qcmRep[3] = 'Réponse 4';
     spyOn(component, 'createNewQuestion');
 
-    component.addQuestion();
+    await component.addQuestion();
 
     expect(component.question.answer).toContain(component.qcmRep[0]);
     expect(component.question.answer).toContain(component.qcmRep[1]);

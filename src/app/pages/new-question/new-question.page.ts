@@ -48,8 +48,6 @@ export class NewQuestionPage  implements OnInit{
   }
 
   ngOnInit() {
-    this.lectureService.initialize();
-
     this.typeQuestion = TypeQuestion;
 
     this.questionsType = typeQuestionList;
@@ -57,6 +55,7 @@ export class NewQuestionPage  implements OnInit{
     this.duplicatedTitle = '';
 
     if (!this.updateState) {
+      this.lectureService.initialize();
       this.createNewQuestion();
     }
   }
@@ -89,12 +88,12 @@ export class NewQuestionPage  implements OnInit{
    * Ajoute une question au lectureService, créer une nouvelle question.
    * RG Pour QCM, concat des différents champs avec un séparateur / La première réponse est la bonne.
    */
-  addQuestion() {
+  public async addQuestion() {
     if (this.question.type === TypeQuestion.qcm) {
       this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];
     }
     if (this.questionIsValid()) {
-      this.lectureService.addQuestion(this.question);
+      await this.lectureService.addQuestion(this.question);
       this.createNewQuestion();
     }
 

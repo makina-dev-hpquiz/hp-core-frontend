@@ -30,7 +30,7 @@ export class Question {
     // group: Group;
 
     constructor(){
-        this.id = uuidv4();
+        // this.id = uuidv4();
         this.isCreated = new Date().toISOString();
         this.isUpdated = new Date().toISOString();
     }

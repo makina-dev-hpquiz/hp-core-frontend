@@ -27,7 +27,7 @@ export class ArtworkDaoService extends AbstractDaoService {
   }
 
   async init() {
-    this.database = await this.databaseService.getDatabase();
+    this.database = await this.databaseService.getDatabase(); 
   }
 
 
