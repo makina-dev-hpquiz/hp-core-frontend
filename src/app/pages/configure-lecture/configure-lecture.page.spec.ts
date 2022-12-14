@@ -80,7 +80,10 @@ describe('ConfigureLecturePage', () => {
 
     fixture = TestBed.createComponent(ConfigureLecturePage);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+    await component.ionViewDidEnter();
+
   }));
 
   it('should create', async () => {
@@ -166,10 +169,12 @@ describe('ConfigureLecturePage', () => {
   it('startLecture', async () => {
     component.selectedArtwork = new Artwork();
     await component.startLecture();
+    expect(mockConfigureLectureService.saveLecture).not.toHaveBeenCalled();
     expect(component[router].navigated).toBeFalse();
 
     component.selectedArtwork = artwork1;
     await component.startLecture();
+    expect(mockConfigureLectureService.saveLecture).toHaveBeenCalled();
     expect(component[router].navigated).toBeTrue();
   });
 

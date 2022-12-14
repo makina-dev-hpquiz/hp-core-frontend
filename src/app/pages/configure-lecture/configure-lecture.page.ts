@@ -4,7 +4,7 @@ import { formatDate } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { ArtworkType } from 'src/models/enums/typeArtworkEnum';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ConfigureLectureService } from 'src/providers/configure-lecture.service';
 import { Lecture } from 'src/entities/lecture';
 import { ArtworkModel } from 'src/models/artwork.model'; //TODO
@@ -35,24 +35,26 @@ export class ConfigureLecturePage implements OnInit {
   private replaceValue = ':?';
 
   constructor(private router: Router, private configureLecture: ConfigureLectureService, private screenOrientation: ScreenOrientation) {
-
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-    this.lecture = configureLecture.initializeNewLecture();
-
-    registerLocaleData(localeFr, 'fr');
-    this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
-
-    this.typesArtwork = ArtworkType;
-    this.selectedArtworkType = this.typesArtwork.book;
-    this.selectedArtwork = new Artwork();
-
-    this.artworksList = new Array();
   }
 
   async ngOnInit(): Promise<void> {
-    await this.getArtworksAndSelectFirst();
+    registerLocaleData(localeFr, 'fr');
+
+    this.typesArtwork = ArtworkType;
+    this.selectedArtwork = new Artwork();
+    this.artworksList = new Array();
   }
 
+  async ionViewDidEnter() {
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    this.lecture = this.configureLecture.initializeNewLecture();
+    this.currentDateToDisplay = formatDate(this.lecture.date, 'dd/MM/yyyy HH:mm:ss', 'fr');
+
+    this.selectedArtworkType = this.typesArtwork.book;
+    this.selectedArtwork = new Artwork();
+    this.artworksList = new Array();
+    await this.getArtworksAndSelectFirst();
+  }
 
   /**
    * Lorsque le type sélectionné dans la liste déroulante Type d'oeuvre change,
@@ -117,7 +119,12 @@ export class ConfigureLecturePage implements OnInit {
     if (this.selectedArtwork.title) {
       this.lecture.artwork = this.selectedArtwork;
       await this.configureLecture.saveLecture();
-      await this.router.navigate(['/tabs/']);
+      const navigationExtras: NavigationExtras = {
+        state: {
+          initialize: true
+        }
+      };
+      await this.router.navigate(['/tabs'], navigationExtras);
     }
   }
 

@@ -14,7 +14,7 @@ export class LectureService {
   public questions: Array<Question>;
   public groups: Array<Group>;
 
-  private isInitialize: boolean;
+  private isInitialize: boolean; //TODO
 
   constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService,
     private groupDao: GroupDaoService) {
@@ -29,6 +29,7 @@ export class LectureService {
       this.lecture = this.configureLecture.getCurrentLecture();
       this.questions = new Array<Question>();
       this.groups = new Array<Group>();
+      this.isInitialize = true;
   }
 
   /**

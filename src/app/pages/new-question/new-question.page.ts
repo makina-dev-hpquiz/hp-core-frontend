@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { IonTextarea } from '@ionic/angular';
 import { Question } from 'src/entities/Question';
 import { difficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
@@ -34,28 +34,32 @@ export class NewQuestionPage implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.updateState = this.router.getCurrentNavigation().extras.state.update;
-        this.question = this.router.getCurrentNavigation().extras.state.question;
-        if (this.question.type === TypeQuestion.qcm) {
-          this.qcmRep = this.question.answer.split('/');
-        } else {
-          this.qcmRep = ['', '', '', ''];
-        }
 
+        const initialize = this.router.getCurrentNavigation().extras.state.initialize;
+        if(initialize) {
+          this.lectureService.initialize();
+          this.createNewQuestion();
+        } else {
+          this.updateState = this.router.getCurrentNavigation().extras.state.update;
+          this.question = this.router.getCurrentNavigation().extras.state.question;
+          if (this.question.type === TypeQuestion.qcm) {
+            this.qcmRep = this.question.answer.split('/');
+          } else {
+            this.qcmRep = ['', '', '', ''];
+          }
+        }
       }
     });
   }
 
   public ngOnInit() {
     this.typeQuestion = TypeQuestion;
-
     this.questionsType = typeQuestionList;
     this.difficulties = difficultyList;
+  }
 
-    if (!this.updateState) {
-      this.lectureService.initialize();
-      this.createNewQuestion();
-    }
+  public ionViewDidEnter() {
+    this.questionTitleInput.setFocus();
   }
 
   /**
@@ -67,34 +71,16 @@ export class NewQuestionPage implements OnInit {
     this.qcmRep = ['', '', '', ''];
   }
 
-  /**
-   * Créer une nouvelle question
-   */
-  public createNewQuestion() { //TODO Private?
-    this.updateState = false;
-    this.question = new Question();
 
-    this.question.lecture = this.lectureService.lecture;
-    this.question.type = TypeQuestion.question;
-    this.question.difficulty = Difficulty.moyen;
 
-    this.qcmRep = ['', '', '', ''];
-    if (this.questionTitleInput) {
-      this.questionTitleInput.setFocus();
-    }
-  }
-
-  public ionViewDidEnter() {
-    this.questionTitleInput.setFocus();
-  }
 
   /**
    * Ajoute une question au lectureService, créer une nouvelle question.
    * RG Pour QCM, concat des différents champs avec un séparateur / La première réponse est la bonne.
    */
   public async addQuestion() {
-    this.saveQuestion();
-    if (this.questionIsValid()) {
+    await this.saveQuestion();
+    if (this.questionIsValid()) { // TODO
       this.createNewQuestion();
     }
   }
@@ -102,15 +88,16 @@ export class NewQuestionPage implements OnInit {
   /**
    * L'application navigue vers l'écran Groups en sélectionnant la question actuelle
    */
-  public addInGroup() {
+  public async addInGroup() {
     if (this.questionIsValid()) {
-      //TODO Sauvegarde en bdd
+      await this.saveQuestion();
+      this.createNewQuestion();
       const navigationExtras: NavigationExtras = {
         state: {
-          question: this.question
+          question: this.lectureService.questions[this.lectureService.questions.length-1]
         }
       };
-      this.router.navigate(['/tabs/groups'], navigationExtras);
+      await this.router.navigate(['/tabs/groups'], navigationExtras);
     }
   }
 
@@ -150,6 +137,23 @@ export class NewQuestionPage implements OnInit {
     }
     if (this.questionIsValid()) {
       await this.lectureService.addQuestion(this.question);
+    }
+  }
+
+  /**
+   * Créer une nouvelle question
+   */
+  private createNewQuestion() {
+    this.updateState = false;
+    this.question = new Question();
+
+    this.question.lecture = this.lectureService.lecture;
+    this.question.type = TypeQuestion.question;
+    this.question.difficulty = Difficulty.moyen;
+
+    this.qcmRep = ['', '', '', ''];
+    if (this.questionTitleInput) {
+      this.questionTitleInput.setFocus();
     }
   }
 }

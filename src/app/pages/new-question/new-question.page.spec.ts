@@ -14,6 +14,12 @@ import { Question } from 'src/entities/Question';
 
 //Méthode privée
 const saveQuestion = 'saveQuestion';
+const createNewQuestion = 'createNewQuestion';
+const getCurrentNavigation = 'getCurrentNavigation';
+
+// Propriété privée
+const lectureService = 'lectureService';
+const routerProp = 'router';
 
 
 describe('NewQuestionPage', () => {
@@ -47,7 +53,8 @@ describe('NewQuestionPage', () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
-    spyOn(router, 'getCurrentNavigation').and.returnValue({ extras: { state: undefined } } as any);
+    // spyOn(router, 'getCurrentNavigation').and.returnValue({ extras: { state: undefined } } as any);
+    spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { initialize: true} } } as any);
 
     fixture = TestBed.createComponent(NewQuestionPage);
     component = fixture.componentInstance;
@@ -70,7 +77,7 @@ describe('NewQuestionPage', () => {
 
     spyOn(component.questionTitleInput, 'setFocus');
     expect(component.questionTitleInput.setFocus).not.toHaveBeenCalled();
-    component.createNewQuestion();
+    component[createNewQuestion]();
     expect(component.question.type).toEqual(TypeQuestion.question);
     expect(component.question.difficulty).toEqual(Difficulty.moyen);
     expect(component.qcmRep[0]).toEqual('');
@@ -213,12 +220,12 @@ describe('NewQuestionPage', () => {
     component.question.type = TypeQuestion.question;
     component.question.question = 'Question';
     component.question.answer = 'Réponse';
-    spyOn(component, 'createNewQuestion');
+    spyOn<any>(component, createNewQuestion);
 
     await component.addQuestion();
 
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
-    expect(component.createNewQuestion).toHaveBeenCalled();
+    expect(component[createNewQuestion]).toHaveBeenCalled();
   });
 
   it('addQuestion QCM Question', async () => {
@@ -228,7 +235,7 @@ describe('NewQuestionPage', () => {
     component.qcmRep[1] = 'Réponse 2';
     component.qcmRep[2] = 'Réponse 3';
     component.qcmRep[3] = 'Réponse 4';
-    spyOn(component, 'createNewQuestion');
+    spyOn<any>(component, createNewQuestion);
 
     await component.addQuestion();
 
@@ -237,22 +244,29 @@ describe('NewQuestionPage', () => {
     expect(component.question.answer).toContain(component.qcmRep[2]);
     expect(component.question.answer).toContain(component.qcmRep[3]);
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
-    expect(component.createNewQuestion).toHaveBeenCalled();
+    expect(component[createNewQuestion]).toHaveBeenCalled();
   });
 
-  it('addInGroup', () => {
+  it('addInGroup', async () => {
     component.question.type = TypeQuestion.question;
     component.question.question = 'Question';
     component.question.answer = 'Réponse';
+    component.question.difficulty = Difficulty.difficile;
+    component[lectureService].questions = new Array<Question>();
+    component[lectureService].questions.push(component.question);
 
+    const saveQuestionSpy = spyOn<any>(component, saveQuestion);
+    const createNewQuestionSpy = spyOn<any>(component, createNewQuestion);
+    const navigateSpy = spyOn<any>(component[routerProp], 'navigate');
 
-    //TODO Sauvegarde en bdd
+    expect(saveQuestionSpy).not.toHaveBeenCalled();
+    expect(navigateSpy).not.toHaveBeenCalled();
+    expect(createNewQuestionSpy).not.toHaveBeenCalled();
+    await component.addInGroup();
 
-    spyOn(router, 'navigate');
-
-    expect(router.navigate).not.toHaveBeenCalled();
-    component.addInGroup();
-    expect(router.navigate).toHaveBeenCalled();
+    expect(component[saveQuestion]).toHaveBeenCalled();
+    expect(component[createNewQuestion]).toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalled();
   });
 
   it('Duplique une question ', () => {
@@ -359,7 +373,7 @@ describe('NewQuestionPage', () => {
     component.qcmRep[1] = 'Réponse 2';
     component.qcmRep[2] = 'Réponse 3';
     component.qcmRep[3] = 'Réponse 4';
-    spyOn(component, 'createNewQuestion');
+    spyOn<any>(component, createNewQuestion);
 
     await component[saveQuestion]();
 
