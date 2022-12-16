@@ -3,5 +3,9 @@
     <ion-title>
       {{title}}
     </ion-title>
+
+    <ion-buttons *ngIf="buttonIsActive" slot="end" (click)="actionButton()">
+      <ion-icon size="large"  name="chevron-forward-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

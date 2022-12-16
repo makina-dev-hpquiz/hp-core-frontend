@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header-lecture',
@@ -7,8 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  public title= 'Mode lecture';
+  @Output() actionButtonEmitter = new EventEmitter<boolean>();
+
+  @Input() public title: string = 'Mode lecture';
+  @Input() public buttonIsActive: boolean = false;
+
   constructor() { }
 
   ngOnInit() {}
+
+  public actionButton(){
+    this.actionButtonEmitter.emit(true);
+  }
 }

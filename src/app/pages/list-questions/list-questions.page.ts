@@ -47,7 +47,7 @@ export class ListQuestionsPage {
 
   /**
    * Retourne le premier caractère de la chaîne fourni en paramètre.
-   * TODO Attention pas de distinction entre Question : Q et QCM : Q
+   * Attention pas de distinction entre Question : Q et QCM : Q
    *
    * @param typeName string
    * @returns string

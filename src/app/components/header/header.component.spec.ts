@@ -21,4 +21,11 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('actionButton', () => {
+    let spy = spyOn(component.actionButtonEmitter, 'emit');
+    expect(spy).not.toHaveBeenCalled();
+    component.actionButton();
+    expect(spy).toHaveBeenCalled();
+  })
 });
