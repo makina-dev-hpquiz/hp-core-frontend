@@ -9,8 +9,8 @@ export class HeaderComponent implements OnInit {
 
   @Output() actionButtonEmitter = new EventEmitter<boolean>();
 
-  @Input() public title: string = 'Mode lecture';
-  @Input() public buttonIsActive: boolean = false;
+  @Input() public title = 'Mode lecture';
+  @Input() public buttonIsActive = false;
 
   constructor() { }
 

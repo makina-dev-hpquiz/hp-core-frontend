@@ -9,12 +9,11 @@ import { Question } from 'src/entities/Question';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 
-
 //Private methods
 const sortQuestions = 'sortQuestions';
 
 //Private properties
-
+const router = 'router';
 
 describe('ListQuestionsPage', () => {
   let component: ListQuestionsPage;
@@ -45,7 +44,7 @@ describe('ListQuestionsPage', () => {
   ];
 
   beforeEach(waitForAsync(() => {
-    mockLectureService = jasmine.createSpyObj<LectureService>('LectureService', [], {questions});
+    mockLectureService = jasmine.createSpyObj<LectureService>('LectureService', [], { questions });
 
     TestBed.configureTestingModule({
       declarations: [ListQuestionsPage],
@@ -68,32 +67,63 @@ describe('ListQuestionsPage', () => {
   });
 
   it('goToDetail', () => {
-
+    const navigateSpy = spyOn(component[router], 'navigate');
+    expect(navigateSpy).not.toHaveBeenCalled();
+    component.goToDetail(q1);
+    expect(navigateSpy).toHaveBeenCalled();
   });
 
   it('getMiniNameType', () => {
-    let typesList = typeQuestionList;
-    let lettreListExpected = ['Q', 'Qc', 'L', 'C', 'D', 'S', 'G', 'V', 'A'];
+    const typesList = typeQuestionList;
+    const lettreListExpected = ['Q', 'Qc', 'L', 'C', 'D', 'S', 'G', 'V', 'A'];
 
     let i = 0;
     typesList.forEach(type => {
       expect(component.getMiniNameType(type)).toEqual(lettreListExpected[i]);
       i++;
-    })
+    });
   });
 
   it('filter', () => {
+    if (questions.length < 4) {
+      const q4 = new Question();
+      q4.id = '4';
+      q4.type = TypeQuestion.affirmation;
+      q4.difficulty = Difficulty.moyen;
+      q4.question = 'Comment s\’appelle l\'oncle d\’Harry Potter?';
+      questions.push(q4);
+    }
 
+    component.questions = questions;
+
+    component.keyword = '';
+    component.filter();
+    expect(component.questions.length).toEqual(4);
+
+    component.keyword = 'oncle';
+    component.filter();
+    expect(component.questions.length).toEqual(1);
+    component.keyword = '';
+    component.filter();
+    expect(component.questions.length).toEqual(4);
+
+    component.keyword = 'appelle';
+    component.filter();
+    expect(component.questions.length).toEqual(3);
+
+    component.keyword = '';
+    component.filter();
+    expect(component.questions.length).toEqual(4);
   });
 
   it('private sortQuestions', () => {
-    let q4 = new Question();
+    const q4 = new Question();
     q4.id = '4';
     q4.type = TypeQuestion.affirmation;
     q4.difficulty = Difficulty.moyen;
     q4.question = 'Comment s\’appelle l\'oncle d\’Harry Potter?';
-    
     questions.push(q4);
+
     component.questions = questions;
     component[sortQuestions]();
 

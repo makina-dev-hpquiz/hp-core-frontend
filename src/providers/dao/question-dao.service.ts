@@ -30,7 +30,7 @@ export class QuestionDaoService extends AbstractDaoService  {
     try {
       (await this.databaseService.getDatabase()).executeSql(this.addRequest,
         [question.question, question.answer, question.type,
-          question.difficulty, question.nbPlayer, question.particularity, 
+          question.difficulty, question.nbPlayer, question.particularity,
           question.isCreated, question.isUpdated, question.lecture.id]);
 
         return await this.findNewestQuestion();

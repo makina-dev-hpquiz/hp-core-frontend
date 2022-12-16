@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LectureService } from 'src/providers/lecture.service';
 
@@ -10,7 +10,7 @@ import { Question } from 'src/entities/Question';
   templateUrl: 'list-questions.page.html',
   styleUrls: ['list-questions.page.scss']
 })
-export class ListQuestionsPage {
+export class ListQuestionsPage implements OnInit {
 
   public questions: Question[];
   public keyword: string;
@@ -52,7 +52,7 @@ export class ListQuestionsPage {
    * @param typeName string
    * @returns string
    */
-  public getMiniNameType(typeName: String) {
+  public getMiniNameType(typeName: string) {
 
     if (typeName === TypeQuestion.qcm) {
       return 'Qc';

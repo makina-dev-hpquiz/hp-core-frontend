@@ -23,9 +23,9 @@ describe('HeaderComponent', () => {
   });
 
   it('actionButton', () => {
-    let spy = spyOn(component.actionButtonEmitter, 'emit');
+    const spy = spyOn(component.actionButtonEmitter, 'emit');
     expect(spy).not.toHaveBeenCalled();
     component.actionButton();
     expect(spy).toHaveBeenCalled();
-  })
+  });
 });
