@@ -9,9 +9,9 @@ export class Question {
     // @ManyToOne(() => Lecture, lecture => lecture.id)
     lecture: Lecture;
 
-    isCreated: string;
+    public isCreated: string;
 
-    isUpdated: string;
+    public isUpdated: string;
 
 
     public question: string;

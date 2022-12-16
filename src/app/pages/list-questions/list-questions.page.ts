@@ -10,7 +10,7 @@ import { Question } from 'src/entities/Question';
   templateUrl: 'list-questions.page.html',
   styleUrls: ['list-questions.page.scss']
 })
-export class ListQuestionsPage{
+export class ListQuestionsPage {
 
   public questions: Question[];
   public keyword: string;
@@ -22,8 +22,8 @@ export class ListQuestionsPage{
     this.keyword = '';
   }
 
-  ionViewWillEnter(){
-    if(this.keyword === '') {
+  ionViewWillEnter() {
+    if (this.keyword === '') {
       this.questions = this.lectureService.questions;
     }
     this.sortQuestions();
@@ -72,9 +72,11 @@ export class ListQuestionsPage{
   /**
    * trie les questions par date de plus récentes à plus anciennes.
    */
-  private sortQuestions(){
-    this.questions.sort((q1, q2) =>
-    (new Date(q1.isUpdated) > new Date(q2.isUpdated)) ? -1 : (new Date(q1.isUpdated) < new Date(q2.isUpdated)) ? 1 : 0
-    );
+  private sortQuestions() {
+    if (this.questions.length > 1) {
+      this.questions = this.questions.sort((q1, q2) =>
+        (new Date(q1.isUpdated) > new Date(q2.isUpdated)) ? -1 : (new Date(q1.isUpdated) < new Date(q2.isUpdated)) ? 1 : 0
+      );
+    }
   }
 }

@@ -13,7 +13,7 @@ export class QuestionDaoService extends AbstractDaoService  {
   private table = 'question';
 
   private addRequest = 'INSERT INTO ' + this.table +
-    ' (question, answer, type, difficulty, nb_player, particularity, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?);';
+    ' (question, answer, type, difficulty, nb_player, particularity, isCreated, isUpdated, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
   private findNewestQuestionRequest = 'SELECT * FROM ' + this.table + ' ORDER BY id DESC LIMIT 1';
 
 
@@ -30,7 +30,8 @@ export class QuestionDaoService extends AbstractDaoService  {
     try {
       (await this.databaseService.getDatabase()).executeSql(this.addRequest,
         [question.question, question.answer, question.type,
-          question.difficulty, question.nbPlayer, question.particularity, question.lecture.id]);
+          question.difficulty, question.nbPlayer, question.particularity, 
+          question.isCreated, question.isUpdated, question.lecture.id]);
 
         return await this.findNewestQuestion();
       } catch (error) {

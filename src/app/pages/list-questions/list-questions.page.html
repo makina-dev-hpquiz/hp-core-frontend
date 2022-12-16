@@ -3,8 +3,8 @@
 <ion-content>
 
   <ion-searchbar (ionChange)="filter()" (ionClear)="filter()" [(ngModel)]="keyword" animated></ion-searchbar>
-  <ion-list>
-
+  
+  <ion-list >
     <ion-item *ngFor="let question of questions" color="{{question.difficulty.toLowerCase()}}">
       <ion-label class="type-question-label">{{getMiniNameType(question.type)}}</ion-label>
       <span class="vertical-barre"></span>

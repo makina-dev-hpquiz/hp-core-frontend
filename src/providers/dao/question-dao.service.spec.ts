@@ -62,7 +62,7 @@ describe('QuestionDaoService', () => {
 
   it('TNR requêtes', () => {
     const addRequestExpected = 'INSERT INTO ' + service[table] +
-    ' (question, answer, type, difficulty, nb_player, particularity, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?);';
+    ' (question, answer, type, difficulty, nb_player, particularity, isCreated, isUpdated, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
     const findNewestQuestionRequestExpected = 'SELECT * FROM ' + service[table] + ' ORDER BY id DESC LIMIT 1';
 
     expect(addRequestExpected).toEqual(service[addRequest]);

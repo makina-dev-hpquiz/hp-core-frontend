@@ -19,6 +19,8 @@ export class LectureService {
   constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService,
     private groupDao: GroupDaoService) {
       this.isInitialize = false;
+      this.questions = new Array<Question>();
+      this.groups = new Array<Group>();
   }
 
 
