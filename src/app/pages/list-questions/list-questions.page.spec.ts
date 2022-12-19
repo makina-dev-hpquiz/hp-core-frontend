@@ -8,6 +8,7 @@ import { LectureService } from 'src/providers/lecture.service';
 import { Question } from 'src/entities/Question';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 //Private methods
 const sortQuestions = 'sortQuestions';
@@ -20,6 +21,8 @@ describe('ListQuestionsPage', () => {
   let fixture: ComponentFixture<ListQuestionsPage>;
 
   let mockLectureService: jasmine.SpyObj<LectureService>;
+  let mockScreenOrientation: jasmine.SpyObj<ScreenOrientation>;
+
   const q1 = new Question();
   q1.id = '1';
   q1.type = TypeQuestion.question;
@@ -45,6 +48,7 @@ describe('ListQuestionsPage', () => {
 
   beforeEach(waitForAsync(() => {
     mockLectureService = jasmine.createSpyObj<LectureService>('LectureService', [], { questions });
+    mockScreenOrientation = jasmine.createSpyObj<ScreenOrientation>('ScreenOrientation', ['lock']);
 
     TestBed.configureTestingModule({
       declarations: [ListQuestionsPage],
@@ -53,6 +57,10 @@ describe('ListQuestionsPage', () => {
         {
           provide: LectureService,
           useValue: mockLectureService
+        },
+        {
+          provide: ScreenOrientation,
+          useValue: mockScreenOrientation
         }
       ]
     }).compileComponents();
@@ -128,6 +136,5 @@ describe('ListQuestionsPage', () => {
     component[sortQuestions]();
 
     expect(component.questions[0].id).toEqual(q4.id);
-    expect(component.questions.length).toEqual(4);
   });
 });

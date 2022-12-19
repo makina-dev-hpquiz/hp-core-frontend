@@ -1,9 +1,10 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LectureService } from 'src/providers/lecture.service';
 
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { Question } from 'src/entities/Question';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-list-questions',
@@ -12,10 +13,12 @@ import { Question } from 'src/entities/Question';
 })
 export class ListQuestionsPage implements OnInit {
 
+  public title = 'Lecture - Lister les questions';
   public questions: Question[];
   public keyword: string;
 
-  constructor(private router: Router, private lectureService: LectureService) { }
+  constructor(private router: Router, private lectureService: LectureService,
+    private screenOrientation: ScreenOrientation) { }
 
   ngOnInit() {
     this.questions = this.lectureService.questions;
@@ -23,6 +26,8 @@ export class ListQuestionsPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     if (this.keyword === '') {
       this.questions = this.lectureService.questions;
     }
