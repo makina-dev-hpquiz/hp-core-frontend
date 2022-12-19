@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { NewQuestionPage } from './new-question.page';
-import { of } from 'rxjs';
 import { routes } from 'src/app/app-routing.module';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { LectureService } from 'src/providers/lecture.service';
@@ -63,7 +62,6 @@ describe('NewQuestionPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(mockScreenOrientation.unlock).toHaveBeenCalled();
     expect(component.updateState).toBeFalse();
     expect(component.difficulties).toEqual(difficultyList);
     expect(component.questionsType).toEqual(typeQuestionList);

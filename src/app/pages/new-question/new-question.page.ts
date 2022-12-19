@@ -18,7 +18,7 @@ export class NewQuestionPage implements OnInit {
   @ViewChild('questionTitleInput', { read: IonTextarea }) questionTitleInput: IonTextarea;
 
   public updateState: boolean;
-
+  public title= 'Lecture - Nouvelle question';
   public typeQuestion;
   public questionsType;
   public difficulties;
@@ -28,8 +28,6 @@ export class NewQuestionPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService,
     private screenOrientation: ScreenOrientation) {
-
-    this.screenOrientation.unlock();
     this.updateState = false;
 
     this.route.queryParams.subscribe(params => {
@@ -59,6 +57,7 @@ export class NewQuestionPage implements OnInit {
   }
 
   public ionViewDidEnter() {
+    this.screenOrientation.unlock();
     this.questionTitleInput.setFocus();
   }
 
