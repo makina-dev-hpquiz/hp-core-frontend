@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
-import { IonTextarea } from '@ionic/angular';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { IonAccordionGroup, IonTextarea } from '@ionic/angular';
 import { Question } from 'src/entities/Question';
 import { difficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { typeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
@@ -16,6 +16,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 export class NewQuestionPage implements OnInit {
 
   @ViewChild('questionTitleInput', { read: IonTextarea }) questionTitleInput: IonTextarea;
+  @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
 
   public updateState: boolean;
   public title= 'Lecture - Nouvelle question';
@@ -32,12 +33,13 @@ export class NewQuestionPage implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-
         const initialize = this.router.getCurrentNavigation().extras.state.initialize;
         if(initialize) {
           this.lectureService.initialize();
           this.createNewQuestion();
         } else {
+          
+          this.closeAccordion();
           this.updateState = this.router.getCurrentNavigation().extras.state.update;
           this.question = this.router.getCurrentNavigation().extras.state.question;
           if (this.question.type === TypeQuestion.qcm) {
@@ -69,9 +71,6 @@ export class NewQuestionPage implements OnInit {
     this.question.answer = '';
     this.qcmRep = ['', '', '', ''];
   }
-
-
-
 
   /**
    * Ajoute une question au lectureService, créer une nouvelle question.
@@ -153,6 +152,18 @@ export class NewQuestionPage implements OnInit {
     this.qcmRep = ['', '', '', ''];
     if (this.questionTitleInput) {
       this.questionTitleInput.setFocus();
+    }
+    
+    this.closeAccordion();
+  }
+
+  /**
+   * Ferme l'accordeon
+   * TODO No Test
+   */
+  private closeAccordion(){
+    if(this.accordionGroup) {
+      this.accordionGroup.value= undefined;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonAccordionGroup, IonicModule } from '@ionic/angular';
 
 import { NewQuestionPage } from './new-question.page';
 import { routes } from 'src/app/app-routing.module';
@@ -15,6 +15,7 @@ import { Question } from 'src/entities/Question';
 const saveQuestion = 'saveQuestion';
 const createNewQuestion = 'createNewQuestion';
 const getCurrentNavigation = 'getCurrentNavigation';
+const closeAccordion = 'closeAccordion';
 
 // Propriété privée
 const lectureService = 'lectureService';
@@ -30,14 +31,16 @@ describe('NewQuestionPage', () => {
 
   let router: Router;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(waitForAsync(async () => {
     mockScreenOrientation = jasmine.createSpyObj<ScreenOrientation>('ScreenOrientation', ['unlock']);
     mockLectureService = jasmine.createSpyObj<LectureService>('LectureService',
     ['initialize', 'addQuestion', 'updateQuestion', 'deleteQuestion']);
 
 
     TestBed.configureTestingModule({
-      declarations: [NewQuestionPage],
+      declarations: [NewQuestionPage,
+        IonAccordionGroup
+      ],
       imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes(routes)],
       providers: [
         {
@@ -52,12 +55,13 @@ describe('NewQuestionPage', () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
-    // spyOn(router, 'getCurrentNavigation').and.returnValue({ extras: { state: undefined } } as any);
     spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { initialize: true} } } as any);
 
     fixture = TestBed.createComponent(NewQuestionPage);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+    
   }));
 
   it('should create', () => {
@@ -68,21 +72,24 @@ describe('NewQuestionPage', () => {
     expect(component.question.type).toEqual(TypeQuestion.question);
     expect(component.question.difficulty).toEqual(Difficulty.moyen);
 
+
     expect(component.questionTitleInput.ionFocus).toBeTruthy();
   });
 
   it('createNewQuestion', async () => {
+    component.accordionGroup = jasmine.createSpyObj<IonAccordionGroup>('accordionGroup', [], {'value': 'test'}) as IonAccordionGroup;
 
     spyOn(component.questionTitleInput, 'setFocus');
     expect(component.questionTitleInput.setFocus).not.toHaveBeenCalled();
+    spyOn<any>(component, closeAccordion);
+
     component[createNewQuestion]();
     expect(component.question.type).toEqual(TypeQuestion.question);
     expect(component.question.difficulty).toEqual(Difficulty.moyen);
     expect(component.qcmRep[0]).toEqual('');
 
-
     expect(component.questionTitleInput.setFocus).toHaveBeenCalled();
-
+    expect(component[closeAccordion]).toHaveBeenCalled();
   });
 
   it('Adaptation des champs en fonction du type de question sélectionné', () => {
