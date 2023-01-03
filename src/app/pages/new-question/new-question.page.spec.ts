@@ -61,7 +61,7 @@ describe('NewQuestionPage', () => {
     component = fixture.componentInstance;
 
     fixture.detectChanges();
-    
+
   }));
 
   it('should create', () => {
@@ -77,7 +77,7 @@ describe('NewQuestionPage', () => {
   });
 
   it('createNewQuestion', async () => {
-    component.accordionGroup = jasmine.createSpyObj<IonAccordionGroup>('accordionGroup', [], {'value': 'test'}) as IonAccordionGroup;
+    component.accordionGroup = jasmine.createSpyObj<IonAccordionGroup>('accordionGroup', [], {value: 'test'}) as IonAccordionGroup;
 
     spyOn(component.questionTitleInput, 'setFocus');
     expect(component.questionTitleInput.setFocus).not.toHaveBeenCalled();
@@ -221,17 +221,29 @@ describe('NewQuestionPage', () => {
     expect(component.questionTitleInput.setFocus).toHaveBeenCalled();
   });
 
-  it('addQuestion', async () => {
+  it('addQuestion en création', async () => {
     component.question.type = TypeQuestion.question;
     component.question.question = 'Question';
     component.question.answer = 'Réponse';
     spyOn<any>(component, createNewQuestion);
 
     await component.addQuestion();
-
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
     expect(component[createNewQuestion]).toHaveBeenCalled();
   });
+
+  it('addQuestion en modification', async () => {
+    component.question.type = TypeQuestion.question;
+    component.question.question = 'Question';
+    component.question.answer = 'Réponse';
+    spyOn<any>(component, createNewQuestion);
+    component.updateState = true;
+
+    await component.addQuestion();
+    expect(mockLectureService.updateQuestion).toHaveBeenCalled();
+    expect(component[createNewQuestion]).not.toHaveBeenCalled();
+  });
+
 
   it('addQuestion QCM Question', async () => {
     component.question.question = 'Question';
@@ -371,7 +383,7 @@ describe('NewQuestionPage', () => {
     expect(component.questionIsValid()).toBeTrue();
   });
 
-  it('private saveQuestion ', async () => {
+  it('private saveQuestion en création', async () => {
     component.question.question = 'Question';
     component.question.type = TypeQuestion.qcm;
     component.qcmRep[0] = 'Réponse 1';
@@ -387,5 +399,24 @@ describe('NewQuestionPage', () => {
     expect(component.question.answer).toContain(component.qcmRep[2]);
     expect(component.question.answer).toContain(component.qcmRep[3]);
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
+  });
+
+  it('private saveQuestion en modification', async () => {
+    component.question.question = 'Question';
+    component.question.type = TypeQuestion.qcm;
+    component.qcmRep[0] = 'Réponse 1';
+    component.qcmRep[1] = 'Réponse 2';
+    component.qcmRep[2] = 'Réponse 3';
+    component.qcmRep[3] = 'Réponse 4';
+    spyOn<any>(component, createNewQuestion);
+    component.updateState = true;
+
+    await component[saveQuestion]();
+
+    expect(component.question.answer).toContain(component.qcmRep[0]);
+    expect(component.question.answer).toContain(component.qcmRep[1]);
+    expect(component.question.answer).toContain(component.qcmRep[2]);
+    expect(component.question.answer).toContain(component.qcmRep[3]);
+    expect(mockLectureService.updateQuestion).toHaveBeenCalled();
   });
 });

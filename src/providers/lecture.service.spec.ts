@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { componentOnReady } from '@ionic/core';
+import { Lecture } from 'src/entities/lecture';
 import { Question } from 'src/entities/Question';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
@@ -17,7 +18,7 @@ describe('LectureService', () => {
   let mockGroupDaoService: jasmine.SpyObj<GroupDaoService>;
 
   beforeEach(() => {
-    mockQuestionDaoService = jasmine.createSpyObj<QuestionDaoService>('QuestionDaoService', ['saveQuestion']);
+    mockQuestionDaoService = jasmine.createSpyObj<QuestionDaoService>('QuestionDaoService', ['saveQuestion', 'updateQuestion']);
     TestBed.configureTestingModule({
       providers:[
         {
@@ -42,14 +43,29 @@ describe('LectureService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('addQuestion', () => {
+  it('addQuestion', async () => {
     const q1 = new Question();
     q1.question = 'Question';
     q1.answer = 'Réponse';
     q1.difficulty = Difficulty.moyen;
     q1.type = TypeQuestion.question;
+    q1.lecture = new Lecture();
+    q1.lecture.id = 1;
 
-    service.addQuestion(q1);
+    await service.addQuestion(q1);
     expect(mockQuestionDaoService.saveQuestion).toHaveBeenCalled();
+  });
+
+  it('updateQuestion', async () => {
+    const q1 = new Question();
+    q1.question = 'Question';
+    q1.answer = 'Réponse';
+    q1.difficulty = Difficulty.moyen;
+    q1.type = TypeQuestion.question;
+    q1.lecture = new Lecture();
+    q1.lecture.id = 1;
+    await service.updateQuestion(q1);
+
+    expect(mockQuestionDaoService.updateQuestion).toHaveBeenCalled();
   });
 });

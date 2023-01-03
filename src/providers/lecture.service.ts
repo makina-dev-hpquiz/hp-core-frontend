@@ -52,7 +52,14 @@ export class LectureService {
     this.questions.push(question);
   }
 
-  async updateQuestion(question: Question) {}
+  /**
+   * Appel le service Dao permettant de mettre à jour la question en base de données
+   *
+   * @param question
+   */
+  async updateQuestion(question: Question) {
+    await this.questionDao.updateQuestion(question);
+  }
 
   deleteQuestion(question: Question) { }
 

@@ -26,7 +26,7 @@ export class ListQuestionsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    
+
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     if (this.keyword === '') {
       this.questions = this.lectureService.questions;

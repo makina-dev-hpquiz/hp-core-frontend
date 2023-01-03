@@ -14,15 +14,17 @@ export class QuestionDaoService extends AbstractDaoService  {
 
   private addRequest = 'INSERT INTO ' + this.table +
     ' (question, answer, type, difficulty, nbPlayer, particularity, isCreated, isUpdated, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
-  private findNewestQuestionRequest = 'SELECT * FROM ' + this.table + ' ORDER BY id DESC LIMIT 1';
-
+  private findNewestQuestionRequest = 'SELECT * FROM ' + this.table + ' ORDER BY id DESC LIMIT 1;';
+  private updateRequest = 'UPDATE ' + this.table +
+  ' SET question = ?, answer = ?, type = ?, difficulty = ?, nbPlayer = ?, particularity = ?, isUpdated = ? ' +
+  'WHERE id = ?;';
 
   constructor(private databaseService: DatabaseService) {
     super();
    }
 
   /**
-   * Sauvegarde une entité lecture de la base de données
+   * Sauvegarde une entité question de la base de données
    */
   public async saveQuestion(question: Question) {
     console.log('QuestionDaoService.saveQuestion : ',
@@ -38,6 +40,26 @@ export class QuestionDaoService extends AbstractDaoService  {
       console.log('Erreur saveQuestion ', error);
     }
   }
+
+  /**
+   * Met à jour une entité question en base de données
+   *
+   * @param question
+   */
+  public async updateQuestion(question: Question) {
+    question.isUpdated = new Date().toISOString();
+    console.log('QuestionDaoService.updateQuestion');
+    try {
+      (await this.databaseService.getDatabase()).executeSql(this.updateRequest,
+        [question.question, question.answer, question.type,
+          question.difficulty, question.nbPlayer, question.particularity,
+          question.isUpdated, question.id]
+      );
+    } catch(error) {
+      console.log('Erreur updateQuestion ', error);
+    }
+  }
+
 
   /**
    * Retourne la dernière question créer
@@ -68,3 +90,7 @@ export class QuestionDaoService extends AbstractDaoService  {
 
 
 }
+function executeSql() {
+  throw new Error('Function not implemented.');
+}
+

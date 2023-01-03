@@ -21,6 +21,7 @@ describe('QuestionDaoService', () => {
   const table = 'table';
   const addRequest = 'addRequest';
   const findNewestQuestionRequest = 'findNewestQuestionRequest';
+  const updateRequest = 'updateRequest';
 
   // Private method
   const findNewestQuestion = 'findNewestQuestion';
@@ -63,10 +64,14 @@ describe('QuestionDaoService', () => {
   it('TNR requêtes', () => {
     const addRequestExpected = 'INSERT INTO ' + service[table] +
     ' (question, answer, type, difficulty, nbPlayer, particularity, isCreated, isUpdated, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
-    const findNewestQuestionRequestExpected = 'SELECT * FROM ' + service[table] + ' ORDER BY id DESC LIMIT 1';
+    const findNewestQuestionRequestExpected = 'SELECT * FROM ' + service[table] + ' ORDER BY id DESC LIMIT 1;';
+    const updateRequestExpected = 'UPDATE ' + service[table] +
+    ' SET question = ?, answer = ?, type = ?, difficulty = ?, nbPlayer = ?, particularity = ?, isUpdated = ? ' +
+    'WHERE id = ?;';
 
     expect(addRequestExpected).toEqual(service[addRequest]);
     expect(findNewestQuestionRequestExpected).toEqual(service[findNewestQuestionRequest]);
+    expect(updateRequestExpected).toEqual(service[updateRequest]);
   });
 
   it('saveQuestion', async () => {
@@ -95,5 +100,14 @@ describe('QuestionDaoService', () => {
 
     const film = await service[findNewestQuestion]();
     expect(questions[0]).toEqual(question);
+  });
+
+  it('updateQuestion', async () => {
+    const isUpdated = question.isUpdated;
+    await service.updateQuestion(question);
+    expect(isUpdated).not.toEqual(question.isUpdated);
+
+
+
   });
 });

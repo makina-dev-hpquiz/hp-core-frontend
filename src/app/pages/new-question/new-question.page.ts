@@ -38,7 +38,7 @@ export class NewQuestionPage implements OnInit {
           this.lectureService.initialize();
           this.createNewQuestion();
         } else {
-          
+
           this.closeAccordion();
           this.updateState = this.router.getCurrentNavigation().extras.state.update;
           this.question = this.router.getCurrentNavigation().extras.state.question;
@@ -78,7 +78,7 @@ export class NewQuestionPage implements OnInit {
    */
   public async addQuestion() {
     await this.saveQuestion();
-    if (this.questionIsValid()) { // TODO
+    if (this.questionIsValid() && !this.updateState) { // TODO
       this.createNewQuestion();
     }
   }
@@ -104,6 +104,7 @@ export class NewQuestionPage implements OnInit {
    */
   public duplicate() {
     if (this.updateState) {
+      // Enregistrement puis changement d'état.
     } else {
       this.saveQuestion();
     }
@@ -134,9 +135,19 @@ export class NewQuestionPage implements OnInit {
       this.question.answer = this.qcmRep[0] + '/' + this.qcmRep[1] + '/' + this.qcmRep[2] + '/' + this.qcmRep[3];
     }
     if (this.questionIsValid()) {
-      await this.lectureService.addQuestion(this.question);
+      if(this.updateState) {
+        await this.lectureService.updateQuestion(this.question);
+      } else {
+        await this.lectureService.addQuestion(this.question);
+      }
+
+      //Toaster
     }
   }
+
+  // private async updateQuestion() {
+
+  // }
 
   /**
    * Créer une nouvelle question
@@ -153,7 +164,7 @@ export class NewQuestionPage implements OnInit {
     if (this.questionTitleInput) {
       this.questionTitleInput.setFocus();
     }
-    
+
     this.closeAccordion();
   }
 
