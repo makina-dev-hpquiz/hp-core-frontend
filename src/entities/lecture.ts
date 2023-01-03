@@ -19,8 +19,12 @@ export class Lecture {
 
     public isInProgress: boolean;
 
-    constructor() {
-        this.date = new Date().toISOString();
-        this.isInProgress = true;
+    constructor(id?: number) {
+        if (id) {
+            this.id = id;
+        } else {
+            this.date = new Date().toISOString();
+            this.isInProgress = true;
+        }
     }
 }

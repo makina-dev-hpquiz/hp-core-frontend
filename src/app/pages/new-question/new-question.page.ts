@@ -102,11 +102,10 @@ export class NewQuestionPage implements OnInit {
   /**
    * Duplique le titre de la question pour une utilisation ultérieur
    */
-  public duplicate() {
+  public async duplicate() {
+    await this.saveQuestion();
     if (this.updateState) {
-      // Enregistrement puis changement d'état.
-    } else {
-      this.saveQuestion();
+      this.updateState = false;
     }
   }
 
@@ -142,12 +141,10 @@ export class NewQuestionPage implements OnInit {
       }
 
       //Toaster
+    } else {
+      console.log('question invalide : ', this.question);
     }
   }
-
-  // private async updateQuestion() {
-
-  // }
 
   /**
    * Créer une nouvelle question

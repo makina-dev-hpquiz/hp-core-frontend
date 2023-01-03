@@ -286,16 +286,21 @@ describe('NewQuestionPage', () => {
     expect(navigateSpy).toHaveBeenCalled();
   });
 
-  it('Duplique une question ', () => {
-
+  it('Duplique une question ', async () => {
     const saveQuestionSpy = spyOn<any>(component, saveQuestion);
     expect(saveQuestionSpy).not.toHaveBeenCalled();
-    component.duplicate();
+    await component.duplicate();
     expect(saveQuestionSpy).toHaveBeenCalled();
   });
 
-  it('Duplique une question existante', () => {
-    //TODO A développer
+  it('Duplique une question existante', async () => {
+    component.updateState = true;
+    const saveQuestionSpy = spyOn<any>(component, saveQuestion);
+    expect(saveQuestionSpy).not.toHaveBeenCalled();
+    expect(component.updateState).toBeTrue();
+    await component.duplicate();
+    expect(saveQuestionSpy).toHaveBeenCalled();
+    expect(component.updateState).toBeFalse();
   });
 
   it('typeChange', () => {

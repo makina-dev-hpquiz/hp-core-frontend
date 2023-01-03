@@ -53,8 +53,7 @@ export class QuestionDaoService extends AbstractDaoService  {
       (await this.databaseService.getDatabase()).executeSql(this.updateRequest,
         [question.question, question.answer, question.type,
           question.difficulty, question.nbPlayer, question.particularity,
-          question.isUpdated, question.id]
-      );
+          question.isUpdated, question.id]);
     } catch(error) {
       console.log('Erreur updateQuestion ', error);
     }
@@ -65,15 +64,39 @@ export class QuestionDaoService extends AbstractDaoService  {
    * Retourne la dernière question créer
    */
   private async findNewestQuestion() {
-    try {
+    let question: Question;
+    try{
       return (await this.databaseService.getDatabase()).executeSql(this.findNewestQuestionRequest, []).then(res =>
-        res.rows.item(0)
+        question = this.extractQuestion(res.rows.item(0))
       );
     } catch (error) {
       console.log('Erreur findNewestQuestion ', error);
     }
+
+    return question;
   }
 
+  /**
+   * TODO a refacto abstract extract() {}
+   *
+   * @param res
+   * @returns
+   */
+  private extractQuestion(res: any) {
+    const q = new Question();
+    q.id = res.id;
+    q.answer = res.answer;
+    q.question = res.question;
+    q.type = res.type;
+    q.difficulty = res.difficulty;
+    q.isCreated = res.isCreated;
+    q.isUpdated = res.isUpdated;
+    q.nbPlayer = res.nbPlayer;
+    q.particularity = res.particularity;
+    q.lecture = new Lecture(res.lecture_id);
+
+    return q;
+  }
 
 
   //   /**
@@ -90,7 +113,5 @@ export class QuestionDaoService extends AbstractDaoService  {
 
 
 }
-function executeSql() {
-  throw new Error('Function not implemented.');
-}
+
 

@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { componentOnReady } from '@ionic/core';
+import { of } from 'rxjs';
 import { Lecture } from 'src/entities/lecture';
 import { Question } from 'src/entities/Question';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
@@ -49,11 +50,16 @@ describe('LectureService', () => {
     q1.answer = 'Réponse';
     q1.difficulty = Difficulty.moyen;
     q1.type = TypeQuestion.question;
-    q1.lecture = new Lecture();
-    q1.lecture.id = 1;
+    const lecture = new Lecture();
+    lecture.id = 1;
+    q1.lecture = lecture;
+
+    await mockQuestionDaoService.saveQuestion.and.returnValue(of(q1).toPromise());
+    service.lecture = lecture;
 
     await service.addQuestion(q1);
     expect(mockQuestionDaoService.saveQuestion).toHaveBeenCalled();
+    expect(service.questions.length).toEqual(1);
   });
 
   it('updateQuestion', async () => {

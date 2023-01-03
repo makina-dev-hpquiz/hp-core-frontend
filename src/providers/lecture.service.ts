@@ -49,6 +49,7 @@ export class LectureService {
    */
   public async addQuestion(question: Question) {
     question = await this.questionDao.saveQuestion(question);
+    question.lecture = this.lecture;
     this.questions.push(question);
   }
 
@@ -57,7 +58,7 @@ export class LectureService {
    *
    * @param question
    */
-  async updateQuestion(question: Question) {
+  public async updateQuestion(question: Question) {
     await this.questionDao.updateQuestion(question);
   }
 
