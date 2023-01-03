@@ -18,9 +18,9 @@ export class LectureService {
 
   constructor(private configureLecture: ConfigureLectureService, private questionDao: QuestionDaoService,
     private groupDao: GroupDaoService) {
-      this.isInitialize = false;
-      this.questions = new Array<Question>();
-      this.groups = new Array<Group>();
+    this.isInitialize = false;
+    this.questions = new Array<Question>();
+    this.groups = new Array<Group>();
   }
 
 
@@ -28,10 +28,10 @@ export class LectureService {
    * Initialise le service en récupérant l'item Lecture réalisé par le service ConfigureLectureService
    */
   initialize() {
-      this.lecture = this.configureLecture.getCurrentLecture();
-      this.questions = new Array<Question>();
-      this.groups = new Array<Group>();
-      this.isInitialize = true;
+    this.lecture = this.configureLecture.getCurrentLecture();
+    this.questions = new Array<Question>();
+    this.groups = new Array<Group>();
+    this.isInitialize = true;
   }
 
   /**
@@ -60,6 +60,7 @@ export class LectureService {
    */
   public async updateQuestion(question: Question) {
     await this.questionDao.updateQuestion(question);
+    this.questions[this.questions.findIndex(q => q.id === question.id)] = question;
   }
 
   deleteQuestion(question: Question) { }

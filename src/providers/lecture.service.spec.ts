@@ -70,8 +70,15 @@ describe('LectureService', () => {
     q1.type = TypeQuestion.question;
     q1.lecture = new Lecture();
     q1.lecture.id = 1;
-    await service.updateQuestion(q1);
+
+    service.questions.push(q1);
+    const q1Updated = Object.assign({}, q1);
+    q1Updated.question = 'Question Updated';
+
+    await service.updateQuestion(q1Updated);
 
     expect(mockQuestionDaoService.updateQuestion).toHaveBeenCalled();
+    expect(service.questions.length).toEqual(1);
+    expect(service.questions[0].question).toEqual(q1Updated.question);
   });
 });

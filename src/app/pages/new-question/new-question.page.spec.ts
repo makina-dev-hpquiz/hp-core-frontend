@@ -6,10 +6,11 @@ import { NewQuestionPage } from './new-question.page';
 import { routes } from 'src/app/app-routing.module';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { LectureService } from 'src/providers/lecture.service';
-import { Router } from '@angular/router';
+import { Navigation, Router } from '@angular/router';
 import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 import { Question } from 'src/entities/Question';
+import { Lecture } from 'src/entities/lecture';
 
 //Méthode privée
 const saveQuestion = 'saveQuestion';
@@ -28,6 +29,7 @@ describe('NewQuestionPage', () => {
 
   let mockLectureService: jasmine.SpyObj<LectureService>;
   let mockScreenOrientation: jasmine.SpyObj<ScreenOrientation>;
+  let getCurrentNavigationSpy: jasmine.Spy<() => Navigation>;
 
   let router: Router;
 
@@ -55,13 +57,13 @@ describe('NewQuestionPage', () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
-    spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { initialize: true} } } as any);
+    getCurrentNavigationSpy = spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { initialize: true} } } as any);
 
     fixture = TestBed.createComponent(NewQuestionPage);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
-
+    jasmine.getEnv().allowRespy(true);
   }));
 
   it('should create', () => {
@@ -71,7 +73,6 @@ describe('NewQuestionPage', () => {
     expect(component.questionsType).toEqual(typeQuestionList);
     expect(component.question.type).toEqual(TypeQuestion.question);
     expect(component.question.difficulty).toEqual(Difficulty.moyen);
-
 
     expect(component.questionTitleInput.ionFocus).toBeTruthy();
   });

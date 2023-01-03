@@ -38,10 +38,9 @@ export class NewQuestionPage implements OnInit {
           this.lectureService.initialize();
           this.createNewQuestion();
         } else {
-
           this.closeAccordion();
           this.updateState = this.router.getCurrentNavigation().extras.state.update;
-          this.question = this.router.getCurrentNavigation().extras.state.question;
+          this.question = Object.assign({}, this.router.getCurrentNavigation().extras.state.question);
           if (this.question.type === TypeQuestion.qcm) {
             this.qcmRep = this.question.answer.split('/');
           } else {
