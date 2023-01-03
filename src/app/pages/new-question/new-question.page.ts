@@ -78,7 +78,7 @@ export class NewQuestionPage implements OnInit {
    */
   public async addQuestion() {
     await this.saveQuestion();
-    if (this.questionIsValid() && !this.updateState) { // TODO
+    if (this.questionIsValid() && !this.updateState) {
       this.createNewQuestion();
     }
   }
@@ -89,13 +89,13 @@ export class NewQuestionPage implements OnInit {
   public async addInGroup() {
     if (this.questionIsValid()) {
       await this.saveQuestion();
-      this.createNewQuestion();
       const navigationExtras: NavigationExtras = {
         state: {
-          question: this.lectureService.questions[this.lectureService.questions.length-1]
+          question: this.question
         }
       };
       await this.router.navigate(['/tabs/groups'], navigationExtras);
+      this.createNewQuestion();
     }
   }
 
