@@ -13,7 +13,7 @@ export class QuestionDaoService extends AbstractDaoService  {
   private table = 'question';
 
   private addRequest = 'INSERT INTO ' + this.table +
-    ' (question, answer, type, difficulty, nb_player, particularity, isCreated, isUpdated, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
+    ' (question, answer, type, difficulty, nbPlayer, particularity, isCreated, isUpdated, lecture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
   private findNewestQuestionRequest = 'SELECT * FROM ' + this.table + ' ORDER BY id DESC LIMIT 1';
 
 

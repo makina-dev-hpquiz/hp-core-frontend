@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS lecture (id INTEGER PRIMARY KEY AUTOINCREMENT, date T
          ON DELETE CASCADE 
          ON UPDATE NO ACTION
 );
-CREATE TABLE IF NOT EXISTS question (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT, type TEXT, difficulty TEXT, nb_player INTEGER, particularity TEXT, isCreated TEXT, isUpdated TEXT, lecture_id INTEGER, FOREIGN KEY (lecture_id) 
+DROP TABLE question;
+CREATE TABLE IF NOT EXISTS question (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT, type TEXT, difficulty TEXT, nbPlayer INTEGER, particularity TEXT, isCreated TEXT, isUpdated TEXT, lecture_id INTEGER, FOREIGN KEY (lecture_id) 
     REFERENCES lecture (id) 
          ON DELETE CASCADE 
          ON UPDATE NO ACTION
