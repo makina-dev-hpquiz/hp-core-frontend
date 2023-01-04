@@ -19,7 +19,7 @@ export class NewQuestionPage implements OnInit {
   @ViewChild('accordionGroup', { static: true }) accordionGroup: IonAccordionGroup;
 
   public updateState: boolean;
-  public title= 'Lecture - Nouvelle question';
+  public title: string;
   public typeQuestion;
   public questionsType;
   public difficulties;
@@ -27,9 +27,12 @@ export class NewQuestionPage implements OnInit {
 
   public question: Question;
 
+  private readonly titleNewQuestion = 'Lecture - Nouvelle question';
+  private readonly titleUpdateQuestion = 'Lecture - Mise à jour question';
+
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService,
     private screenOrientation: ScreenOrientation) {
-    this.updateState = false;
+    this.changeState();
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -38,6 +41,7 @@ export class NewQuestionPage implements OnInit {
           this.lectureService.initialize();
           this.createNewQuestion();
         } else {
+          this.title = this.titleUpdateQuestion;
           this.closeAccordion();
           this.updateState = this.router.getCurrentNavigation().extras.state.update;
           this.question = Object.assign({}, this.router.getCurrentNavigation().extras.state.question);
@@ -104,7 +108,7 @@ export class NewQuestionPage implements OnInit {
   public async duplicate() {
     await this.saveQuestion();
     if (this.updateState) {
-      this.updateState = false;
+      this.changeState();
     }
   }
 
@@ -149,7 +153,7 @@ export class NewQuestionPage implements OnInit {
    * Créer une nouvelle question
    */
   private createNewQuestion() {
-    this.updateState = false;
+    this.changeState();
     this.question = new Question();
 
     this.question.lecture = this.lectureService.lecture;
@@ -172,5 +176,13 @@ export class NewQuestionPage implements OnInit {
     if(this.accordionGroup) {
       this.accordionGroup.value= undefined;
     }
+  }
+
+  /**
+   * Change l'état de la page en état de création.
+   */
+  private changeState(){
+      this.updateState = false;
+      this.title = this.titleNewQuestion;
   }
 }

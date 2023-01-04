@@ -425,4 +425,6 @@ describe('NewQuestionPage', () => {
     expect(component.question.answer).toContain(component.qcmRep[3]);
     expect(mockLectureService.updateQuestion).toHaveBeenCalled();
   });
+
+
 });

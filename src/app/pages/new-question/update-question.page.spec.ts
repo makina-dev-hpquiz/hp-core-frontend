@@ -15,6 +15,11 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 //Méthode privée
 const getCurrentNavigation = 'getCurrentNavigation';
 const closeAccordion = 'closeAccordion';
+const changeState = 'changeState';
+
+//Propriété privée
+const titleUpdateQuestion = 'titleUpdateQuestion';
+const titleNewQuestion = 'titleNewQuestion';
 
 describe('NewQuestionPage en modification', () => {
     let component: NewQuestionPage;
@@ -22,6 +27,7 @@ describe('NewQuestionPage en modification', () => {
 
     let mockLectureService: jasmine.SpyObj<LectureService>;
     let mockScreenOrientation: jasmine.SpyObj<ScreenOrientation>;
+    let getCurrentNavigationSpy;
     let router: Router;
 
     let question = new Question();
@@ -56,16 +62,14 @@ describe('NewQuestionPage en modification', () => {
         }).compileComponents();
 
         router = TestBed.inject(Router);
-        spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { update: true, question } } } as any);
+        getCurrentNavigationSpy = spyOn(router, getCurrentNavigation).and.returnValue(
+            { extras: { state: { update: true, question } } } as any);
 
         fixture = TestBed.createComponent(NewQuestionPage);
         component = fixture.componentInstance;
 
         fixture.detectChanges();
     }));
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
 
     it('Accès à l\'écran avec une question existante', async () => {
         question = new Question();
@@ -78,8 +82,7 @@ describe('NewQuestionPage en modification', () => {
         question.lecture = lecture;
 
         await TestBed.compileComponents();
-
-        spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { update: true, question } } } as any);
+        getCurrentNavigationSpy.and.returnValue({ extras: { state: { update: true, question } } } as any);
 
         fixture = TestBed.createComponent(NewQuestionPage);
         component = fixture.componentInstance;
@@ -102,8 +105,7 @@ describe('NewQuestionPage en modification', () => {
         question.lecture = lecture;
 
         await TestBed.compileComponents();
-
-        spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { update: true, question } } } as any);
+        getCurrentNavigationSpy.and.returnValue({ extras: { state: { update: true, question } } } as any);
 
         fixture = TestBed.createComponent(NewQuestionPage);
         component = fixture.componentInstance;
@@ -114,4 +116,12 @@ describe('NewQuestionPage en modification', () => {
         expect(component.question.id).toEqual(question.id);
     });
 
+    it('private changeState', async () => {
+        expect(component.updateState).toBeTrue();
+        expect(component.title).toEqual(component[titleUpdateQuestion]);
+        component[changeState]();
+
+        expect(component.updateState).toBeFalse();
+        expect(component.title).toEqual(component[titleNewQuestion]);
+      });
 });
