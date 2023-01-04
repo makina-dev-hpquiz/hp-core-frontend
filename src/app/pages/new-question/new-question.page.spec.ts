@@ -11,6 +11,8 @@ import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 import { Question } from 'src/entities/Question';
 import { Lecture } from 'src/entities/lecture';
+import { ToasterService } from 'src/providers/toaster.service';
+import { of } from 'rxjs';
 
 //Méthode privée
 const saveQuestion = 'saveQuestion';
@@ -30,14 +32,17 @@ describe('NewQuestionPage', () => {
   let mockLectureService: jasmine.SpyObj<LectureService>;
   let mockScreenOrientation: jasmine.SpyObj<ScreenOrientation>;
   let getCurrentNavigationSpy: jasmine.Spy<() => Navigation>;
-
+  let mockToasterService: jasmine.SpyObj<ToasterService>;
+  let presentSpy;
   let router: Router;
 
   beforeEach(waitForAsync(async () => {
     mockScreenOrientation = jasmine.createSpyObj<ScreenOrientation>('ScreenOrientation', ['unlock']);
     mockLectureService = jasmine.createSpyObj<LectureService>('LectureService',
     ['initialize', 'addQuestion', 'updateQuestion', 'deleteQuestion']);
+    presentSpy = jasmine.createSpy('present');
 
+    mockToasterService = jasmine.createSpyObj<ToasterService>('ToasterService', ['getSuccessToast', 'getDangerToast']);
 
     TestBed.configureTestingModule({
       declarations: [NewQuestionPage,
@@ -52,12 +57,18 @@ describe('NewQuestionPage', () => {
         {
           provide: ScreenOrientation,
           useValue: mockScreenOrientation
+        },
+        {
+          provide: ToasterService,
+          useValue: mockToasterService
         }
       ]
     }).compileComponents();
 
     router = TestBed.inject(Router);
     getCurrentNavigationSpy = spyOn(router, getCurrentNavigation).and.returnValue({ extras: { state: { initialize: true} } } as any);
+    mockToasterService.getSuccessToast.and.returnValue({present: presentSpy} as any);
+    mockToasterService.getDangerToast.and.returnValue({present: presentSpy} as any);
 
     fixture = TestBed.createComponent(NewQuestionPage);
     component = fixture.componentInstance;
@@ -231,6 +242,7 @@ describe('NewQuestionPage', () => {
     await component.addQuestion();
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
     expect(component[createNewQuestion]).toHaveBeenCalled();
+    expect(mockToasterService.getSuccessToast).toHaveBeenCalled();
   });
 
   it('addQuestion en modification', async () => {
@@ -243,6 +255,7 @@ describe('NewQuestionPage', () => {
     await component.addQuestion();
     expect(mockLectureService.updateQuestion).toHaveBeenCalled();
     expect(component[createNewQuestion]).not.toHaveBeenCalled();
+    expect(mockToasterService.getSuccessToast).toHaveBeenCalled();
   });
 
 
@@ -263,6 +276,14 @@ describe('NewQuestionPage', () => {
     expect(component.question.answer).toContain(component.qcmRep[3]);
     expect(mockLectureService.addQuestion).toHaveBeenCalled();
     expect(component[createNewQuestion]).toHaveBeenCalled();
+    expect(mockToasterService.getSuccessToast).toHaveBeenCalled();
+  });
+
+  it('addQuestion avec incomplète question', async () => {
+    component.question = new Question();
+    await component.addQuestion();
+
+    expect(mockToasterService.getDangerToast).toHaveBeenCalled();
   });
 
   it('addInGroup', async () => {

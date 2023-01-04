@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { IonAccordionGroup, IonTextarea } from '@ionic/angular';
+import { IonAccordionGroup, IonTextarea, ToastController } from '@ionic/angular';
 import { Question } from 'src/entities/Question';
 import { difficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { typeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { LectureService } from 'src/providers/lecture.service';
 
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
+import { ToasterService } from 'src/providers/toaster.service';
 
 @Component({
   selector: 'app-new-question',
@@ -31,7 +32,7 @@ export class NewQuestionPage implements OnInit {
   private readonly titleUpdateQuestion = 'Lecture - Mise à jour question';
 
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService,
-    private screenOrientation: ScreenOrientation) {
+    private screenOrientation: ScreenOrientation, private toasterService: ToasterService) {
     this.changeState();
 
     this.route.queryParams.subscribe(params => {
@@ -139,14 +140,15 @@ export class NewQuestionPage implements OnInit {
     if (this.questionIsValid()) {
       if(this.updateState) {
         await this.lectureService.updateQuestion(this.question);
+        (await this.toasterService.getSuccessToast('La question a été mis à jour !')).present();
       } else {
         await this.lectureService.addQuestion(this.question);
+        (await this.toasterService.getSuccessToast('La question a été sauvegardé !')).present();
       }
-
-      //Toaster
     } else {
-      console.log('question invalide : ', this.question);
+      await (await this.toasterService.getDangerToast('La question n\'a pas pu être sauvegardé !')).present();
     }
+
   }
 
   /**
