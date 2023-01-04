@@ -15,7 +15,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 //Méthode privée
 const getCurrentNavigation = 'getCurrentNavigation';
 const closeAccordion = 'closeAccordion';
-const changeState = 'changeState';
+const changeStatePage = 'changeStatePage';
 
 //Propriété privée
 const titleUpdateQuestion = 'titleUpdateQuestion';
@@ -116,10 +116,10 @@ describe('NewQuestionPage en modification', () => {
         expect(component.question.id).toEqual(question.id);
     });
 
-    it('private changeState', async () => {
+    it('private changeStatePage', async () => {
         expect(component.updateState).toBeTrue();
         expect(component.title).toEqual(component[titleUpdateQuestion]);
-        component[changeState]();
+        component[changeStatePage]();
 
         expect(component.updateState).toBeFalse();
         expect(component.title).toEqual(component[titleNewQuestion]);

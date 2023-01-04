@@ -33,7 +33,7 @@ export class NewQuestionPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private lectureService: LectureService,
     private screenOrientation: ScreenOrientation, private toasterService: ToasterService) {
-    this.changeState();
+    this.changeStatePage();
 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -109,7 +109,7 @@ export class NewQuestionPage implements OnInit {
   public async duplicate() {
     await this.saveQuestion();
     if (this.updateState) {
-      this.changeState();
+      this.changeStatePage();
     }
   }
 
@@ -155,7 +155,7 @@ export class NewQuestionPage implements OnInit {
    * Créer une nouvelle question
    */
   private createNewQuestion() {
-    this.changeState();
+    this.changeStatePage();
     this.question = new Question();
 
     this.question.lecture = this.lectureService.lecture;
@@ -183,7 +183,7 @@ export class NewQuestionPage implements OnInit {
   /**
    * Change l'état de la page en état de création.
    */
-  private changeState(){
+  private changeStatePage(){
       this.updateState = false;
       this.title = this.titleNewQuestion;
   }
