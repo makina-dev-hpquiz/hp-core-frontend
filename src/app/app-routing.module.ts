@@ -17,7 +17,11 @@ export const routes: Routes = [
   {
     path: 'configure-lecture',
     loadChildren: () => import('./pages/lecture/configure-lecture/configure-lecture.module').then( m => m.ConfigureLecturePageModule)
+  },  {
+    path: 'lectures',
+    loadChildren: () => import('./pages/lectures/lectures.module').then( m => m.LecturesPageModule)
   }
+
 
 ];
 @NgModule({
