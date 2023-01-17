@@ -20,6 +20,10 @@ export const routes: Routes = [
   },  {
     path: 'lectures',
     loadChildren: () => import('./pages/lectures/lectures.module').then( m => m.LecturesPageModule)
+  },
+  {
+    path: 'configurations',
+    loadChildren: () => import('./pages/configurations/configurations.module').then( m => m.ConfigurationsPageModule)
   }
 
 
