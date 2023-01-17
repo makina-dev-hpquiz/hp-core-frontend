@@ -8,4 +8,4 @@ declarations: [HeaderComponent],
 exports: [HeaderComponent],
 imports: [IonicModule, CommonModule]
 })
-export class ComponentsModule {}
+export class LectureComponentsModule {}

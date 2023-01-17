@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NewQuestionPage } from './new-question.page';
 
 import { NewQuestionPageRoutingModule } from './new-question-routing.module';
-import { ComponentsModule } from 'src/app/components/ComponentsModule';
+import { LectureComponentsModule } from 'src/app/pages/lecture/components/lecture-components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { ComponentsModule } from 'src/app/components/ComponentsModule';
     CommonModule,
     FormsModule,
     NewQuestionPageRoutingModule,
-    ComponentsModule
+    LectureComponentsModule
   ],
   declarations: [NewQuestionPage]
 })

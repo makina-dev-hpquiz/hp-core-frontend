@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { GroupsPage } from './groups.page';
 
 import { GroupsPageRoutingModule } from './groups-routing.module';
-import { ComponentsModule } from 'src/app/components/ComponentsModule';
+import { LectureComponentsModule } from 'src/app/pages/lecture/components/lecture-components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { ComponentsModule } from 'src/app/components/ComponentsModule';
     FormsModule,
     // RouterModule.forChild([{ path: '', component: GroupsPage }]),
     GroupsPageRoutingModule,
-    ComponentsModule
+    LectureComponentsModule
   ],
   declarations: [GroupsPage],
 })

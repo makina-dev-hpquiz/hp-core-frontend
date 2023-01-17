@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
-import { ComponentsModule } from 'src/app/components/ComponentsModule';
+import { LectureComponentsModule } from 'src/app/pages/lecture/components/lecture-components.module';
 
 @NgModule({
     imports: [

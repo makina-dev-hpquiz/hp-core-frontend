@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { StopLecturePageRoutingModule } from './stop-lecture-routing.module';
 
 import { StopLecturePage } from './stop-lecture.page';
-import { ComponentsModule } from 'src/app/components/ComponentsModule';
+import { LectureComponentsModule } from 'src/app/pages/lecture/components/lecture-components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { ComponentsModule } from 'src/app/components/ComponentsModule';
     FormsModule,
     IonicModule,
     StopLecturePageRoutingModule,
-    ComponentsModule
+    LectureComponentsModule
   ],
   declarations: [StopLecturePage]
 })

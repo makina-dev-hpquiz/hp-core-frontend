@@ -8,15 +8,15 @@ export const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/lecture/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'stop-lecture',
-    loadChildren: () => import('./pages/stop-lecture/stop-lecture.module').then( m => m.StopLecturePageModule)
+    loadChildren: () => import('./pages/lecture/stop-lecture/stop-lecture.module').then( m => m.StopLecturePageModule)
   },
   {
     path: 'configure-lecture',
-    loadChildren: () => import('./pages/configure-lecture/configure-lecture.module').then( m => m.ConfigureLecturePageModule)
+    loadChildren: () => import('./pages/lecture/configure-lecture/configure-lecture.module').then( m => m.ConfigureLecturePageModule)
   }
 
 ];

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ListQuestionsPage } from './list-questions.page';
 
 import { ListQuestionsPageRoutingModule } from './list-questions-routing.module';
-import { ComponentsModule } from 'src/app/components/ComponentsModule';
+import { LectureComponentsModule } from 'src/app/pages/lecture/components/lecture-components.module';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { ComponentsModule } from 'src/app/components/ComponentsModule';
     CommonModule,
     FormsModule,
     ListQuestionsPageRoutingModule,
-    ComponentsModule
+    LectureComponentsModule
   ],
   declarations: [ListQuestionsPage]
 })
