@@ -4,10 +4,8 @@ import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
 
 
 import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
-import { DatabaseService } from 'src/providers/database.service';
 import { ArtworkModel } from 'src/models/artwork.model';
 import { ArtworkDaoService } from 'src/providers/dao/artwork-dao.service';
-import { Artwork } from 'src/entities/artwork';
 import { DateUtils } from 'src/utils/date-utils';
 
 
