@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { SQLiteObject } from '@awesome-cordova-plugins/sqlite';
 import { Artwork } from 'src/entities/artwork';
+import { Lecture } from 'src/entities/lecture';
 import { DatabaseService } from '../database.service';
 import { AbstractDaoService } from './abstract-dao.service';
 
@@ -8,7 +9,6 @@ import { AbstractDaoService } from './abstract-dao.service';
   providedIn: 'root'
 })
 export class ArtworkDaoService extends AbstractDaoService {
-
 
   private table = 'artwork';
 
@@ -19,6 +19,7 @@ export class ArtworkDaoService extends AbstractDaoService {
   private findAllRequest = 'SELECT * FROM ' + this.table + ';';
   private findAll2Request = 'SELECT * FROM ' + this.table + ' JOIN lecture (' +
    this.table + '.id=lecture.id) ORDER BY lecture.date DESC'; //TODO
+  private findByIdRequest= 'SELECT * FROM '+this.table + ' WHERE id= ?;';
 
   private database: SQLiteObject;
 
@@ -67,27 +68,49 @@ export class ArtworkDaoService extends AbstractDaoService {
   public async findAllArtworksByType(type: string): Promise<Artwork[]> {
     let artworks: Artwork[] = [];
     console.log('ArtworkDaoService.findAllArtworksByType ' + this.findAllByTypeRequest);
-    await (await this.databaseService.getDatabase()).executeSql(this.findAllByTypeRequest, [type]).then(res => {
-      artworks = this.extractResultSet(res);
+    await (await this.databaseService.getDatabase()).executeSql(this.findAllByTypeRequest, [type]).then(async res => {
+      artworks = await this.extractResultSet(res);
     });
 
     return artworks;
   }
 
   public async findArtworkByTitle(artwork: Artwork) {
-    console.log('findArtwork ?', artwork.title);
+    console.log('ArtworkDaoService.findArtworkByTitle ?', artwork.title);
     return (await this.databaseService.getDatabase()).executeSql(this.findByTitleRequest, [artwork.title]).then(res =>
-      res.rows.item(0) //TODO is Null?
+      this.extract(res.rows.item(0))
     );
+  }
+
+  public async findById(artwork: Artwork) {
+    console.log('ArtworkDaoService.findById ?', artwork.id);
+    return (await this.databaseService.getDatabase()).executeSql(this.findByIdRequest, [artwork.id]).then(async res =>
+      await this.extract(res.rows.item(0))
+    );
+
   }
 
   public async findAll() {
     console.log('ArtworkDaoService.findAll : ' + this.findAllRequest);
     let artworks: Artwork[] = [];
-    await (await this.databaseService.getDatabase()).executeSql(this.findAllRequest, []).then(res => {
-      artworks = this.extractResultSet(res);
+    await (await this.databaseService.getDatabase()).executeSql(this.findAllRequest, []).then(async res => {
+      artworks = await this.extractResultSet(res);
     });
 
     return artworks;
+  }
+
+  /**
+   *
+   * @param res
+   * @returns
+   */
+  protected extract(res: any) {
+    const artwork = new Artwork();
+    artwork.id = res.id;
+    artwork.title = res.title;
+    artwork.type = res.type;
+
+    return artwork;
   }
 }

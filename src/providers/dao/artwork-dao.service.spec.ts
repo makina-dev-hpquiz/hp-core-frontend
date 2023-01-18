@@ -23,16 +23,20 @@ describe('ArtworkDaoService', () => {
   const findByTitleRequest = 'findByTitleRequest';
   const findAllRequest = 'findAllRequest';
   const updateRequest = 'updateRequest';
+  const findByIdRequest = 'findByIdRequest';
 
 
   // private Method
   const extractResultSet = 'extractResultSet';
 
-
   const artworks = new Array(
-    new Artwork('HP1', 'Film'),
-    new Artwork('HP2', 'Film')
+  new Artwork('HP1', 'Film'),
+  new Artwork('HP2', 'Film')
   );
+
+  artworks[0].id = 1;
+  artworks[1].id = 2;
+
   const res = {
     rows: {
         length: artworks.length,
@@ -73,12 +77,14 @@ describe('ArtworkDaoService', () => {
     const findByTitleRequestExpected = 'SELECT * FROM ' + service[table] + ' WHERE title = ?;';
     const findAllRequestExpected = 'SELECT * FROM '+service[table]+';';
     const updateRequestExpected = 'UPDATE '+service[table]+' SET title = ?, type = ? WHERE id = ?;';
+    const findByIdRequestExpected = 'SELECT * FROM '+service[table]+' WHERE id= ?;';
 
     expect(addRequestExpected).toEqual(service[addRequest]);
     expect(findAllByTypeRequestExpected).toEqual(service[findAllByTypeRequest]);
     expect(findByTitleRequestExpected).toEqual(service[findByTitleRequest]);
     expect(findAllRequestExpected).toEqual(service[findAllRequest]);
     expect(updateRequestExpected).toEqual(service[updateRequest]);
+    expect(findByIdRequestExpected).toEqual(service[findByIdRequest]);
 
   });
 
@@ -95,6 +101,8 @@ describe('ArtworkDaoService', () => {
     const artworks2 = new Array(
       new Artwork('Les Animaux fantastiques', 'Film')
     );
+
+    artworks2[0].id = 3;
 
     const resSpecific = {
       rows: {
@@ -132,9 +140,15 @@ describe('ArtworkDaoService', () => {
     expect(mockSQLiteObject.executeSql).toHaveBeenCalled();
   });
 
+  it('findById', async () => {
+    await mockSQLiteObject.executeSql.and.returnValue(of(res).toPromise());
+    const artworkResult = await service.findById(artworks[0]);
+
+    expect(artworkResult).toEqual(artworks[0]);
+  });
 
   it('private extractResultSet', async () => {
-    const artworksResult = service[extractResultSet](res);
+    const artworksResult = await service[extractResultSet](res);
     expect(artworks).toEqual(artworksResult);
   });
 
