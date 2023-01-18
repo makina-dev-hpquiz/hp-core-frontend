@@ -13,9 +13,9 @@ export class Lecture {
     // @OneToMany(type => QuestionModel, question => question.lecture)
     // public questions: Array<QuestionModel>;
 
-    public startPage: string;
+    public startPage = '';
 
-    public endPage: string;
+    public endPage = '';
 
     public isInProgress: boolean;
 
