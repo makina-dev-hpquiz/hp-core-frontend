@@ -26,10 +26,16 @@ export class LecturesPage implements OnInit {
     await this.getLectures();
   }
 
+  /**
+   * Réactualise la liste de lectures.
+   */
   public changeSelectedArtwork(){
-    console.log('changeSelectedArtwork');
+    this.getLectures();
   }
 
+  /**
+   * Récupère la liste des lectures
+   */
   private async getLectures(){
     this.lectures = new Array();
     if(this.selectedArtwork.id) {
@@ -39,6 +45,9 @@ export class LecturesPage implements OnInit {
     }
   }
 
+  /**
+   * Récupère la liste des oeuvres
+   */
   private async getArtworks(){
     this.artworks = await this.artworkDaoService.findAll();
   }
