@@ -1,4 +1,5 @@
 import { Artwork } from './artwork';
+import { Question } from './Question';
 
 export class Lecture {
 
@@ -11,7 +12,7 @@ export class Lecture {
 
 
     // @OneToMany(type => QuestionModel, question => question.lecture)
-    // public questions: Array<QuestionModel>;
+    public questions: Array<Question>;
 
     public startPage = '';
 
@@ -26,5 +27,7 @@ export class Lecture {
             this.date = new Date().toISOString();
             this.isInProgress = true;
         }
+
+        this.questions = new Array();
     }
 }

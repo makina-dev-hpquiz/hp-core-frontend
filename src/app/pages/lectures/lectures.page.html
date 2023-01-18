@@ -4,13 +4,15 @@
 
 <ion-content>
   <ion-select [(ngModel)]="selectedArtwork" (ionChange)="changeSelectedArtwork()">
-    <ion-select-option *ngFor="let artwork of artworks" [value]="artwork">{{artwork.title}}</ion-select-option>
+    <ion-select-option *ngFor="let artwork of artworks" [value]="artwork">{{artwork.title}} ({{artwork.type}})</ion-select-option>
   </ion-select>
 
   <ion-list>
     <ion-item *ngFor="let lecture of lectures">
       <ion-label>{{lecture.date}}</ion-label>
       <ion-label>{{lecture.artwork.title}}</ion-label>
+      <ion-label>{{lecture.questions.length}}</ion-label>
+      <ion-label>{{lecture.isInProgress}}</ion-label>
       <ion-button position="end"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>
     </ion-item>
     <ion-item *ngIf="lectures.length === 0">
