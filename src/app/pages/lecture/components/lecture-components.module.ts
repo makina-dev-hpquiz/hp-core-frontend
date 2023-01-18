@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { HeaderComponent } from './header/header.component';
+import { LectureHeaderComponent } from './lecture-header/lecture-header.component';
 
 @NgModule({
-declarations: [HeaderComponent],
-exports: [HeaderComponent],
+declarations: [LectureHeaderComponent],
+exports: [LectureHeaderComponent],
 imports: [IonicModule, CommonModule]
 })
 export class LectureComponentsModule {}

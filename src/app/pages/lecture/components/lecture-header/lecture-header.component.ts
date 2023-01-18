@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header-lecture',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  templateUrl: './lecture-header.component.html',
+  styleUrls: ['./lecture-header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class LectureHeaderComponent implements OnInit {
 
   @Output() actionButtonEmitter = new EventEmitter<boolean>();
 
