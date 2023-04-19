@@ -57,6 +57,13 @@ describe('ConfigureLectureService', () => {
     expect(service.getCurrentLecture().date).toEqual(initializeLecture.date);
   });
 
+  it('loadLecture', () => {
+    const lecture1 = new Lecture();
+    lecture1.id = 1;
+    service.loadLecture(lecture1);
+    expect(lecture1).toEqual(service.getCurrentLecture());
+  });
+
   it('findArtworksByType', async () => {
     const artworksList = [
       artwork1,

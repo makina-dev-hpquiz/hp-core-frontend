@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Lecture } from 'src/entities/lecture';
 import { ConfigureLectureService } from './configure-lecture.service';
 import { QuestionDaoService } from './dao/question-dao.service';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { Group } from 'src/entities/group';
 import { GroupDaoService } from './dao/group-dao.service';
 
@@ -27,7 +27,7 @@ export class LectureService {
   /**
    * Initialise le service en récupérant l'item Lecture réalisé par le service ConfigureLectureService
    */
-  initialize() {
+  public initialize() {
     this.lecture = this.configureLecture.getCurrentLecture();
     this.questions = new Array<Question>();
     this.groups = new Array<Group>();
@@ -37,8 +37,10 @@ export class LectureService {
   /**
    * Charge une précedente lecture non terminée
    */
-  loadReading(lecture: Lecture) {
-    //TODO Impl
+  public loadLecture(lecture: Lecture) {
+   this.configureLecture.loadLecture(lecture);
+   this.lecture = this.configureLecture.getCurrentLecture();
+   this.questions = this.lecture.questions;
   }
 
   /**

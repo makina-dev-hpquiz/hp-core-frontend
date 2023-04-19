@@ -13,7 +13,7 @@
       </ion-label>
       <ion-label *ngIf="!selectedArtwork.id">{{lecture.artwork.title}}</ion-label>
       <ion-label>{{lecture.questions.length}}</ion-label>
-      <ion-button position="end"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>
+      <ion-button position="end" (click)="goToLecture(lecture)"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>
     </ion-item>
     <ion-item *ngIf="lectures.length === 0">
       <ion-label>Aucune lecture</ion-label>

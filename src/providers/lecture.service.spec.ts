@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { componentOnReady } from '@ionic/core';
 import { of } from 'rxjs';
 import { Lecture } from 'src/entities/lecture';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { ConfigureLectureService } from './configure-lecture.service';
@@ -18,8 +17,16 @@ describe('LectureService', () => {
   let mockQuestionDaoService: jasmine.SpyObj<QuestionDaoService>;
   let mockGroupDaoService: jasmine.SpyObj<GroupDaoService>;
 
+
+  //Proprété privée
+  const configureLectureService = 'configureLectureService';
+  const lectureProp = 'lecture';
+  const isInitialize = 'isInitialize';
+
   beforeEach(() => {
     mockQuestionDaoService = jasmine.createSpyObj<QuestionDaoService>('QuestionDaoService', ['saveQuestion', 'updateQuestion']);
+    mockConfigureLectureService = jasmine.createSpyObj<ConfigureLectureService>('ConfigureLectureService',
+    ['getCurrentLecture', 'loadLecture']);
     TestBed.configureTestingModule({
       providers:[
         {
@@ -42,6 +49,30 @@ describe('LectureService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('initialize', async () => {
+    const lecture = new Lecture();
+    lecture.id = 1;
+    mockConfigureLectureService.getCurrentLecture.and.returnValues(await of(lecture).toPromise());
+    service.initialize();
+
+    expect(service.lecture).toEqual(lecture);
+    expect(service.questions.length).toEqual(0);
+    expect(service.groups.length).toEqual(0);
+    expect(service[isInitialize]).toBeTrue();
+  });
+
+  it('loadLecture', async () => {
+    const lecture = new Lecture();
+    lecture.id = 1;
+    lecture.questions = new Array(new Question(), new Question());
+    mockConfigureLectureService.getCurrentLecture.and.returnValues(await of(lecture).toPromise());
+    service.loadLecture(lecture);
+
+    expect(service.lecture).toEqual(lecture);
+    expect(service.questions.length).toEqual(2);
+
   });
 
   it('addQuestion', async () => {

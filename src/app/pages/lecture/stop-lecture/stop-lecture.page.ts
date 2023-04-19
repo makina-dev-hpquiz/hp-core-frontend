@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LectureService } from 'src/providers/lecture.service';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
@@ -14,12 +14,29 @@ export class StopLecturePage implements OnInit {
   public nbQuestions: number;
   public nbQuestionPerDifficulty: number[];
 
-
-  constructor(private router: Router, private lectureService: LectureService) {
-   this.nbQuestionPerDifficulty = [0, 0, 0];
+  constructor(private router: Router, private lectureService: LectureService, private route: ActivatedRoute) {
+    this.nbQuestionPerDifficulty = [0, 0, 0];
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.lectureService.loadLecture(this.router.getCurrentNavigation().extras.state.lecture);
+        this.calculateQuestionsNumber();
+      }
+    });
   }
 
-  ionViewWillEnter(){
+  public ionViewWillEnter() {
+   this.calculateQuestionsNumber();
+  }
+
+  public ngOnInit() {
+  }
+
+  public async stopLecture() {
+    await this.router.navigate(['/']);
+  }
+
+  private calculateQuestionsNumber(){
+    this.nbQuestionPerDifficulty = [0, 0, 0];
     this.nbQuestions = this.lectureService.questions.length;
     this.lectureService.questions.forEach(q => {
       switch (q.difficulty) {
@@ -36,12 +53,4 @@ export class StopLecturePage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
-
-  stopLecture() {
-    this.router.navigate(['/']);
-
-  }
 }

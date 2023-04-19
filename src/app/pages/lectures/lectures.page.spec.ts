@@ -16,6 +16,9 @@ const getArtworks = 'getArtworks';
 const sortLectures = 'sortLectures';
 const getQuestions = 'getQuestions';
 
+//Propriété privée
+const router = 'router';
+
 describe('LecturesPage', () => {
   let component: LecturesPage;
   let fixture: ComponentFixture<LecturesPage>;
@@ -88,6 +91,13 @@ describe('LecturesPage', () => {
     expect(component.lectures[0].questions.length).toEqual(2);
   });
 
+  it('goToLecture', () => {
+    const navigateSpy = spyOn(component[router], 'navigate');
+    expect(navigateSpy).not.toHaveBeenCalled();
+    component.goToLecture(lecture1);
+    expect(navigateSpy).toHaveBeenCalled();
+  });
+
   it('Private LecturePage.getLectures sans artwork sélectionné', async () => {
     await mockLectureDaoService.findAll.and.returnValues(of(lectures).toPromise());
     await mockQuestionDaoService.findAllByLecture.and.returnValues(of([new Question(), new Question()]).toPromise());
@@ -107,17 +117,17 @@ describe('LecturesPage', () => {
     expect(component.lectures.length).toEqual(1);
     expect(component.lectures[0].questions.length).toEqual(1);
   });
-  
+
   it('Private LecturePage.getQuestions', async () => {
     await mockLectureDaoService.findAllByArtwork.and.returnValues(of([lecture1]).toPromise());
     await mockQuestionDaoService.findAllByLecture.and.returnValues(of([new Question(), new Question()]).toPromise());
     await component[getQuestions]();
-    
+
     expect(component.lectures[0].questions.length).toEqual(2);
   });
 
   it('Private LecturePage.sortLectures', async () => {
-    let lecture3 = new Lecture();
+    const lecture3 = new Lecture();
     lecture3.id = 3;
 
     component.selectedArtwork = new Artwork();

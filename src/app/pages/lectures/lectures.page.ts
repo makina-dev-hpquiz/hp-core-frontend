@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { Artwork } from 'src/entities/artwork';
 import { Lecture } from 'src/entities/lecture';
 import { ArtworkDaoService } from 'src/providers/dao/artwork-dao.service';
@@ -17,7 +18,7 @@ export class LecturesPage implements OnInit {
   public selectedArtwork: Artwork;
 
   constructor(private lectureDaoService: LectureDaoService, private artworkDaoService: ArtworkDaoService,
-    private questionDaoService: QuestionDaoService) { }
+    private questionDaoService: QuestionDaoService, private router: Router) { }
 
   async ngOnInit() {
     this.artworks = new Array();
@@ -35,8 +36,18 @@ export class LecturesPage implements OnInit {
     await this.getLectures();
   }
 
-  public displayDate(date: Date) {
-    return date.toDateString();
+  /**
+   * Réouvre la lecture passée en paramètre
+   *
+   * @param lecture
+   */
+  public goToLecture(lecture: Lecture){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        lecture
+      }
+    };
+    this.router.navigate(['/tabs/stop-lecture'], navigationExtras);
   }
 
   /**

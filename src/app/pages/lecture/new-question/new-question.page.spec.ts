@@ -10,9 +10,7 @@ import { Navigation, Router } from '@angular/router';
 import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 import { Question } from 'src/entities/question';
-import { Lecture } from 'src/entities/lecture';
 import { ToasterService } from 'src/providers/toaster.service';
-import { of } from 'rxjs';
 
 //Méthode privée
 const saveQuestion = 'saveQuestion';
@@ -87,6 +85,7 @@ describe('NewQuestionPage', () => {
 
     expect(component.questionTitleInput.ionFocus).toBeTruthy();
   });
+
 
   it('createNewQuestion', async () => {
     component.accordionGroup = jasmine.createSpyObj<IonAccordionGroup>('accordionGroup', [], {value: 'test'}) as IonAccordionGroup;

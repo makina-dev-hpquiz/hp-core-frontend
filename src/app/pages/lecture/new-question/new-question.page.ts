@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { IonAccordionGroup, IonTextarea, ToastController } from '@ionic/angular';
-import { Question } from 'src/entities/Question';
+import { IonAccordionGroup, IonTextarea } from '@ionic/angular';
+import { Question } from 'src/entities/question';
 import { difficultyList, Difficulty } from 'src/models/enums/difficultyEnum';
 import { typeQuestionList, TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { LectureService } from 'src/providers/lecture.service';
@@ -52,6 +52,8 @@ export class NewQuestionPage implements OnInit {
             this.qcmRep = ['', '', '', ''];
           }
         }
+      } else {
+        this.createNewQuestion();
       }
     });
   }

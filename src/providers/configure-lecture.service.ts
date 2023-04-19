@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ArtworkModel } from 'src/models/artwork.model';
 import { ArtworkType } from 'src/models/enums/typeArtworkEnum';
 import { Lecture } from 'src/entities/lecture';
 import { LectureDaoService } from './dao/lecture-dao.service';
@@ -36,6 +35,15 @@ export class ConfigureLectureService {
       return this.lecture;
    }
 
+   /**
+    * Charge l'objet lecture avec la nouvelle fourni en paramètre
+    *
+    * @param lecture
+    */
+   public loadLecture(lecture: Lecture){
+      this.lecture = lecture;
+   }
+
 
   /**
    * Récupère depuis le service Dao la liste des oeuvres liées au type selectionné
@@ -70,4 +78,5 @@ export class ConfigureLectureService {
     this.lecture = await this.lectureDao.saveLecture(this.lecture);
     console.log('Lecture saved !', this.lecture);
   }
+
 }

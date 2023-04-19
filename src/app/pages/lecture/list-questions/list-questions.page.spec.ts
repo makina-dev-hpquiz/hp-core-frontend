@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ListQuestionsPage } from './list-questions.page';
 import { routes } from 'src/app/app-routing.module';
 import { LectureService } from 'src/providers/lecture.service';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';

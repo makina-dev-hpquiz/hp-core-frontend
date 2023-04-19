@@ -3,7 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { LectureService } from 'src/providers/lecture.service';
 
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
