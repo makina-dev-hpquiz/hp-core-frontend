@@ -13,6 +13,8 @@ import { Question } from 'src/entities/question';
 //Méthode privée
 const getLectures = 'getLectures';
 const getArtworks = 'getArtworks';
+const sortLectures = 'sortLectures';
+const getQuestions = 'getQuestions';
 
 describe('LecturesPage', () => {
   let component: LecturesPage;
@@ -106,10 +108,33 @@ describe('LecturesPage', () => {
     expect(component.lectures[0].questions.length).toEqual(1);
   });
 
+  it('Private LecturePage.getQuestions', async () => {
+    await mockLectureDaoService.findAllByArtwork.and.returnValues(of([lecture1]).toPromise());
+    await mockQuestionDaoService.findAllByLecture.and.returnValues(of([new Question(), new Question()]).toPromise());
+    await component[getQuestions]();
+
+    expect(component.lectures[0].questions.length).toEqual(2);
+  });
+
+  it('Private LecturePage.sortLectures', async () => {
+    const lecture3 = new Lecture();
+    lecture3.id = 3;
+
+    component.selectedArtwork = new Artwork();
+    await mockLectureDaoService.findAll.and.returnValues(of([lecture1, lecture3]).toPromise());
+    await component[getLectures]();
+    component[sortLectures]();
+
+    expect(component.lectures.length).toEqual(2);
+    expect(component.lectures[0].id).toEqual(lecture3.id);
+    expect(component.lectures[1].id).toEqual(lecture1.id);
+  });
+
+
   it('Private LecturePage.getArtworks', async () => {
     await mockArtworkDaoService.findAll.and.returnValues(of([artwork]).toPromise());
     await component[getArtworks]();
-    expect(component.artworks.length).toEqual(1);
+    expect(component.artworks.length).toEqual(2);
   });
 
 
