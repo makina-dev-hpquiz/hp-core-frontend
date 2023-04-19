@@ -31,31 +31,53 @@ export class LecturesPage implements OnInit {
   /**
    * Réactualise la liste de lectures.
    */
-  public async changeSelectedArtwork(){
+  public async changeSelectedArtwork() {
     await this.getLectures();
+  }
+
+  public displayDate(date: Date) {
+    return date.toDateString();
   }
 
   /**
    * Récupère la liste des lectures
    */
-  private async getLectures(){
+  private async getLectures() {
     this.lectures = new Array();
-    if(this.selectedArtwork.id) {
+    if (this.selectedArtwork.id) {
       this.lectures = await this.lectureDaoService.findAllByArtwork(this.selectedArtwork);
     } else {
       this.lectures = await this.lectureDaoService.findAll();
     }
 
+    this.sortLectures();
+    this.getQuestions();
+  }
+
+  /**
+   * Tri la liste des lectures de la plus récente à la plus ancienne
+   */
+  private sortLectures() {
+    this.lectures.sort((lecture1, lecture2) => new Date(lecture2.date).getTime() - new Date(lecture1.date).getTime());
+  }
+
+  /**
+   * Récupère et associe les questions aux lectures
+   */
+  private async getQuestions() {
     this.lectures.forEach(async (lecture) => {
       lecture.questions = await this.questionDaoService.findAllByLecture(lecture);
     });
   }
 
   /**
-   * Récupère la liste des oeuvres
+   * Récupère la liste des oeuvres et ajoute une oeuvre vide en tête de la liste
    */
-  private async getArtworks(){
-    this.artworks = await this.artworkDaoService.findAll();
+  private async getArtworks() {
+    let artworkList = await this.artworkDaoService.findAll();
+    this.artworks = new Array(new Artwork());
+    artworkList.forEach(artwork => {
+      this.artworks.push(artwork);
+    });
   }
-
 }
