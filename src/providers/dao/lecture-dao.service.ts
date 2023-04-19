@@ -59,6 +59,12 @@ export class LectureDaoService extends AbstractDaoService {
     return lectures;
   }
 
+  /**
+   * Retourne une liste de lecture associée à l'oeuvre fourni en paramètre
+   *
+   * @param artwork : Artwork
+   * @returns Lecture[]
+   */
   public async findAllByArtwork(artwork: Artwork): Promise<Lecture[]> {
     console.log('LectureDaoService.findAllByArtwork : ' + this.findAllByArtworkRequest, artwork.id);
     let lectures: Lecture[] = [];

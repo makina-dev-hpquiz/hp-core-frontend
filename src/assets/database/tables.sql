@@ -1,3 +1,10 @@
+
+/**
+DROP TABLE question;
+DROP TABLE lecture;
+DROP TABLE artwork;
+**/
+
 CREATE TABLE IF NOT EXISTS artwork(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, type TEXT);
 
 CREATE TABLE IF NOT EXISTS lecture (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, start TEXT, end TEXT, is_progress BOOLEAN, artwork_id INTEGER, FOREIGN KEY (artwork_id) 
@@ -5,12 +12,14 @@ CREATE TABLE IF NOT EXISTS lecture (id INTEGER PRIMARY KEY AUTOINCREMENT, date T
          ON DELETE CASCADE 
          ON UPDATE NO ACTION
 );
-DROP TABLE question;
+
 CREATE TABLE IF NOT EXISTS question (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT, type TEXT, difficulty TEXT, nbPlayer INTEGER, particularity TEXT, isCreated TEXT, isUpdated TEXT, lecture_id INTEGER, FOREIGN KEY (lecture_id) 
     REFERENCES lecture (id) 
          ON DELETE CASCADE 
          ON UPDATE NO ACTION
 );
+
+
 CREATE TABLE IF NOT EXISTS groups (id INTEGER PRIMARY KEY AUTOINCREMENT, lecture_id INTEGER, FOREIGN KEY (lecture_id) 
     REFERENCES lecture (id) 
          ON DELETE CASCADE 

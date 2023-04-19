@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Lecture } from 'src/entities/lecture';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { DatabaseService } from '../database.service';
 import { AbstractDaoService } from './abstract-dao.service';
 
@@ -18,6 +18,8 @@ export class QuestionDaoService extends AbstractDaoService {
   private updateRequest = 'UPDATE ' + this.table +
     ' SET question = ?, answer = ?, type = ?, difficulty = ?, nbPlayer = ?, particularity = ?, isUpdated = ? ' +
     'WHERE id = ?;';
+
+  private findAllByLectureRequest = 'SELECT * FROM '+ this.table + ' WHERE lecture_id = ? ORDER BY isUpdated DESC;';
 
   constructor(private databaseService: DatabaseService) {
     super();
@@ -48,7 +50,7 @@ export class QuestionDaoService extends AbstractDaoService {
    */
   public async updateQuestion(question: Question) {
     question.isUpdated = new Date().toISOString();
-    console.log('QuestionDaoService.updateQuestion');
+    console.log('QuestionDaoService.updateQuestion : ', question.id);
     try {
       (await this.databaseService.getDatabase()).executeSql(this.updateRequest,
         [question.question, question.answer, question.type,
@@ -59,6 +61,20 @@ export class QuestionDaoService extends AbstractDaoService {
     }
   }
 
+  /**
+   * Retourne une liste de question associée à la lecture fourni en paramètre
+   *
+   * @param lecture: Lecture
+   * @returns Question[]
+   */
+  public async findAllByLecture(lecture: Lecture){
+    console.log('QuestionDaoService.findAllByLecture : ' + this.findAllByLectureRequest, lecture.id);
+    let questions: Question[] = [];
+    await (await this.databaseService.getDatabase()).executeSql(this.findAllByLectureRequest, [lecture.id]).then(async res => {
+      questions = await this.extractResultSet(res);
+    });
+    return questions;
+  }
 
   /**
    * TODO a refacto abstract extract() {}

@@ -1,5 +1,5 @@
 import { Artwork } from './artwork';
-import { Question } from './Question';
+import { Question } from './question';
 
 export class Lecture {
 

@@ -3,6 +3,7 @@ import { Artwork } from 'src/entities/artwork';
 import { Lecture } from 'src/entities/lecture';
 import { ArtworkDaoService } from 'src/providers/dao/artwork-dao.service';
 import { LectureDaoService } from 'src/providers/dao/lecture-dao.service';
+import { QuestionDaoService } from 'src/providers/dao/question-dao.service';
 
 @Component({
   selector: 'app-lectures',
@@ -15,7 +16,8 @@ export class LecturesPage implements OnInit {
   public artworks: Artwork[];
   public selectedArtwork: Artwork;
 
-  constructor(private lectureDaoService: LectureDaoService, private artworkDaoService: ArtworkDaoService) { }
+  constructor(private lectureDaoService: LectureDaoService, private artworkDaoService: ArtworkDaoService,
+    private questionDaoService: QuestionDaoService) { }
 
   async ngOnInit() {
     this.artworks = new Array();
@@ -29,8 +31,8 @@ export class LecturesPage implements OnInit {
   /**
    * Réactualise la liste de lectures.
    */
-  public changeSelectedArtwork(){
-    this.getLectures();
+  public async changeSelectedArtwork(){
+    await this.getLectures();
   }
 
   /**
@@ -43,6 +45,10 @@ export class LecturesPage implements OnInit {
     } else {
       this.lectures = await this.lectureDaoService.findAll();
     }
+
+    this.lectures.forEach(async (lecture) => {
+      lecture.questions = await this.questionDaoService.findAllByLecture(lecture);
+    });
   }
 
   /**

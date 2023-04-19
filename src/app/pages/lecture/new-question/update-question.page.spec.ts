@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IonAccordionGroup, IonicModule } from '@ionic/angular';
 import { routes } from 'src/app/app-routing.module';
 import { Lecture } from 'src/entities/lecture';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { Difficulty } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion } from 'src/models/enums/typeQuestionEnum';
 import { LectureService } from 'src/providers/lecture.service';

@@ -9,7 +9,7 @@ import { LectureService } from 'src/providers/lecture.service';
 import { Navigation, Router } from '@angular/router';
 import { Difficulty, difficultyList } from 'src/models/enums/difficultyEnum';
 import { TypeQuestion, typeQuestionList } from 'src/models/enums/typeQuestionEnum';
-import { Question } from 'src/entities/Question';
+import { Question } from 'src/entities/question';
 import { Lecture } from 'src/entities/lecture';
 import { ToasterService } from 'src/providers/toaster.service';
 import { of } from 'rxjs';

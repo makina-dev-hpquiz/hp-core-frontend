@@ -21,16 +21,9 @@ export class ArtworkDaoService extends AbstractDaoService {
    this.table + '.id=lecture.id) ORDER BY lecture.date DESC'; //TODO
   private findByIdRequest= 'SELECT * FROM '+this.table + ' WHERE id= ?;';
 
-  private database: SQLiteObject;
-
   constructor(private databaseService: DatabaseService) {
     super();
   }
-
-  async init() {
-    this.database = await this.databaseService.getDatabase();
-  }
-
 
   /**
    * Sauvegarde une entité lecture de la base de données

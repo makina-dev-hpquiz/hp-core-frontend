@@ -52,7 +52,6 @@ describe('ArtworkDaoService', () => {
     mockDatabaseService =
       jasmine.createSpyObj<DatabaseService>('DatabaseService', ['getDatabase']);
     mockDatabaseService[storage] = mockSQLiteObject;
-
     TestBed.configureTestingModule({
       providers: [
         {
