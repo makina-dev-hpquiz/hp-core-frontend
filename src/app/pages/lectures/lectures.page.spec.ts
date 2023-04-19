@@ -107,6 +107,29 @@ describe('LecturesPage', () => {
     expect(component.lectures.length).toEqual(1);
     expect(component.lectures[0].questions.length).toEqual(1);
   });
+  
+  it('Private LecturePage.getQuestions', async () => {
+    await mockLectureDaoService.findAllByArtwork.and.returnValues(of([lecture1]).toPromise());
+    await mockQuestionDaoService.findAllByLecture.and.returnValues(of([new Question(), new Question()]).toPromise());
+    await component[getQuestions]();
+    
+    expect(component.lectures[0].questions.length).toEqual(2);
+  });
+
+  it('Private LecturePage.sortLectures', async () => {
+    let lecture3 = new Lecture();
+    lecture3.id = 3;
+
+    component.selectedArtwork = new Artwork();
+    await mockLectureDaoService.findAll.and.returnValues(of([lecture1, lecture3]).toPromise());
+    await component[getLectures]();
+    component[sortLectures]();
+
+    expect(component.lectures.length).toEqual(2);
+    expect(component.lectures[0].id).toEqual(lecture3.id);
+    expect(component.lectures[1].id).toEqual(lecture1.id);
+  });
+
 
   it('Private LecturePage.getQuestions', async () => {
     await mockLectureDaoService.findAllByArtwork.and.returnValues(of([lecture1]).toPromise());
