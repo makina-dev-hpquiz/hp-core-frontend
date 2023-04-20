@@ -3,5 +3,13 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-label class="subtitle">
+    Accès serveur
+  </ion-label>
+  <div class="connexion-div">
+    <ion-input placeholder="192.168.0.30:8080" [(ngModel)]="address"></ion-input>
+    <ion-label *ngIf="stateConnexion" class="connexion connexion-ok">OK</ion-label>
+    <ion-label *ngIf="!stateConnexion" class="connexion connexion-ko">KO</ion-label>
+  </div>
+  <ion-button class="bottom-button" (click)="save()">Sauvegarder</ion-button>
 </ion-content>

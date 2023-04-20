@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigurationsPage implements OnInit {
 
-  constructor() { }
+  public address: string;
+  public stateConnexion: boolean;
+
+  constructor() {
+    this.stateConnexion = false;
+   }
 
   ngOnInit() {
+  }
+
+  save(){
+    alert(this.address);
   }
 
 }

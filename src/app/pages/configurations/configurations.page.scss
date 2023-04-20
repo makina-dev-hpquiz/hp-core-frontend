@@ -1,0 +1,23 @@
+.subtitle{
+    font-weight: bold;
+    font-size: 24px;
+    margin-left: 2%;
+}
+
+.connexion-div {
+    display: flex;
+    margin-right: 2%;
+
+    .connexion {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .connexion-ok {
+        color: var(--ion-color-easy);
+    }
+
+    .connexion-ko {
+        color: var(--ion-color-hard);
+    }
+}
